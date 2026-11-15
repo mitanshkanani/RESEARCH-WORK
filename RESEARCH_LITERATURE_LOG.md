@@ -73,3 +73,58 @@ Not opened (leads only): Coates and Ng "single-layer networks" (K-means features
 82% on CIFAR-10), PCANet arXiv:1404.3606, "Scaling Forward Gradient with Local Losses"
 arXiv:2210.03310, FeCAM arXiv:2309.14062, DS-AL arXiv:2403.17503, F-OAL arXiv:2403.15751,
 "Budgeted Training" arXiv:1905.04753.
+
+---
+
+## 2. Giving new units a view of old classes without old pictures; does freeze-and-grow limit features? (2026-11-15)
+
+Question: in grow and lock, the units added at a stage see only that stage's 10 classes. What
+is published on showing a network its old classes without storing old images, and on the
+feature quality of networks that grow by frozen pieces?
+
+### Ways to stand in for old data
+
+| Paper | Tag | What it does | Numbers seen (CIFAR-100, no stored images unless stated) |
+|---|---|---|---|
+| Smith et al., "Always Be Dreaming" (ABD), arXiv:2106.09701 | passages | Makes synthetic old-class images by inverting the old network (a generator trained about 5,000 steps per task). Nothing stored but the model | Equal splits, last-step accuracy: 5 / 10 / 20 tasks = 43.9 / 33.7 / 20.0. The plain inversion recipe gets 18.8 / 10.9 / 5.7. Finding: the network learns "synthetic against real" more easily than "old class against new class", so the details of the loss matter a lot |
+| Gao et al., "R-DFCIL", arXiv:2203.13104 | passages | Builds on ABD | 5 / 10 / 20 tasks = 50.5 / 42.4 / 30.8, small ResNet-32 |
+| Zhang et al., "Deep Model Consolidation" (DMC), arXiv:1903.07864 | passages | Trains a separate model on the new classes, then merges old and new models using **unlabeled outside images** (not old data) | 8,000 to 32,000 outside images were enough. Natural images (textures, scenes) work; digits as outside images fail (about 2%) |
+| Lee et al., "Overcoming Catastrophic Forgetting with Unlabeled Data in the Wild", arXiv:1903.12648 | passages | Distillation helped by sampled outside images | 65.0 to 68.1 average with outside data. **May also use a stored set of old images; not confirmed as exemplar-free** |
+| Magistri et al., "Elastic Feature Consolidation" (EFC), arXiv:2402.03917 | passages | Backbone keeps training; stores a mean and covariance per class and replays samples from them at the last layer | Small first task, 10 steps: 43.6 last-step. About 30 directions per class keep 99% of the covariance |
+| Petit et al., "FeTrIL", arXiv:2211.13131 | passages | Frozen extractor; makes fake old-class features by shifting new-class features | Good with a large first task (66.3), weak with a small one (34.9 in EFC's table) |
+| Balaji et al., "Compressed Activation Replay", arXiv:2010.02418 | passages | Stores compressed activations of middle layers **together with real inputs** | Not exemplar-free. Shows that pooled middle-layer activations are usable |
+
+**No paper was found that replays stored statistics of middle layers without stored inputs.**
+Everything exemplar-free works at the last feature layer only.
+
+### Networks that grow by frozen pieces
+
+| Paper | Tag | What it says |
+|---|---|---|
+| Yan et al., "DER", arXiv:2103.16788 | passages | Freezes the old extractor, adds a new one per step. Uses stored images. Adds a special loss so the new extractor learns to tell "new classes" from "all old classes as one", for the stated purpose of learning "diverse and discriminative features". That loss needs old images |
+| Wang et al., "FOSTER", arXiv:2204.04662 | passages | States the narrow-view problem directly: a new module trained only on what the old one gets wrong "cannot learn anything about old categories". Fix: make the new features classify all classes seen so far, which needs old images |
+| Zhou et al., "MEMO", arXiv:2205.13218 | passages | Early layers of networks from different stages are similar; deep layers differ. **With fewer than about 20 first classes, freezing the early layers hurts; they should keep training.** With more first classes, freezing is better. (Uses stored images) |
+| Rypeść et al., "SEED", arXiv:2401.10191 | passages | No stored images, from scratch, equal splits. Five full networks; one is fine-tuned per task; all vote through a mean and full covariance per class | Average accuracy 61.7 for 10 tasks against 46.3 for FeTrIL. With class means only: 54.1. So a **full covariance per class adds about 7.6 points** |
+
+### What this means for us (our reading, not from the papers)
+
+- **The narrow-view problem is known**, described in DER, FOSTER and FeTrIL. Every published fix
+  uses old images. Without old images the options are: outside unlabeled images, images dreamed
+  up from the old network, or statistics replay (so far only at the last layer).
+- **Outside unlabeled images are the cheapest stand-in** with direct evidence, and a few
+  thousand natural images are enough. It does mean bringing in a second dataset.
+- **Dreamed images work but are fragile** and cost about 5,000 extra training steps per stage.
+  Our old units are locked, so the "teacher" never changes; that may make it easier. Untested.
+- **Our first group is 10 classes, under the roughly 20 below which freezing early layers was
+  found harmful.** If EXP-6 points to locking, the first thing to try is a larger or longer
+  first stage, or locking only the deep layers.
+- **A covariance per class in the memory is worth points in two separate papers** (SEED +7.6,
+  RanDumb about +25 on CIFAR-10). Our cards store means only. This is cheap, needs no backprop
+  and no old pictures, and has not been tried here.
+- Replaying stored statistics of middle layers so that new units can "see" old classes is, as
+  far as this search went, not published without stored inputs. It would be a new experiment.
+
+Not opened (leads only): DeepInversion (known only through ABD), Generative Feature Replay
+arXiv:2004.09199, brain-inspired replay (van de Ven et al.), Latent Replay arXiv:1912.01100,
+ACAE-REMIND arXiv:2105.08595, AdaGauss arXiv:2409.18265, "Adapt Your Teacher" arXiv:2308.09544,
+Progressive Neural Networks, DEN.
