@@ -13,17 +13,17 @@ researched both ways.
 
 | Item | Where | State |
 |---|---|---|
-| Project rules and goal | `CLAUDE.md` | written, not committed or pushed |
-| Literature report: growing structure, ranked methods | `RESEARCH_GROWING_STRUCTURE.md` | written, not committed or pushed |
-| 14 new papers (PAPER 54-67) + manifest | `01-/02-/03-` folders, `PAPERS_MANIFEST.md` | added, not committed or pushed |
-| Old agent's END_GOAL and reports | `_archive-previous-agent/` | moved with `git mv` (staged), not committed. Goals and recommendations there are not to be used |
-| EXP-2 (feature ladder) | `EXP-2-FEATURE-LADDER/` | complete. Pushed to GitHub branch `exp-2-feature-ladder` (commit 88ceeb5). PDF journal: `EXP-2-JOURNAL.pdf` |
+| Project rules and goal | `CLAUDE.md` | on `main` |
+| Literature report: growing structure, ranked methods | `RESEARCH_GROWING_STRUCTURE.md` | on `main` |
+| 14 new papers (PAPER 54-67) + manifest | `01-/02-/03-` folders, `PAPERS_MANIFEST.md` | on `main` |
+| Old agent's END_GOAL and reports | `_archive-previous-agent/` | on `main`. Goals and recommendations there are not to be used |
+| EXP-2 (feature ladder) | `EXP-2-FEATURE-LADDER/` | complete. PDF journal: `EXP-2-JOURNAL.pdf` |
 | EXP-1 | `EXP-1-CATASTROPHIC-FORGETTING/` | a design only, written by the earlier agent. Never run: no code, no results. Its plain "train A, then B" baseline is reused inside EXP-3 |
 | EXP-3 (growing features) | `EXP-3-GROWING-FEATURES/` | complete (2026-11-15). Run on a private Kaggle GPU job (Tesla T4, 157 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-3-JOURNAL.pdf` has Part A and Part B (14 pages). Verdict by the pre-written rule: **does not work on photos**. Not committed |
-| EXP-4 (fair cards) | `EXP-4-FAIR-CARDS/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 64 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds_*.npz`. Journal `EXP-4-JOURNAL.pdf` has Part A and Part B (15 pages). Verdict by the pre-written rule: **does not work on photos**; cause confirmed. Branch `exp-4-fair-cards` |
+| EXP-4 (fair cards) | `EXP-4-FAIR-CARDS/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 64 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds_*.npz`. Journal `EXP-4-JOURNAL.pdf` has Part A and Part B (15 pages). Verdict by the pre-written rule: **does not work on photos**; cause confirmed |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
-The local repo is on branch `exp-2-feature-ladder`, not `main`. `01-continual-learning/PAPER 4.PDF`
+Everything is on `main`; the owner wants no other branches (2026-11-15). `01-continual-learning/PAPER 4.PDF`
 had a modification before this work started; it is unrelated.
 
 ## EXP-2 result (read the journal for detail)
@@ -137,7 +137,5 @@ CIFAR-100, after stage 8, exam half, 5 seeds (`results/summary.json`):
 
 ## Open decisions for the owner
 
-1. Merge the experiment branches into `main`? Everything is pushed (`exp-2-feature-ladder`,
-   `exp-3-growing-features`, `exp-4-fair-cards`), nothing is merged.
-2. Go ahead with EXP-5 as proposed in section 18 of `EXP-4-FAIR-CARDS/EXP-4-JOURNAL.pdf`, or
+1. Go ahead with EXP-5 as proposed in section 18 of `EXP-4-FAIR-CARDS/EXP-4-JOURNAL.pdf`, or
    pick a different next step?

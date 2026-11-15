@@ -100,6 +100,7 @@ of any few-shot ability comes from the pretraining rather than from the learning
   globally or written elsewhere on the machine. Tell the owner the expected disk use before
   downloading, and the measured disk use afterwards.
 - Explain in plain language. The owner thinks in concrete examples (cats vs dogs, then digits).
+- Work directly on `main`. Do not create git branches (owner, 2026-11-15).
 - Do not create extra planning documents unless asked. The experiment journal below is the one
   document every experiment must have.
 
