@@ -22,6 +22,8 @@ researched both ways.
 | EXP-3 (growing features) | `EXP-3-GROWING-FEATURES/` | complete (2026-11-15). Run on a private Kaggle GPU job (Tesla T4, 157 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-3-JOURNAL.pdf` has Part A and Part B (14 pages). Verdict by the pre-written rule: **does not work on photos**. Not committed |
 | EXP-4 (fair cards) | `EXP-4-FAIR-CARDS/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 64 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds_*.npz`. Journal `EXP-4-JOURNAL.pdf` has Part A and Part B (15 pages). Verdict by the pre-written rule: **does not work on photos**; cause confirmed |
 | EXP-5 (better eyes) | `EXP-5-BETTER-EYES/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 216 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds.npz`. Journal `EXP-5-JOURNAL.pdf` has Part A and Part B (15 pages). Verdict by the pre-written rule: **does not work** |
+| EXP-6 (what limits the eyes) | `EXP-6-WHAT-LIMITS-THE-EYES/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 173 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds.npz`. Journal `EXP-6-JOURNAL.pdf` has Part A and Part B. A diagnosis: **locking and building in steps is the main cause** |
+| Literature log | `RESEARCH_LITERATURE_LOG.md` | six sections written 2026-11-15 from subagent reading (passages, not full papers) |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
 Everything is on `main`; the owner wants no other branches (2026-11-15). `01-continual-learning/PAPER 4.PDF`
@@ -144,6 +146,30 @@ Grow and lock with R7 fixed; four ways of training the units added at each stage
   on all classes so far (old data, diagnosis only), (c) both; see which moves open-book and the
   3-shot test. Needs a Part A first.
 
+## EXP-6 result (read the journal for detail)
+
+Diagnosis of why grown features stay under retraining. Grow and lock with R7, 30 passes,
+CIFAR-100, 80 classes, exam half, 5 seeds (`results/summary.json`). Open-book accuracy:
+
+| Run | Open-book | 20 unseen classes, 3 shots | Time / energy per seed |
+|---|---|---|---|
+| A as before (16 units per stage, final 144) | 41.0 | 29.7 | 131 s / 1.36 Wh |
+| C diagnosis: new units trained on all classes so far, old units locked | 43.7 | 31.1 | 737 s / 7.68 Wh |
+| Retrain, size 144 | 53.2 | 38.5 | 202 s / 2.12 Wh |
+| B double units (final 288) | 42.7 | 30.9 | 238 s / 2.48 Wh |
+| Retrain, size 288 | 55.0 | 40.2 | 453 s / 4.75 Wh |
+
+- Gap at size 144 is 12.2 points: narrow data per stage explains 2.7 (22%, "minor"); locking
+  and staged building explains 9.5 (78%, "main cause").
+- Gap at size 288 is 12.3 points: size is not a cause of the gap.
+- Double units with R7: 41.7 against 39.6, 15% of the gap, "does not work"; first group with
+  its own prototypes dropped 3.4 points.
+- Not separated: "old units cannot improve" against "network built piece by piece". A larger
+  first group was not tested.
+- Proposed EXP-7: feature extractors that are not fitted to classes at all (fixed whitened
+  image patches, no backprop, one pass; see section 6 of `RESEARCH_LITERATURE_LOG.md`), with
+  the same 80-class protocol, plus a shared-covariance memory. Needs a Part A first.
+
 ## Other literature facts worth keeping (from `RESEARCH_GROWING_STRUCTURE.md`)
 
 - Zero-forgetting growth methods mostly need a task hint; no-hint growth methods mostly rely on replay.
@@ -166,5 +192,5 @@ Grow and lock with R7 fixed; four ways of training the units added at each stage
 
 ## Open decisions for the owner
 
-1. Go ahead with EXP-6 as proposed in section 18 of `EXP-5-BETTER-EYES/EXP-5-JOURNAL.pdf`, or
+1. Go ahead with EXP-7 as proposed in section 17 of `EXP-6-WHAT-LIMITS-THE-EYES/EXP-6-JOURNAL.pdf`, or
    pick a different next step?

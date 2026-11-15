@@ -1,6 +1,6 @@
 # EXP-6 · WHAT LIMITS THE EYES
 
-**Experiment ID:** EXP-6 · **Part A written:** 2026-11-15, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** PLANNED, NOT RUN YET
+**Experiment ID:** EXP-6 · **Part A written:** 2026-11-15, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** COMPLETE. Run and Part B added 2026-11-15. Result: locking and building in steps is the main cause (78% of the gap); narrow view is minor (22%); size is not a cause (section 12)
 
 This journal has two parts. **Part A** (this part) explains the experiment before it starts.
 **Part B** will be added to the end of this same PDF when the experiment finishes. Part A
@@ -237,14 +237,206 @@ has to be measured again.
 
 <div class="pagebreak"></div>
 
-# Part B: the readings (to be added after the run)
+# Part B: the readings (added after the run, 2026-11-15)
 
-**Not run yet.** When the experiment finishes, this part will be filled in, in the same PDF:
+Part A above was not changed after the run, except the one status line at the top of page 1.
 
-1. What was actually run, and anything that differed from Part A
-2. The readings: tables and figures made from the result files
-3. The verdict, using the rule in section 5
-4. Was the expectation in section 5 right or wrong
-5. What it means for the project
-6. What is still unverified
-7. What the next experiment should be, and why
+## 10. What was actually run
+
+The plan in section 3 was run once, on a free Kaggle GPU (Tesla T4), as a private job named
+`exp6-what-limits-the-eyes`. It took **173 minutes** (the plan said about 3.5 hours). The
+first push sat in Kaggle's queue and was cancelled by the owner; the same code was pushed
+again and that second run is the one reported. The result files were downloaded into
+`results/`: `runs.jsonl` (380 lines), `meta.json`, `preds.npz` and `kaggle_run.log`. All 5
+seeds finished for all three runs and both sizes of the reference points, with no errors in
+the log. `src/figures.py` turned `runs.jsonl` into `results/summary.json` and the figures.
+**Every number below comes from `results/summary.json`**: exam half, after stage 8, mean of
+5 seeds.
+
+**Things that differ from Part A, or that the code had to fix:**
+
+| Item | What was done |
+|---|---|
+| Small code check before the run | A 1-pass trial on a tenth of the data was run on the laptop to catch crashes, borrowing EXP-2's Python environment and dataset (read only). Its numbers were thrown away |
+| Run C | at each stage a fresh answer layer over all classes so far is trained together with the new units; old units stay locked |
+| Random starts | each run and each reference point got its own random start; the class order is the same for all within a seed |
+| Energy | Kaggle reported GPU power, so energy was recorded (GPU only) |
+
+Nothing in sections 1 to 9 was changed.
+
+## 11. The readings
+
+### 11.1 Step 0: was EXP-5 rebuilt correctly? Yes
+
+| | EXP-5 | EXP-6 rebuild (run A) |
+|---|---|---|
+| Open-book on grown eyes | 40.9 | 41.0 |
+| Real test with R7 | 39.6 | 39.6 |
+| Retrain everything, size 144 | 53.2 | 53.2 |
+| Frozen eyes, size 144 | 32.8 | 33.2 |
+
+### 11.2 How good are the eyes in each run?
+
+| Run | Open-book, all 80 classes | 3-picture surprise test | Real test with R7 | Time per seed | GPU energy per seed |
+|---|---|---|---|---|---|
+| A as now (size 144) | 41.0 ± 0.5 | 29.7 | 39.6 | 131 s | 1.36 Wh |
+| C wide view, diagnosis (size 144) | 43.7 ± 1.0 | 31.1 | (not a method) | 737 s | 7.68 Wh |
+| Retrain everything (size 144) | **53.2** ± 0.4 | 38.5 | | 202 s | 2.12 Wh |
+| B double units (size 288) | 42.7 ± 0.7 | 30.9 | 41.7 | 238 s | 2.48 Wh |
+| Retrain everything (size 288) | **55.0** ± 0.3 | 40.2 | | 453 s | 4.75 Wh |
+| Frozen eyes (size 144 / 288) | 33.2 / 32.6 | 25.6 / 26.1 | | 26 s / 57 s | 0.27 / 0.60 Wh |
+
+![Open-book score of every run](figures/fig1_eyes.svg)
+
+*Figure 1. Height = how good the eyes are (open-book score). Left group: size 144. Right
+group: size 288. In both groups grow and lock sits about 12 points under retraining.*
+
+### 11.3 Step 1: where does the gap come from, at size 144?
+
+The gap between run A and retraining is 53.2 − 41.0 = **12.2 points**.
+
+| Suspect | How it is read | Points | Share of the gap | Name by the rule |
+|---|---|---|---|---|
+| Narrow view | C minus A | 2.7 | **22%** | minor |
+| Locking and building in steps | retrain minus C | 9.5 | **78%** | **main cause** |
+
+![The gap split into the two suspects](figures/fig2_gap_split.svg)
+
+*Figure 2. The 12.2 points between run A and retraining. Only the short violet part is won
+back by letting the new units see every class so far.*
+
+In plain words: even when the new units were allowed to see **all** old pictures (which our
+method forbids), the eyes only improved from 41.0% to 43.7%. The remaining 9.5 points are
+lost for a different reason: the network is built in small locked steps. The narrow-view
+share varied between seeds from 13% to 35%; in no seed did it reach half.
+
+The 3-picture surprise test says the same: A 29.7%, C 31.1%, retrain 38.5%.
+
+### 11.4 Step 2: do too few units cause the gap? No
+
+| | Grow and lock | Retrain | Gap |
+|---|---|---|---|
+| Size 144 | 41.0 (A) | 53.2 | 12.2 |
+| Size 288 | 42.7 (B) | 55.0 | 12.3 |
+
+Doubling the units lifts both by about 1.7 points and leaves the gap unchanged (it would
+have had to shrink by a quarter to count). Bigger helps everyone equally.
+
+### 11.5 Step 3: is double units a usable gain? No
+
+On the real test with R7, B scores 41.7% against 39.6% for A. That closes
+(41.7 − 39.6) ÷ (53.2 − 39.6) = **15%** of the gap, under the 25% needed. B also lost 3.4
+points on the first group with its own cards (77.4% to 74.0%), just over the 3 allowed; A
+lost 1.8. B costs 1.8 times the time and energy of A and used 1.3 GB of GPU memory.
+
+![Three-picture test on surprise classes](figures/fig3_surprise.svg)
+
+*Figure 3. Learning 20 never-seen classes from 3 pictures each. Grow and lock in any form
+stays near 30%; retraining reaches 38 to 40%.*
+
+Two more figures are in `figures/`: the open-book score after every stage
+(`fig4_over_time.svg`) and the cost of each run (`fig5_cost.svg`).
+
+## 12. The verdict, by the rule written in section 5
+
+| Step | Reading | Result |
+|---|---|---|
+| 0. Rebuild check | 41.0, 39.6, 53.2, 33.2 against 40.9, 39.6, 53.2, 32.8 | passed |
+| 1. Narrow view | 22% of the gap | **minor** |
+| 1. Locking and building in steps | 78% of the gap | **main cause** |
+| 2. Too few units | gap 12.2 at size 144, 12.3 at size 288 | **not a cause of the gap** |
+| 3. Double units as a fix | closes 15%; first group drop 3.4 | **does not work** |
+
+## 13. Was the expectation in section 5 right?
+
+| What I wrote before the run | What happened | |
+|---|---|---|
+| Run C open-book about 47%; narrow view about half the gap | 43.7%; 22% | wrong |
+| Locking about half the gap | 78% | wrong (it is the main cause) |
+| Run B open-book about 44.5%, R7 about 43% | 42.7%, 41.7% | too optimistic |
+| Retrain at size 288 about 57% | 55.0% | too optimistic |
+| Size is not a cause of the gap | gap unchanged | right |
+| B closes about 25% of the gap | 15% | wrong |
+| Surprise test: C about 34%, B about 31.5% | 31.1%, 30.9% | C wrong, B close |
+| Forgetting in B under 3 points | 3.4 | wrong, narrowly |
+
+I expected the narrow view to matter much more than it does. The published warnings about
+it (section 2 of `RESEARCH_LITERATURE_LOG.md`) are real, but here it is the smaller problem.
+
+## 14. What it means for the project
+
+**1. Grow and lock, in this form, has a built-in ceiling.** The eyes it builds are about 10
+points worse than eyes trained in one go, and that is not because of what the new units
+see, and not because there are too few of them. It is because the old units are fixed
+after seeing very little (the first 32 units only ever saw 10 classes), and everything
+added later has to build on them.
+
+**2. The price of never overwriting was higher than it looked.** Locking is what gives the
+method its best property: old knowledge cannot be damaged. EXP-6 shows the same locking is
+what costs most of the accuracy. With eyes that are trained by backpropagation on a few
+classes at a time, the two pull against each other.
+
+**3. This points away from "train a little, lock, repeat" for the eyes.** Two published
+results (read as passages, see the literature log) fit this picture: with fewer than about
+20 first classes, freezing early layers hurts (MEMO, arXiv:2205.13218), and methods that
+freeze after a small first group score low (FeCAM 33.1, FeTrIL 37.0 on CIFAR-100 in the
+table of arXiv:2407.08536).
+
+**4. What would not have this problem.** Eyes whose units do not depend on which classes
+they were built from. If a unit is just "how much does this bit of the picture look like
+this small patch", then locking it costs nothing, because it was never fitted to 10
+classes in the first place. The reading done during this run found exactly such eyes in
+published work: fixed whitened picture patches, no backpropagation, one pass, 78 to 86% on
+10-class photos (Coates, Lee, Ng 2011; Thiry et al., arXiv:2101.07528).
+
+**5. Cost, for the record.** Grow and lock (A) costs 131 s and 1.36 Wh for all 8 stages;
+one retraining at the end costs 202 s and 2.12 Wh. Run C shows what "let the new units see
+everything" would cost if it were allowed: 737 s and 7.68 Wh, for 2.7 points.
+
+## 15. What is still unverified
+
+- "Locking and building in steps" is two things that this run cannot separate: old units
+  can never improve, and the network is grown piece by piece. Which of the two costs the
+  9.5 points is not known.
+- Run C trains longer than run A (more pictures per stage). Its 2.7-point gain may be
+  partly that, so narrow view may matter even less than 22%.
+- The run "double units and wide view together" was left out. The two could interact.
+- A larger first group (for example 40 classes) might shrink the locking cost a lot. Not tested.
+- One dataset, one kind of network, 5 seeds, images only.
+- Energy is GPU-only on a Kaggle T4. The figures were generated from the result files but
+  only the result numbers were checked by eye this time, not every drawing.
+- Papers cited from the literature log were read as passages by reading assistants.
+
+## 16. What carries over beyond pictures
+
+The finding itself is general in form: units that are fitted to a small first set of
+classes and then frozen become a weak foundation for everything added later. Whether the
+same happens for language units has to be measured there. The idea in point 4 of section
+14 (units that are not fitted to particular classes) also has a language form: the
+"what came before, what came next" memories described in section 5 of the literature log.
+
+## 17. What the next experiment should be, and why
+
+**Proposed EXP-7: eyes made of picture patches, with no backpropagation.**
+
+Why: EXP-6 says the accuracy is lost by locking units that were trained on few classes.
+Patch-based eyes are not trained on classes at all, so locking them should cost nothing.
+They also answer the owner's two standing questions at once: no backpropagation, and one
+look at the data.
+
+What it should contain:
+
+1. Eyes: cut small patches from the first group's pictures, whiten them, keep a fixed set
+   as "detectors". Describing a picture = how strongly each detector matches in each
+   quarter of the picture. No labels and no backpropagation are used to build them.
+2. Memory: class cards as before. Also test the cheap upgrade from the literature log
+   (square-rooted features and one shared covariance), which needs one look and no old
+   pictures.
+3. The same test as before: 80 classes in 8 stages of 10, no old pictures, the 3-picture
+   surprise test, time and energy.
+4. Two versions of the eyes: all detectors taken from the first 10 classes and never
+   changed, and "growing" eyes that add detectors from each new group with old ones locked.
+5. Compare against the numbers to beat: grow and lock 39.6%, frozen backprop eyes 33.2%,
+   retrain 53.2%.
+
+This is a proposal. It needs its own Part A before any code is run.

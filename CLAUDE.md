@@ -85,7 +85,12 @@ of any few-shot ability comes from the pretraining rather than from the learning
   the data gives 16.5% against 39.6% with 30 passes. Section 18 proposes EXP-6 (diagnose
   what limits the grown features: units per stage, or seeing only 10 classes per stage).
 - `EXP-6-WHAT-LIMITS-THE-EYES/`: a diagnosis of why grown features stay under retraining:
-  narrow data per stage, too few units per stage, or locking. Part A written 2026-11-15.
+  narrow data per stage, too few units per stage, or locking. Complete (2026-11-15); journal
+  `EXP-6-JOURNAL.pdf`. Locking and building in steps is the main cause (78% of the 12-point
+  gap), narrow data is minor (22%), and doubling the units leaves the gap unchanged.
+  Section 17 proposes EXP-7 (feature extractors made of whitened image patches, no backprop).
+- `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
+  2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that
   misread the project (it treated brain-inspired and energy as side issues and steered toward
   benchmark-building). Their sourced facts about papers are still usable as reference. Their
