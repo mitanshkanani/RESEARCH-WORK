@@ -1,6 +1,6 @@
 # EXP-7 · PATCH EYES
 
-**Experiment ID:** EXP-7 · **Part A written:** 2026-11-16, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** PLANNED, NOT RUN YET
+**Experiment ID:** EXP-7 · **Part A written:** 2026-11-16, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** COMPLETE. Run and Part B added 2026-11-16. Verdict: works by the written rule (55.2% on 80 classes with no backpropagation), with three warnings in section 12
 
 This journal has two parts. **Part A** (this part) explains the experiment before it starts.
 **Part B** will be added to the end of this same PDF when the experiment finishes. Part A
@@ -254,14 +254,255 @@ in the journal as written.
 
 <div class="pagebreak"></div>
 
-# Part B: the readings (to be added after the run)
+# Part B: the readings (added after the run, 2026-11-16)
 
-**Not run yet.** When the experiment finishes, this part will be filled in, in the same PDF:
+Part A above was not changed after the run, except the one status line at the top of page 1.
 
-1. What was actually run, and anything that differed from Part A
-2. The readings: tables and figures made from the result files
-3. The verdict, using the rule in section 5
-4. Was the expectation in section 5 right or wrong
-5. What it means for the project
-6. What is still unverified
-7. What the next experiment should be, and why
+## 10. What was actually run
+
+The plan in section 3 was run once, on a free Kaggle GPU (Tesla T4), as a private job named
+`exp7-patch-eyes`. It took **64 minutes**. The result files were downloaded into `results/`:
+`runs.jsonl` (1,430 lines), `sanity.json` (the CIFAR-10 check), `meta.json`, `preds.npz` and
+`kaggle_run.log`. All 5 seeds finished for all eight kinds of eyes, with no errors in the
+log. `src/figures.py` turned `runs.jsonl` into `results/summary.json` and the figures.
+**Every number below comes from `results/summary.json` unless another file is named**: exam
+half, after stage 8, mean of 5 seeds. The backprop reference numbers are quoted from
+`EXP-6-WHAT-LIMITS-THE-EYES/results/summary.json`.
+
+**Things that differ from Part A, or that the code had to fix:**
+
+| Item | What was done |
+|---|---|
+| Small code check before the run | A tiny trial (120 detectors, 3 stages, a tenth of the data) was run on the laptop, borrowing EXP-2's Python environment and CIFAR-100 (read only). Its numbers were thrown away |
+| M-lda and M-ridge | solved after stages 1, 4 and 8 only, to save time. Plain cards are scored after every stage |
+| Threshold rule | the patch and the detector are both scaled to length 1 before matching, so the levels 0, 0.1, 0.25 are on a fixed scale |
+| Growing eyes (E2) | tested with cards only (own units, R7, open-book), not with the table memories, which would need extra work for units that old classes never had |
+| Surprise test with M-lda | new classes get their average from the 3 pictures and are judged with the shared table built from the 80 learned classes |
+| Energy | recorded for describing the pictures. It was **not** recorded for updating and solving the tables; only their time was |
+| GPU memory | peak 5.5 GB on Kaggle, because all descriptions were held on the GPU at once. **As written this does not fit the 4 GB laptop**; it would need the descriptions kept in ordinary memory |
+
+Nothing in sections 1 to 9 was changed.
+
+## 11. The readings
+
+### 11.1 Step 0: is the code right? Yes
+
+On CIFAR-10 with all 50,000 training pictures, 1,600 K-means detectors and the triangle
+rule (`results/sanity.json`): **76.3%** with M-ridge and 76.7% with M-lda. The paper reports
+77.9% with a different final classifier. The rule asked for at least 70%. Describing the
+50,000 pictures took 18.6 seconds. With plain cards the same eyes give only 35.3%.
+
+### 11.2 The selected combination
+
+On the practice half, 27 of the 32 combinations kept the first group (step 2). The highest
+score there was **fixed patch eyes, threshold 0.1, with M-lda at smoothing 0.01** (53.35%).
+On the exam half:
+
+| | All 80 classes | First group among all | First group, own cards only (stage 1 → stage 8) |
+|---|---|---|---|
+| **Patch eyes + shared-table memory (selected)** | **55.2% ± 0.4** | 56.2% | 77.6% → 78.2% |
+| Retrain everything, backprop (EXP-6) | 53.2% | 55.1% | – |
+| Grow and lock, backprop, R7 (EXP-6) | 39.6% | 39.0% | 72.9% → 71.0% |
+| Frozen backprop eyes (EXP-6) | 33.2% | 55.3% | – |
+
+All five seeds are between 54.4% and 55.5%. Score per group, oldest to newest: 56.2, 55.3,
+54.8, 55.6, 56.7, 54.4, 56.3, 52.0. No age of class is favoured.
+
+![Patch eyes with four memories](figures/fig1_memories.svg)
+
+*Figure 1. The same patch eyes with four memories. With plain cards they are far below
+everything. With the shared table they pass the retraining line.*
+
+### 11.3 The memory decides almost everything
+
+Same eyes (threshold 0.1), four memories:
+
+| Memory | All 80 classes |
+|---|---|
+| M-cos, plain cards | 15.4% |
+| M-sqrt, cards after square root | 17.2% |
+| M-lda, cards + shared table (smoothing 0.01 / 0.1 / 1) | **55.2%** / 53.6% / 48.0% |
+| M-ridge, one-step straight-line classifier (0.01 / 0.1 / 1) | 53.9% / 49.8% / 41.4% |
+
+The smallest smoothing value tried was the best for both. Smaller values were not tried.
+
+### 11.4 The kinds of eyes
+
+![Every kind of patch eyes](figures/fig2_eyes.svg)
+
+*Figure 2. Grey: cards after square root. Green: the best table memory for those eyes.*
+
+| Eyes | Best table memory | Cards after square root |
+|---|---|---|
+| Fixed, random patches, triangle rule | 53.8% | 17.8% |
+| Fixed, random, threshold 0 | 54.0% | 14.6% |
+| **Fixed, random, threshold 0.1** | **55.2%** | 17.2% |
+| Fixed, random, threshold 0.25 | 54.8% | 19.7% |
+| Fixed, K-means detectors, triangle | 54.8% | 20.9% |
+| Fixed, only 400 detectors, triangle | 47.5% | 18.1% |
+| Patches from all 80 classes (diagnosis), triangle | 53.9% | 18.4% |
+| Growing eyes, threshold 0.1 (cards only) | not tested | 16.5% with R7; 16.4% open-book |
+
+- **Where the patches come from does not matter**: patches from the first 10 classes give
+  53.8%, patches from all 80 classes 53.9%.
+- K-means detectors are 1.0 point better than random ones. 400 detectors are 6.3 points
+  worse than 1,600.
+- Growing the eyes brought nothing with cards (16.5% against 17.2% for fixed eyes).
+
+### 11.5 Old knowledge
+
+With the selected memory, the first group with only its own cards went from 77.6% to 78.2%.
+Nothing was forgotten. The shared table is the only thing that changes over time, and it
+did not hurt old classes. With plain cards nothing can change at all (drop exactly 0.0).
+
+### 11.6 Learning from 3 pictures: weak
+
+| | 20 never-seen classes from 3 pictures each |
+|---|---|
+| Patch eyes, plain cards | 15.8% |
+| Patch eyes, cards after square root | 17.0% |
+| Patch eyes, cards + shared table (0.01 / 0.1 / 1) | 8.2% / 10.5% / 16.0% |
+| Frozen backprop eyes (EXP-6) | 25.6% |
+| Grow and lock (EXP-6) | 29.7% |
+| Retrain everything (EXP-6) | 38.5% |
+
+This is the weak side. With 500 pictures per class the table memory is excellent; with 3
+pictures per class these eyes are clearly worse than every backprop eye we have built.
+
+### 11.7 Cost
+
+![Cost of learning](figures/fig5_cost.svg)
+
+*Figure 3. Seconds per seed to learn all 80 classes on the Kaggle GPU.*
+
+| Step | Time per seed |
+|---|---|
+| Build the eyes (cut patches, whitening) | 0.1 s |
+| Describe all 40,000 training pictures once | 9.1 s (0.095 Wh measured) |
+| Update the shared tables | 13.7 s |
+| Solve once at the end | 1.1 s |
+| **Total** | **24 s** |
+| Grow and lock, all 8 stages (EXP-6) | 131 s, 1.36 Wh |
+| Retrain once on everything (EXP-6) | 202 s, 2.12 Wh |
+
+If an answer is wanted after every stage, the solve is repeated 8 times (about 9 s in
+total). Energy was measured only for the describing step. The description is 6,400 numbers
+per picture and the shared table 6,400 by 6,400, against 576 numbers for the backprop eyes.
+
+Other figures in `figures/`: score after each stage (`fig3_over_time.svg`), the surprise
+test (`fig4_surprise.svg`), growing against fixed eyes (`fig6_growing.svg`).
+
+## 12. The verdict, by the rule written in section 5
+
+| Step | Reading | Result |
+|---|---|---|
+| 0. Code check on CIFAR-10 | 76.3% (needed 70%) | passed |
+| 1. Score on all 80 classes | 55.2% (the "works" line was 46.4%) | **works** |
+| 2. Old knowledge kept | 77.6% → 78.2%, no drop | passed |
+
+**Verdict: works.** A system with no backpropagation anywhere, one look at each picture,
+and no stored pictures scored 55.2% on the 80-class test. That is above grow and lock
+(39.6%) and above our retraining reference (53.2%), in 24 seconds.
+
+**This verdict needs three warnings, all of them already listed as risks in section 7:**
+
+1. **The comparison is not yet fair.** The 53.2% for retraining was measured with plain
+   cards on the retrained eyes. The table memory was never tried on backprop eyes. Retrained
+   eyes with the same memory, or with their own trained answer layer, may well score higher
+   than 53.2%. So this result does **not** show that patch eyes are better eyes. It shows
+   that this cheap system beats the reference as we have been measuring it.
+2. **It fails the project's few-example goal.** From 3 pictures per class it gets 17.0%
+   against 29.7% for grow and lock.
+3. **It does not fit the laptop GPU as written** (5.5 GB peak).
+
+## 13. Was the expectation in section 5 right?
+
+| What I wrote before the run | What happened | |
+|---|---|---|
+| Step 0 passes at about 74% | 76.3% | right |
+| Plain cards about 27%, square root about 30% | 15.4%, 17.2% | wrong, much lower |
+| M-lda or M-ridge selected, about 44%, "partly closes the gap" | M-lda, 55.2%, "works" | right memory, score far too low |
+| Forgetting under 2 points | none | right |
+| Patches from all classes within 1 point | 0.1 point | right |
+| Growing eyes about 2 points below fixed | 0.8 below, with cards | roughly right |
+| K-means and random within 1 point | 1.0 | right, on the border |
+| 400 detectors about 5 points below | 6.3 below | roughly right |
+| Surprise test about 24% | 17.0% | wrong, lower |
+| Cost under 60 s | 24 s | right |
+
+I underestimated how much the shared table would add, and overestimated plain cards.
+
+## 14. What it means for the project
+
+**1. Backpropagation is not needed to reach this level.** For the first time in this
+project, the whole system learns with single calculations and one pass over the data, and
+its score is in the range of the trained network. This answers the owner's two questions
+from 2026-11-15 for this test: no backpropagation, one look.
+
+**2. The big step came from the memory, not the eyes.** With plain cards these eyes score
+15%; with the shared table 55%. All earlier experiments used plain cards. That means the
+earlier numbers for backprop eyes may also have been held down by the memory. EXP-2's
+conclusion "the memory works, the eyes are the bottleneck" has to be re-opened.
+
+**3. The shared-table memory keeps the properties we wanted.** It is filled in one pass,
+needs no old pictures, gives the same answer as if all pictures had been present at once,
+and did not forget (77.6% → 78.2% on the first group).
+
+**4. These eyes are class-blind, as hoped.** Patches from the first 10 classes work as well
+as patches from all 80 (53.8% against 53.9%). So the locking problem found in EXP-6 does not
+arise: there is nothing class-specific to lock.
+
+**5. Few examples are now the open problem.** The system needs many pictures per class to
+find which of its 6,400 numbers matter. From 3 pictures it is worse than everything else.
+The project's goal is both: no forgetting and few examples. This system has the first
+without the second.
+
+**6. Cost.** 24 s against 131 s (grow and lock) and 202 s (one retraining), on the same
+GPU. It trades computing for memory: descriptions are 11 times longer than the backprop
+eyes' (6,400 against 576 numbers).
+
+## 15. What is still unverified
+
+- **Whether patch eyes are better or worse than backprop eyes under the same memory.** Not
+  tested. This is the most important gap.
+- **The true ceiling.** Retraining with a trained answer layer, or with the table memory,
+  was not measured. 53.2% is the plain-cards reference only.
+- Smoothing below 0.01 was not tried, and 0.01 was the best of the three, so the best
+  value may lie lower.
+- Energy for updating and solving the tables was not measured.
+- The laptop was not tested; peak GPU memory on Kaggle was 5.5 GB.
+- Growing eyes were tested with cards only.
+- Why the table memory is so weak from 3 pictures is not analysed.
+- None of the cheap improvements from the literature log (mirrored copies, positive and
+  negative parts, finer regions, a second layer) was tried.
+- One dataset, 5 seeds, images only. Papers were read as passages by reading assistants.
+
+## 16. What carries over beyond pictures
+
+The memory result carries over in form: running tables that give the all-at-once answer
+without old data work on any descriptions, pictures or not. The patch eyes themselves are
+image-specific. The lesson that the comparison rule in the memory can matter more than the
+eyes is not image-specific and should be checked first in any language version.
+
+## 17. What the next experiment should be, and why
+
+**Proposed EXP-8: the same memory on every kind of eyes, and the true ceiling.**
+
+Why: EXP-7's headline (55.2% against 53.2%) compares a strong memory on patch eyes with a
+weak memory on backprop eyes. Until both have the same memory, we do not know which eyes
+are better, and we do not know how far the cheap system is from the best a trained network
+can do.
+
+What it should contain:
+
+1. The table memories (M-lda, M-ridge) on the backprop eyes of EXP-6: frozen eyes,
+   retrained eyes, and grow-and-lock eyes (using open-book tables for the last one, as a
+   first look).
+2. The retrained network's own trained answer layer, as the honest ceiling.
+3. Patch eyes rebuilt next to them with the same class orders, plus smoothing values below
+   0.01.
+4. The 3-picture surprise test for every combination, since that is where patch eyes are
+   weak, and a first check of whether stronger smoothing or fewer numbers helps there.
+5. Time and energy for every step, this time including the tables.
+
+This is a proposal. It needs its own Part A before any code is run.

@@ -23,6 +23,7 @@ researched both ways.
 | EXP-4 (fair cards) | `EXP-4-FAIR-CARDS/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 64 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds_*.npz`. Journal `EXP-4-JOURNAL.pdf` has Part A and Part B (15 pages). Verdict by the pre-written rule: **does not work on photos**; cause confirmed |
 | EXP-5 (better eyes) | `EXP-5-BETTER-EYES/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 216 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds.npz`. Journal `EXP-5-JOURNAL.pdf` has Part A and Part B (15 pages). Verdict by the pre-written rule: **does not work** |
 | EXP-6 (what limits the eyes) | `EXP-6-WHAT-LIMITS-THE-EYES/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 173 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds.npz`. Journal `EXP-6-JOURNAL.pdf` has Part A and Part B. A diagnosis: **locking and building in steps is the main cause** |
+| EXP-7 (patch eyes) | `EXP-7-PATCH-EYES/` | complete (2026-11-16). Private Kaggle job (Tesla T4, 64 min), results in `results/runs.jsonl`, `summary.json`, `sanity.json`, `meta.json`, `preds.npz`. Journal `EXP-7-JOURNAL.pdf` has Part A and Part B. Verdict by the pre-written rule: **works**, with three warnings |
 | Literature log | `RESEARCH_LITERATURE_LOG.md` | six sections written 2026-11-15 from subagent reading (passages, not full papers) |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
@@ -170,6 +171,36 @@ CIFAR-100, 80 classes, exam half, 5 seeds (`results/summary.json`). Open-book ac
   image patches, no backprop, one pass; see section 6 of `RESEARCH_LITERATURE_LOG.md`), with
   the same 80-class protocol, plus a shared-covariance memory. Needs a Part A first.
 
+## EXP-7 result (read the journal for detail)
+
+A feature extractor with no backprop: 1,600 fixed whitened 6x6 patches taken from the first
+10 classes, soft-threshold or triangle encoding, sum-pooled over 4 quadrants (6,400 numbers).
+Memories filled in one pass with no stored images. Same 80-class protocol, exam half, 5 seeds
+(`results/summary.json`). Backprop references are quoted from EXP-6, not rebuilt.
+
+| | All 80 classes | 20 unseen classes, 3 shots | Time per seed |
+|---|---|---|---|
+| Patch features + class means and one shared covariance (LDA, shrinkage 0.01), selected | **55.2** | 8.2 (17.0 with plain means on square-rooted features) | 24 s |
+| Patch features + closed-form ridge classifier | 53.9 | – | similar |
+| Patch features + plain class means (cosine) | 15.4 | 15.8 | 9 s |
+| Retrain, backprop, plain class means (EXP-6) | 53.2 | 38.5 | 202 s |
+| Grow and lock, backprop, R7 (EXP-6) | 39.6 | 29.7 | 131 s |
+| Frozen backprop features (EXP-6) | 33.2 | 25.6 | 26 s |
+
+- CIFAR-10 implementation check: 76.3% (ridge), 76.7% (LDA); Coates et al. 2011 report 77.9%.
+- No forgetting: first group with its own classes only 77.6 to 78.2. Per-group accuracy level.
+- Patches from the first 10 classes are as good as patches from all 80 (53.8 against 53.9).
+  K-means patches +1.0 over random. 400 patches: 47.5. Growing the dictionary gave nothing
+  with class means (not tested with LDA).
+- Smallest shrinkage tried (0.01) was best; smaller not tried.
+- **Not a fair comparison yet**: LDA and ridge were never applied to the backprop features, and
+  retraining was never scored with its own trained output layer. EXP-2's conclusion that the
+  feature extractor is the bottleneck needs re-checking with this memory.
+- Weak at 3 shots. Peak GPU memory 5.5 GB as written (features held on the GPU).
+- Proposed EXP-8: LDA and ridge on frozen, grow-and-lock and retrained backprop features;
+  retraining's own softmax accuracy as the ceiling; patch features rebuilt alongside with
+  smaller shrinkage; 3-shot test for all; time and energy including the tables.
+
 ## Other literature facts worth keeping (from `RESEARCH_GROWING_STRUCTURE.md`)
 
 - Zero-forgetting growth methods mostly need a task hint; no-hint growth methods mostly rely on replay.
@@ -192,5 +223,5 @@ CIFAR-100, 80 classes, exam half, 5 seeds (`results/summary.json`). Open-book ac
 
 ## Open decisions for the owner
 
-1. Go ahead with EXP-7 as proposed in section 17 of `EXP-6-WHAT-LIMITS-THE-EYES/EXP-6-JOURNAL.pdf`, or
+1. Go ahead with EXP-8 as proposed in section 17 of `EXP-7-PATCH-EYES/EXP-7-JOURNAL.pdf`, or
    pick a different next step?

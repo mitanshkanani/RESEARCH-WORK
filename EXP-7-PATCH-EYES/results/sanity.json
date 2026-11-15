@@ -1,0 +1,16 @@
+{
+ "dataset": "cifar10",
+ "detectors": 1600,
+ "train_pictures": 50000,
+ "describe_train_seconds": 18.6,
+ "cos": 0.3527,
+ "sqrt_cos": 0.3988,
+ "lda_g0.01": 0.767,
+ "ridge_g0.01": 0.7632,
+ "lda_g0.1": 0.7318,
+ "ridge_g0.1": 0.7242,
+ "lda_g1.0": 0.6721,
+ "ridge_g1.0": 0.6648,
+ "best_ridge": 0.7632,
+ "passes_70": true
+}

@@ -91,7 +91,13 @@ of any few-shot ability comes from the pretraining rather than from the learning
   Section 17 proposes EXP-7 (feature extractors made of whitened image patches, no backprop).
 - `EXP-7-PATCH-EYES/`: tests a feature extractor made of fixed whitened image patches (no
   backprop, one pass) with class-mean, shared-covariance and ridge memories on the same
-  80-class protocol. Part A written 2026-11-16.
+  80-class protocol. Complete (2026-11-16); journal `EXP-7-JOURNAL.pdf`. Patch features
+  with class means plus one shared covariance (LDA) scored 55.2% on 80 classes with no
+  backprop, one pass and no forgetting, in 24 s, against 53.2% for the retraining reference
+  and 39.6% for grow and lock. With plain class means the same features score 15.4%.
+  Warnings: the references used plain class means (comparison not yet fair), 3-shot accuracy
+  is poor (17.0% against 29.7%), and peak GPU memory was 5.5 GB. Section 17 proposes EXP-8
+  (same memory on every feature extractor, and the true ceiling).
 - `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
   2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that
