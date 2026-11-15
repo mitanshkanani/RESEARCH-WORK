@@ -56,6 +56,27 @@ folder, so check these before assuming a topic isn't covered.
 | PAPER 46.pdf | Lin et al. 2022 — MCUNetV3 ⚠️ *duplicate of PAPER 36* | continual learning (edge) |
 | PAPER 53.pdf | Meem et al. 2026 (IOP NCE) — Energy-aware **spike budgeting** for continual learning in SNNs | continual learning **and** brain-inspired — spans all three |
 
+## Added 2026-11-12 — 14 papers (growing structure, few-shot without forgetting)
+
+arXiv IDs checked against the arXiv API. Discussed in `RESEARCH_GROWING_STRUCTURE.md`.
+
+| File | Folder | Paper |
+|---|---|---|
+| PAPER 54.pdf | 01-continual-learning | Hayes & Kanan — Lifelong Machine Learning with **Deep Streaming LDA** (1909.01520) |
+| PAPER 55.pdf | 01-continual-learning | McDonnell et al. — **RanPAC**: Random Projections and Pre-trained Models for Continual Learning (2307.02251) |
+| PAPER 56.pdf | 01-continual-learning | Prabhu et al. — Random Representations Outperform Online Continually Learned Representations (**RanDumb**, 2402.08823) |
+| PAPER 57.pdf | 01-continual-learning | **FeCAM**: Exploiting the Heterogeneity of Class Distributions in Exemplar-Free Continual Learning (2309.14062) |
+| PAPER 58.pdf | 01-continual-learning | Panos et al. — **First Session Adaptation**: A Strong Replay-Free Baseline for Class-Incremental Learning (2303.13199) |
+| PAPER 59.pdf | 01-continual-learning | Yan et al. — **DER**: Dynamically Expandable Representation for Class Incremental Learning (2103.16788) |
+| PAPER 60.pdf | 01-continual-learning | Class-Incremental Learning: A **Survey** (2302.03648) |
+| PAPER 61.pdf | 01-continual-learning | **SEMA**: Self-Expansion of Pre-trained Models with Mixture of Adapters for Continual Learning (2403.18886) |
+| PAPER 62.pdf | 01-continual-learning | Hersche et al. — Constrained Few-shot Class-incremental Learning (**C-FSCIL**, 2203.16588) |
+| PAPER 63.pdf | 02-brain-inspired-neuro | Shen, Dasgupta & Navlakha — Algorithmic insights on continual learning from **fruit flies** (2107.07617) |
+| PAPER 64.pdf | 02-brain-inspired-neuro | Avoiding Catastrophe: **Active Dendrites** Enable Multi-Task Learning in Dynamic Environments (2201.00042) |
+| PAPER 65.pdf | 02-brain-inspired-neuro | Online Continual Learning on Intel **Loihi 2** via a Co-designed Spiking Neural Network (2511.01553) |
+| PAPER 66.pdf | 02-brain-inspired-neuro | Kemker & Kanan — **FearNet**: Brain-Inspired Model for Incremental Learning (1711.10563) |
+| PAPER 67.pdf | 03-energy-efficiency | **How green is continual learning, really?** Energy consumption in continual training of vision foundation models (2409.18664) |
+
 ---
 
 ## Two things worth knowing

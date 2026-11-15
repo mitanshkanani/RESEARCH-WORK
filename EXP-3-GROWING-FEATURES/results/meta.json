@@ -1,0 +1,33 @@
+{
+ "gpu": "Tesla T4",
+ "torch": "2.11.0+cu130",
+ "on_kaggle": true,
+ "smoke": false,
+ "seeds": 5,
+ "epochs": 30,
+ "batch": 128,
+ "lr": 0.001,
+ "shots": [
+  1,
+  3,
+  10
+ ],
+ "episodes": 20,
+ "configs": {
+  "digits_clothes": {
+   "stages": 2,
+   "per_stage": 10,
+   "start": 32,
+   "add": 32
+  },
+  "cifar100": {
+   "stages": 8,
+   "per_stage": 10,
+   "start": 32,
+   "add": 16
+  }
+ },
+ "power_reported": true,
+ "total_minutes": 157.0,
+ "finished": "2026-11-13 20:58:32"
+}

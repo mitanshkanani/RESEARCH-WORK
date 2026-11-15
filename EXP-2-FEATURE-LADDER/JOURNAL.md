@@ -2,6 +2,28 @@
 
 **Experiment ID:** EXP-2 · **Started:** 2026-11-12 · **Hardware:** RTX 3050 Laptop GPU, 4 GB · **Status:** complete (2026-11-12)
 
+## 0. Why this experiment (added 2026-11-13; the results below are unchanged)
+
+**What came before.** EXP-1 was planned by an earlier assistant in September 2026 (train on
+digits, then on clothes, and study what changed inside the network). It was never run: no code
+was written and it has no readings. So EXP-2 does not build on an EXP-1 result. It builds on a
+reading of published papers done on 2026-11-12 (`RESEARCH_GROWING_STRUCTURE.md`).
+
+**What that reading said.** Think of a learner as two parts: the "eyes" that turn a picture
+into a description, and the "memory" that remembers which description means "dog". Papers show
+that a very simple memory (one average description per class) can add a new class from a few
+pictures without forgetting old ones. In the papers we read, the eyes came from a network that
+had already been trained on other pictures, usually a large one trained on millions of them.
+The project doubts that such a large network should be needed.
+
+**So EXP-2 asks:** if the memory is kept simple, how cheap can the eyes be before learning from
+2-3 pictures stops working? Six kinds of eyes are compared, from no training at all up to a
+large pretrained network.
+
+**What followed.** The answer (sections 5 and 6) was that the memory is fine and the eyes are
+the bottleneck. That led to EXP-3, which tests whether the eyes can keep learning without
+forgetting.
+
 ## 1. Question
 
 A learner that keeps one small memory per class can add a new class from a few examples without
