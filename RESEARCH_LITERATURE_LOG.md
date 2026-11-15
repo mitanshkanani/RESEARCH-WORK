@@ -160,3 +160,41 @@ together), with no stored images and no backprop, when the feature vector grows 
 
 Not opened: Ledoit and Wolf 2004; Mensink et al. (nearest class mean metric learning);
 EFC arXiv:2402.03917 for its covariance handling.
+
+---
+
+## 4. Brain-inspired mechanisms with measured results (2026-11-15)
+
+Question: which brain-inspired mechanisms have real numbers on class-by-class image learning,
+and how do they compare with ordinary methods?
+
+| Paper | Tag | Mechanism | What was measured |
+|---|---|---|---|
+| Shen, Dasgupta, Navlakha, "Algorithmic insights on continual learning from fruit flies", arXiv:2107.07617 | passages | Fixed random expansion to a very wide, sparse code (only a few units active), then a readout where only the links from active units to the correct class are strengthened. One pass, no backprop in that layer, no task hint | CIFAR-100, 25 steps of 4 classes: at least 15 points above the other continual methods tested, 13 below offline. **Inputs were features from an ImageNet-pretrained ResNet-18**, so this measures the memory, not the eyes. Ablation at the end: sparse code plus this readout 0.41; sparse code with an ordinary readout 0.21 |
+| Iyer et al., "Avoiding Catastrophe: Active Dendrites...", arXiv:2201.00042 | passages | Sparse activity (5% active) plus "dendrites" that switch sub-networks on by context | Permuted MNIST only, an easy case. No photos |
+| Masse, Grant, Freedman, context-dependent gating, arXiv:1802.01569 | passages | 80% of units switched off per task | Needs the task to be named at test time. Cannot be used in our setting as is |
+| van de Ven, Siegelmann, Tolias, "Brain-inspired replay", Nature Communications 2020 (PMC7426273) | passages | Replays hidden-layer activity made by a generative model inside the network; nothing stored | CIFAR-100, 10 steps of 10, no task hint: 0.344 average accuracy (with conv layers pre-trained on CIFAR-10). The authors call it the best they know without stored data, and still far below joint training |
+| Tadros et al., "Sleep-like unsupervised replay", Nature Communications 2022 (PMC9755223) | passages | After each task, an offline "sleep" phase with noise input and a local Hebbian rule | CIFAR-10 in 5 steps (pretrained features): 19.0 without, 44.6 with sleep, 72.4 joint |
+| Thapa, Ororbia, Desell, self-organising maps with synthetic replay, arXiv:2508.21240 | passages | Map units keep running statistics and generate replay samples | CIFAR-100 from scratch, 10 steps of 10: 14.4, against 48.1 offline. Strong numbers only with a pretrained encoder |
+| Han et al., SCA-SNN, arXiv:2411.05802 | passages | Spiking network that grows new neurons per task and reuses similar old ones | CIFAR-100, 10 steps, from scratch: 57.1 without task hint, **but with 2,000 stored pictures**. Energy figure is an estimate from operation counts |
+| Hajizada et al., CLP-SNN on Intel Loihi 2, arXiv:2511.01553 | passages | Prototype learner with a local rule; new prototypes allocated for novel inputs | **Only measured energy found**: 0.05 mJ per learning step on the neuromorphic chip against 1.9 to 3.9 mJ for a class-mean learner on a small GPU board. Pretrained frozen backbone; the energy excludes the backbone |
+| Ahmad and Scheinkman, "How Can We Be So Dense?", arXiv:1903.11257 | passages | Sparse networks | Tests noise robustness only. Not evidence about forgetting |
+| Magistri et al., EFC, arXiv:2402.03917 | passages | Ordinary method, used as the reference | CIFAR-100, ResNet-18 from scratch, no stored images, 10 equal steps: 43.6 last-step accuracy; older methods 30 to 35 |
+
+### What this means for us (our reading)
+
+- **No brain-inspired method that was opened beats the best ordinary exemplar-free method** on
+  CIFAR-100 from scratch without a task hint. Where they look strong, the features came from a
+  pretrained network or pictures were stored.
+- The mechanisms with real support all sit in the **memory**, not the eyes: sparse wide codes
+  with a simple readout (fruit fly), prototype learners with local rules. That is the half of
+  our system that already works. EXP-2 tested our own version of the fruit-fly learner and it
+  lost to plain class means in 18 of 18 cases.
+- For reference, our 39.6% on 80 classes is in the same range as the published 43.6% for the
+  best ordinary method on 100 classes in 10 steps, with a network about 30 times smaller. The
+  settings differ, so this is context, not a comparison.
+- Energy has been measured in one paper only, on special hardware, for the memory step only.
+
+Not opened: Draelos et al. "Neurogenesis deep learning"; Dynamically Expandable Networks;
+Growing When Required networks; self-organising incremental neural networks; FearNet;
+differentiable plasticity; HebbCL arXiv:2207.04874.
