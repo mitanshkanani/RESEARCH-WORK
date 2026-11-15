@@ -1,0 +1,39 @@
+{
+ "gpu": "Tesla T4",
+ "torch": "2.11.0+cu130",
+ "on_kaggle": true,
+ "smoke": false,
+ "seeds": 5,
+ "passes": [
+  30,
+  10,
+  3,
+  1
+ ],
+ "ways": [
+  "T0",
+  "T1",
+  "T2",
+  "T3"
+ ],
+ "batch": 128,
+ "lr": 0.001,
+ "stages": 8,
+ "per_stage": 10,
+ "start": 32,
+ "add": 16,
+ "ridge": 0.01,
+ "split_seed": 4321,
+ "shots": [
+  1,
+  3,
+  10
+ ],
+ "episodes": 20,
+ "t3_weight": 1.0,
+ "t3_temp": 0.5,
+ "t3_dim": 64,
+ "power_reported": true,
+ "total_minutes": 215.7,
+ "finished": "2026-11-15 11:11:33"
+}

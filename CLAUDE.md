@@ -79,7 +79,11 @@ of any few-shot ability comes from the pretraining rather than from the learning
   EXP-5 (better features at each stage, R7 fixed).
 - `EXP-5-BETTER-EYES/`: tests whether the units added at each stage can be trained to give
   more general features (three extra training signals, R7 fixed), and how the score falls
-  with fewer passes over the data. Part A written 2026-11-15; not run yet.
+  with fewer passes over the data. Complete (2026-11-15); journal `EXP-5-JOURNAL.pdf`. None
+  of the extra signals improved the features (40.1% against 39.6% without, retrain 53.2%), so
+  the verdict was "does not work". Real forgetting measured under 3 points; one pass over
+  the data gives 16.5% against 39.6% with 30 passes. Section 18 proposes EXP-6 (diagnose
+  what limits the grown features: units per stage, or seeing only 10 classes per stage).
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that
   misread the project (it treated brain-inspired and energy as side issues and steered toward
   benchmark-building). Their sourced facts about papers are still usable as reference. Their

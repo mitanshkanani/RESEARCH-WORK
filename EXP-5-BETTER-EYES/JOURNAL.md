@@ -1,6 +1,6 @@
 # EXP-5 · BETTER EYES
 
-**Experiment ID:** EXP-5 · **Part A written:** 2026-11-15, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** PLANNED, NOT RUN YET
+**Experiment ID:** EXP-5 · **Part A written:** 2026-11-15, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** COMPLETE. Run and Part B added 2026-11-15. Verdict: does not work (section 13); none of the three extra training jobs improved the eyes
 
 This journal has two parts. **Part A** (this part) explains the experiment before it starts.
 **Part B** will be added to the end of this same PDF when the experiment finishes. Part A
@@ -266,14 +266,242 @@ If any of this is wrong, it stays in the journal as written.
 
 <div class="pagebreak"></div>
 
-# Part B: the readings (to be added after the run)
+# Part B: the readings (added after the run, 2026-11-15)
 
-**Not run yet.** When the experiment finishes, this part will be filled in, in the same PDF:
+Part A above was not changed after the run, except the one status line at the top of page 1.
 
-1. What was actually run, and anything that differed from Part A
-2. The readings: tables and figures made from the result files
-3. The verdict, using the rule in section 6
-4. Was the expectation in section 6 right or wrong
-5. What it means for the project
-6. What is still unverified
-7. What the next experiment should be, and why
+## 11. What was actually run
+
+The full plan in section 4 was run once, on a free Kaggle GPU (Tesla T4), as a private job
+named `exp5-better-eyes`. It took **216 minutes** (the plan said 3 to 4 hours). The result
+files were downloaded into `results/`: `runs.jsonl` (1,945 lines), `meta.json` (settings and
+timing), `preds.npz` (every final answer at 30 passes) and `kaggle_run.log`. All 5 seeds
+finished for all four ways at 30, 10, 3 and 1 passes, and the log holds no errors.
+`src/figures.py` turned `runs.jsonl` into `results/summary.json` and the figures.
+**Every number below comes from `results/summary.json` unless another file is named.**
+Numbers are for the exam half, after stage 8, mean of 5 seeds, unless stated.
+
+**Things that differ from Part A, or that Part A left open and the code had to fix:**
+
+| Item | What was done |
+|---|---|
+| Small code check before the run | A 1-pass trial on a tenth of the data was run on the laptop to catch crashes. It borrowed the Python environment and dataset of EXP-2 (read only). Its numbers were thrown away |
+| T1 and T2 | each batch of 128 pictures is altered once, then shown in all four turns (512 pictures per step) |
+| T3 | both altered copies are also used for the class job |
+| Random starts | each way and each number of passes got its own random start; the class order is the same for all of them within a seed |
+| 3-picture surprise test | run after the last stage only, with the same random draws for every way |
+| Energy | Kaggle reported GPU power, so energy was recorded (GPU only) |
+| Frozen eyes and retrain | as before, both are full-size networks (144 units per layer). Grow and lock starts with 32 units |
+
+Nothing in sections 1 to 10 was changed.
+
+## 12. The readings
+
+### 12.1 Step 0: was EXP-4 rebuilt correctly? Yes
+
+| | EXP-4 | EXP-5 rebuild (T0, 30 passes) | Within 3 points? |
+|---|---|---|---|
+| Grow and lock with R7 | 39.5 | 39.6 | yes |
+| Open-book on the same eyes | 41.0 | 40.9 | yes |
+| Frozen eyes | 32.9 | 32.8 | yes |
+| Retrain everything | 52.7 | 53.2 | yes |
+
+### 12.2 The four ways at 30 passes
+
+| Way | All 80 classes (R7) | Open-book, same eyes | 3-picture surprise test | Training time per seed | GPU energy per seed |
+|---|---|---|---|---|---|
+| T0 as before | 39.6 ± 1.0 | 40.9 | 29.6 | 128 s | 1.34 Wh |
+| T1 turned, name the turn | 38.5 ± 0.6 | 40.2 | 29.7 | 484 s | 5.07 Wh |
+| T2 turned, same answer (control) | 34.3 ± 0.6 | 36.1 | 28.8 | 483 s | 5.06 Wh |
+| **T3 two copies agree (selected)** | **40.1 ± 0.6** | 41.3 | 29.8 | 259 s | 2.71 Wh |
+| *Frozen eyes (floor)* | 32.8 | | 25.8 | 24 s | 0.25 Wh |
+| *Retrain everything, once (ceiling)* | 53.2 ± 0.4 | | 38.8 | 191 s | 2.02 Wh |
+
+![Overall score for each way](figures/fig1_ways.svg)
+
+*Figure 1. Coloured bars: the real test with rule R7. Grey bars: open-book on the same eyes.
+All four ways sit near 40%, far under the retrain line. T2 is clearly lower.*
+
+In plain words: **none of the extra jobs made the eyes better.**
+
+- T3 gained 0.6 points over T0, which is inside the spread between seeds, at twice the cost.
+- T1, the one with the best published support, came out 1.1 points *lower* than T0, at
+  almost four times the cost.
+- T2, the control, lost 5.3 points. Showing turned copies and demanding the same answer
+  hurts these small eyes. T1's extra job only repairs that damage.
+- The 3-picture test on never-seen classes, which measures the eyes alone, did not move:
+  29.6, 29.7, 28.8, 29.8. Retrain reaches 38.8.
+
+![Three-picture test on surprise classes](figures/fig4_surprise.svg)
+
+*Figure 2. Learning 20 never-seen classes from 3 pictures each. The four ways are level.*
+
+### 12.3 Selection
+
+On the practice half, all three new ways passed step 3. Their R7 scores were T1 37.5,
+T2 33.0, T3 38.4 (T0 had 38.2). **T3 was selected.**
+
+### 12.4 Is old knowledge really kept? (the new test)
+
+First group, with only its own 10 cards allowed as answers:
+
+| Way | Right after stage 1 | After stage 8 | Drop |
+|---|---|---|---|
+| T0 | 73.4 | 70.8 | 2.6 |
+| T1 | 70.0 | 68.4 | 1.7 |
+| T2 | 67.1 | 64.0 | 3.1 |
+| T3 | 71.2 | 68.4 | 2.8 |
+
+![First group over time](figures/fig3_first_group.svg)
+
+*Figure 3. Solid lines: the first group with only its own cards allowed. They stay almost
+flat. Dashed lines: the same group among all classes so far. They fall from about 72% to
+about 38%.*
+
+So the system has **not** forgotten how to tell the first 10 classes apart: it loses under
+3 points in seven more stages. (The locked units do not change at all; the small loss comes
+from R7's guessed additions to the old cards.) The large fall of the first group among all
+classes, from 73.4% to 39.0% for T0, is caused by 70 new rivals, not by forgetting. For
+comparison, retrain scores 80.4% on this own-cards test and 55.6% among all classes, so
+its eyes are better even for the first group.
+
+### 12.5 Fewer passes (side reading, no verdict)
+
+All 80 classes, R7 for grow and lock:
+
+| Passes per stage | T0 | T1 | T2 | T3 | Retrain everything | T0 as a share of retrain | T0 training time | T0 energy |
+|---|---|---|---|---|---|---|---|---|
+| 30 | 39.6 | 38.5 | 34.3 | 40.1 | 53.2 | 74% | 128 s | 1.34 Wh |
+| 10 | 33.1 | 31.8 | 28.3 | 32.9 | 48.2 | 69% | 43 s | 0.45 Wh |
+| 3 | 23.1 | 22.3 | 21.5 | 22.6 | 38.6 | 60% | 13 s | 0.13 Wh |
+| 1 | 16.5 | 16.4 | 15.8 | 16.6 | 26.1 | 63% | 4 s | 0.03 Wh |
+
+![Score against number of passes](figures/fig2_passes.svg)
+
+*Figure 4. Every method falls steeply with fewer passes. The extra jobs do not help at any
+number of passes.*
+
+- Going from 30 passes to 1 pass costs grow and lock 23 points (39.6 to 16.5) and retrain
+  27 points (53.2 to 26.1). Looking once is far from enough for these eyes.
+- 10 passes keeps 33.1% for a third of the time and energy. That is about level with
+  frozen eyes (32.8%), which trained for 24 s.
+- T1 and T2 see every picture four times per pass (turned), and still do not beat T0 at 1 pass.
+
+### 12.6 Cost
+
+![Cost of each way](figures/fig5_cost.svg)
+
+*Figure 5. Training time and GPU energy per seed for all 8 stages at 30 passes, and for one
+retraining on all 80 classes.*
+
+Peak GPU memory was 0.9 GB for T0 and 2.0 GB for T1, inside the laptop's 4 GB.
+"Retrain once" is one training at the very end. Retraining after every stage was not
+repeated here; in EXP-3 it took 924 s and 9.69 Wh per seed.
+
+The score per group is in `figures/fig6_per_group.svg`.
+
+## 13. The verdict, by the rule written in section 6
+
+Selected way T3, exam half, 30 passes:
+
+| Step | Reading | Result |
+|---|---|---|
+| 0. Rebuild check | 39.6, 40.9, 32.8, 53.2 against 39.5, 41.0, 32.9, 52.7 | passed |
+| 1. Did the eyes get better? | open-book 41.3 against 40.9: **+0.5 points** (2 needed) | **no** |
+| 2. Share of the gap closed | (40.1 − 39.6) ÷ (53.2 − 39.6) = **4%** | under 25% |
+| 3. Old knowledge kept | first group, own cards: 71.2 to 68.4, a drop of 2.8 (3 allowed) | passed |
+
+**Verdict: does not work.** Giving the new units an extra job did not improve the eyes.
+The control clause in section 6 does not apply, because T1 was not selected.
+
+## 14. Was the expectation in section 6 right?
+
+| What I wrote before the run | What happened | |
+|---|---|---|
+| T1 will be selected | T3 was selected; T1 was below T0 | wrong |
+| Open-book rises to about 45% | 41.3% | wrong |
+| R7 score rises to about 43%, "partly works" | 40.1%, "does not work" | wrong |
+| T2 within 2 points of T0 | 5.3 points lower | wrong |
+| T3 gains about 1 point | +0.6 | right |
+| Step 3 passes | drop of 2.8, limit 3 | right, narrowly |
+| Surprise test rises to about 33% for T1 | 29.7% | wrong |
+| T0 with fewer passes: 35% / 27% / 18% | 33.1% / 23.1% / 16.5% | roughly right, a little optimistic |
+| Extra jobs will not rescue the 1-pass case | they did not | right |
+
+The warning from the one paper that tested a small first group turned out to be the right
+guide; my main prediction leaned on the papers with a large first group.
+
+## 15. What it means for the project
+
+**1. "Give the new units a richer job" is not the fix.** Two different extra jobs, one
+image-specific and one that would carry to language, left the eyes where they were. The
+idea that the new units fail because their job is too narrow is not supported, at least
+for jobs of this kind on a network this small.
+
+**2. The new old-knowledge test does its work.** It shows clearly what EXP-3 and EXP-4
+could not separate: real forgetting under grow and lock with R7 is under 3 points in seven
+stages. Everything else that old classes lose is rivalry from new classes.
+
+**3. The gap to retraining is the same size at every amount of training.** Grow and lock
+reaches 60 to 74% of retrain's score at 1, 3, 10 and 30 passes. So the gap is not about
+training longer either.
+
+**4. A clue about size.** Trained on the same first 10 classes for 30 passes, a 144-unit
+network tells them apart 79.8% of the time (frozen eyes, own cards), and grow and lock's
+32-unit start 73.4%. Bigger eyes are better eyes here. Grow and lock adds only 16 units per
+stage. This is a reading of two existing numbers, not a test.
+
+**5. On looking once.** These eyes need many looks: one pass gives 16.5%. The cheap part of
+the system (writing a card from a few pictures) is still cheap, but building eyes from
+scratch is not, with this kind of training.
+
+**6. Cost so far.** Grow and lock (T0) costs 128 s and 1.34 Wh for all 8 stages. That is
+less than one single retraining at the end (191 s, 2.02 Wh) and far less than retraining
+after every stage (924 s, 9.69 Wh in EXP-3). The price is 13.6 points of accuracy.
+
+## 16. What is still unverified
+
+- T3's settings (weight 1.0, temperature 0.5) were fixed once and not tuned. A tuned
+  version might do better; this run cannot say.
+- Only two kinds of extra job were tried. Other kinds exist.
+- The ceiling was not retrained with the extra jobs.
+- The size clue in point 4 of section 15 compares two networks that differ in size only at
+  stage 1; it was not tested as a cause.
+- Why the eyes of grow and lock stay 12 points under retrain (40.9 open-book against 53.2)
+  is still not known. Three candidates, none tested: each stage's units see only 10
+  classes; only 16 units are added per stage; locked units cannot improve.
+- The published papers were read as passages by reading assistants, not cover to cover.
+- One network size, one photo dataset, 5 seeds, images only.
+- Energy is GPU-only, measured on a Kaggle T4, not on the laptop.
+
+## 17. What carries over beyond pictures
+
+Nothing new that works. The image-free extra job (T3) gave no gain, so there is nothing to
+carry. The own-cards test for forgetting and the passes measurement are not tied to
+pictures and can be reused as they are.
+
+## 18. What the next experiment should be, and why
+
+**Proposed EXP-6: find out what holds the eyes back, before trying another fix.**
+
+Why: EXP-5 tried a fix for a cause that was only guessed, and the guess was wrong. Three
+candidate causes remain (section 16). Each can be switched off on its own, using old
+pictures where needed. That is forbidden in the real test, but allowed as a diagnosis, like
+the open-book check.
+
+What it should contain, all with grow and lock and R7, 30 passes:
+
+1. **As now** (T0): 16 new units per stage, trained on the 10 new classes.
+2. **More units**: 48 new units per stage instead of 16. Tests whether size is the limit.
+3. **All data, diagnosis only**: the new units of each stage are trained on all classes so
+   far, with old units still locked. Tests whether seeing only 10 classes is the limit.
+4. **Both** 2 and 3 together.
+5. Retrain at the matching network size, as the ceiling for each.
+
+Reading: whichever switch moves the open-book score and the 3-picture surprise test toward
+retrain names the bottleneck. If "more units" does it, the fix is cheap and allowed. If
+only "all data" does it, the project needs a way to give new units a view of old knowledge
+without old pictures, and that becomes EXP-7. If neither does it, locking itself is the
+limit and grow and lock needs rethinking.
+
+This is a proposal. It needs its own Part A before any code is run.

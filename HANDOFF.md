@@ -21,6 +21,7 @@ researched both ways.
 | EXP-1 | `EXP-1-CATASTROPHIC-FORGETTING/` | a design only, written by the earlier agent. Never run: no code, no results. Its plain "train A, then B" baseline is reused inside EXP-3 |
 | EXP-3 (growing features) | `EXP-3-GROWING-FEATURES/` | complete (2026-11-15). Run on a private Kaggle GPU job (Tesla T4, 157 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-3-JOURNAL.pdf` has Part A and Part B (14 pages). Verdict by the pre-written rule: **does not work on photos**. Not committed |
 | EXP-4 (fair cards) | `EXP-4-FAIR-CARDS/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 64 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds_*.npz`. Journal `EXP-4-JOURNAL.pdf` has Part A and Part B (15 pages). Verdict by the pre-written rule: **does not work on photos**; cause confirmed |
+| EXP-5 (better eyes) | `EXP-5-BETTER-EYES/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 216 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds.npz`. Journal `EXP-5-JOURNAL.pdf` has Part A and Part B (15 pages). Verdict by the pre-written rule: **does not work** |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
 Everything is on `main`; the owner wants no other branches (2026-11-15). `01-continual-learning/PAPER 4.PDF`
@@ -115,6 +116,34 @@ CIFAR-100, after stage 8, exam half, 5 seeds (`results/summary.json`):
   label-free signal), and replace step 3 with a test that separates forgetting from stronger
   rivals. Needs a literature pass by a subagent and a Part A first.
 
+## EXP-5 result (read the journal for detail)
+
+Grow and lock with R7 fixed; four ways of training the units added at each stage; each run at
+30, 10, 3 and 1 passes. CIFAR-100, after stage 8, exam half, 5 seeds (`results/summary.json`):
+
+| Way (30 passes) | All 80 classes (R7) | Open-book | 20 unseen classes, 3 shots | Time / energy per seed |
+|---|---|---|---|---|
+| T0 cross-entropy on the stage's 10 classes | 39.6 | 40.9 | 29.6 | 128 s / 1.34 Wh |
+| T1 rotation as extra classes | 38.5 | 40.2 | 29.7 | 484 s / 5.07 Wh |
+| T2 rotated copies, same label (control) | 34.3 | 36.1 | 28.8 | 483 s / 5.06 Wh |
+| T3 cross-entropy + two-view contrastive (selected) | 40.1 | 41.3 | 29.8 | 259 s / 2.71 Wh |
+| Frozen | 32.8 | | 25.8 | 24 s / 0.25 Wh |
+| Retrain once | 53.2 | | 38.8 | 191 s / 2.02 Wh |
+
+- Verdict "does not work": the selected way closed 4% of the gap to retrain; open-book rose 0.5.
+- New forgetting test (first group scored with only its own 10 prototypes allowed): 73.4 to 70.8
+  for T0 over seven stages. The fall of the first group among all classes (73 to 39) is rivalry.
+- Passes, T0 with R7 / retrain: 30: 39.6 / 53.2; 10: 33.1 / 48.2; 3: 23.1 / 38.6; 1: 16.5 / 26.1.
+- Literature (passages read by subagents, not full papers): R7 is known as drift compensation
+  (LDC arXiv:2407.08536; a ridge fill-in for growing features in DGASA, PLoS ONE 2026; EASE
+  arXiv:2403.12030). Rotation self-supervision is reported to help with a large first task
+  (PASS++ arXiv:2407.14029) and not in cold start (EFC arXiv:2402.03917).
+- Why grown features stay about 12 points under retrain is unknown. Candidates: 10 classes per
+  stage, 16 units per stage, locking.
+- Proposed EXP-6: diagnostic. Grow and lock with (a) 48 units per stage, (b) new units trained
+  on all classes so far (old data, diagnosis only), (c) both; see which moves open-book and the
+  3-shot test. Needs a Part A first.
+
 ## Other literature facts worth keeping (from `RESEARCH_GROWING_STRUCTURE.md`)
 
 - Zero-forgetting growth methods mostly need a task hint; no-hint growth methods mostly rely on replay.
@@ -137,5 +166,5 @@ CIFAR-100, after stage 8, exam half, 5 seeds (`results/summary.json`):
 
 ## Open decisions for the owner
 
-1. Go ahead with EXP-5 as proposed in section 18 of `EXP-4-FAIR-CARDS/EXP-4-JOURNAL.pdf`, or
+1. Go ahead with EXP-6 as proposed in section 18 of `EXP-5-BETTER-EYES/EXP-5-JOURNAL.pdf`, or
    pick a different next step?
