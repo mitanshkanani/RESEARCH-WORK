@@ -89,6 +89,9 @@ of any few-shot ability comes from the pretraining rather than from the learning
   `EXP-6-JOURNAL.pdf`. Locking and building in steps is the main cause (78% of the 12-point
   gap), narrow data is minor (22%), and doubling the units leaves the gap unchanged.
   Section 17 proposes EXP-7 (feature extractors made of whitened image patches, no backprop).
+- `EXP-7-PATCH-EYES/`: tests a feature extractor made of fixed whitened image patches (no
+  backprop, one pass) with class-mean, shared-covariance and ridge memories on the same
+  80-class protocol. Part A written 2026-11-16.
 - `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
   2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that
