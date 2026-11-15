@@ -84,6 +84,8 @@ of any few-shot ability comes from the pretraining rather than from the learning
   the verdict was "does not work". Real forgetting measured under 3 points; one pass over
   the data gives 16.5% against 39.6% with 30 passes. Section 18 proposes EXP-6 (diagnose
   what limits the grown features: units per stage, or seeing only 10 classes per stage).
+- `EXP-6-WHAT-LIMITS-THE-EYES/`: a diagnosis of why grown features stay under retraining:
+  narrow data per stage, too few units per stage, or locking. Part A written 2026-11-15.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that
   misread the project (it treated brain-inspired and energy as side issues and steered toward
   benchmark-building). Their sourced facts about papers are still usable as reference. Their
