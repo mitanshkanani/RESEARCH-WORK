@@ -1,0 +1,13 @@
+{
+  "id": "mitanshkanani/exp4-fair-cards",
+  "title": "exp4-fair-cards",
+  "code_file": "exp4.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}

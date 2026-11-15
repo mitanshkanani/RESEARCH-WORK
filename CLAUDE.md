@@ -70,6 +70,13 @@ of any few-shot ability comes from the pretraining rather than from the learning
   Complete (2026-11-15); journal `EXP-3-JOURNAL.pdf`. Old classes were kept and the features
   improved a little, but overall accuracy on photos fell below frozen features, so the verdict
   by its own rule was "does not work". Section 18 of the journal proposes EXP-4.
+- `EXP-4-FAIR-CARDS/`: tests eight ways of comparing a picture with class prototypes of
+  different sizes on the EXP-3 network, without old examples. Complete (2026-11-15); journal
+  `EXP-4-JOURNAL.pdf`. The suspected cause was confirmed (84% of cross-group errors went to
+  older classes). One rule (R7, filling in the missing part of old prototypes by regression)
+  reached 39.5% against 32.9% frozen and 41.0% open-book, but dropped the first group by 17
+  points, so the verdict by the written rule was again "does not work". Section 18 proposes
+  EXP-5 (better features at each stage, R7 fixed).
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that
   misread the project (it treated brain-inspired and energy as side issues and steered toward
   benchmark-building). Their sourced facts about papers are still usable as reference. Their

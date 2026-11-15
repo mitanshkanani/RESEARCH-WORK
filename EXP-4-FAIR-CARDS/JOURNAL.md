@@ -1,6 +1,6 @@
 # EXP-4 · FAIR CARDS
 
-**Experiment ID:** EXP-4 · **Part A written:** 2026-11-15, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** PLANNED, NOT RUN YET
+**Experiment ID:** EXP-4 · **Part A written:** 2026-11-15, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** COMPLETE. Run and Part B added 2026-11-15. Verdict: does not work on photos by the written rule (section 14); cause confirmed; one rule (R7) reaches 39.5% but fails the old-knowledge check
 
 This journal has two parts. **Part A** (this part) explains the experiment before it starts.
 **Part B** will be added to the end of this same PDF when the experiment finishes. Part A
@@ -256,14 +256,270 @@ for language is a design question for a later experiment.
 
 <div class="pagebreak"></div>
 
-# Part B: the readings (to be added after the run)
+# Part B: the readings (added after the run, 2026-11-15)
 
-**Not run yet.** When the experiment finishes, this part will be filled in, in the same PDF:
+Part A above was not changed after the run, except the one status line at the top of page 1.
 
-1. What was actually run, and anything that differed from Part A
-2. The readings: tables and figures made from the result files
-3. The verdict, using the rule in section 6
-4. Was the expectation in section 6 right or wrong
-5. What it means for the project
-6. What is still unverified
-7. What the next experiment should be, and why
+## 11. What was actually run
+
+The full plan in section 4 was run once, on a free Kaggle GPU (Tesla T4), as a private job
+named `exp4-fair-cards`. It took **64 minutes**. The result files were downloaded into
+`results/`: `runs.jsonl` (510 lines, one per dataset, seed, way, rule and stage), `meta.json`
+(settings and timing), `preds_cifar100.npz` and `preds_digits_clothes.npz` (every final answer
+of every rule), and `kaggle_run.log`. All 5 seeds finished on both datasets and the log holds
+no errors. `src/figures.py` turned `runs.jsonl` into `results/summary.json` and the figures.
+**Every number below comes from `results/summary.json` unless another file is named.**
+
+**Things that differ from Part A, or that Part A left open and the code had to fix:**
+
+| Item | What was done |
+|---|---|
+| Small code check before the run | A 1-epoch trial was run on the laptop to catch crashes. It borrowed the Python environment and the datasets of EXP-2 (read only). Its numbers were thrown away |
+| R6, smallest allowed spread | 0.1 (`var_floor` in `meta.json`) |
+| R7, strength of the fill-in fit | ridge 0.01 (`ridge` in `meta.json`). The fill-in is fitted on un-normalised card averages |
+| Practice half and exam half | split per class with a fixed seed, 4321 |
+| R4 and R5 "stranger" scores | measured on training pictures without the random crop and flip |
+| Step 1 | computed on the exam half; the full-test figure is given next to it |
+| Rule selection on digits, then clothes | Part A defined selection on the photos run only. For the easy pair the same procedure was applied to its own practice half |
+| Frozen eyes | as in EXP-3, this is a full-size network trained on the first group only. That is why it scores a little higher than grow and lock at stage 1, where grow and lock is still small (figure 4) |
+| Figures | after seeing the first drawings, the rule with the highest score (R7) was added to figures 2 and 4 next to the rule selected by the written procedure. No number changed |
+
+Nothing in sections 1 to 10 was changed.
+
+## 12. The readings on photos
+
+### 12.1 Step 0: was EXP-3 rebuilt correctly? Yes
+
+Full test set, all 80 classes, after stage 8, mean of 5 seeds:
+
+| | EXP-3 | EXP-4 rebuild | Within 3 points? |
+|---|---|---|---|
+| Grow and lock, rule R0 | 29.9 | 29.7 | yes |
+| Frozen eyes | 32.3 | 32.4 | yes |
+| Retrain everything | 52.6 | 52.2 | yes |
+| Open-book cards on the grown eyes | 40.4 | 40.5 | (not part of the rule) |
+
+### 12.2 Step 1: is the suspected cause real? Yes
+
+Under the EXP-3 rule (R0), of the wrong answers that landed in a different group than the
+true class, **84.2% went to an older group** (exam half; 84.2% on the full test too). The
+rule in section 6 says 65% or more means "cause confirmed". For comparison, frozen eyes send
+55.7% to older groups and open-book cards 54.1%, so the natural level here is about 55%, not
+exactly 50%.
+
+In plain words: in EXP-3 the short old cards really did win too often. A photo of a new
+class was usually mistaken for an old class, not the other way round.
+
+![Where the wrong answers go, photos](figures/fig3_wrong_answers_photos.svg)
+
+*Figure 1. Each bar is one rule. Orange = wrong answers that went to an older class, blue =
+to a newer class. R0, R2 and R6 lean heavily to old classes. R1 leans the other way. R3, R4,
+R5 and R7 are balanced, like open-book.*
+
+### 12.3 All eight rules
+
+Exam half, after stage 8, mean of 5 seeds (± is the spread between seeds):
+
+| Rule | All 80 classes | First group | Wrong answers going to older groups | Passed step 3 on the practice half? |
+|---|---|---|---|---|
+| R0 as in EXP-3 | 30.4 ± 1.7 | 60.8 | 84% | yes |
+| R1 blank fill | 12.2 ± 0.7 | 0.0 | 0.3% | no |
+| R2 group-centred | 21.9 ± 2.5 | 68.3 | 93% | yes |
+| R3 group-standardised | 23.4 ± 0.8 | 23.4 | 49% | no |
+| R4 stranger (running) | 31.0 ± 1.5 | 33.0 | 49% | no |
+| R5 stranger (same crowd) | 28.7 ± 2.7 | 31.8 | 52% | no |
+| R6 spread-aware | 21.7 ± 1.4 | 65.6 | 93% | yes |
+| **R7 predicted fill-in** | **39.5 ± 0.8** | 39.5 | 50% | **no** |
+| *Frozen eyes (floor)* | 32.9 ± 0.5 | 56.2 | 56% | |
+| *Open-book, same eyes (not allowed)* | 41.0 ± 0.3 | 47.0 | 54% | |
+| *Retrain everything (ceiling)* | 52.7 ± 0.4 | 54.3 | 50% | |
+
+![Overall score of each rule, photos](figures/fig1_rules_photos.svg)
+
+*Figure 2. Height = accuracy on all 80 classes. R7 is far above every other rule and close
+to the open-book line, which is the most any card rule could reach with these eyes.*
+
+Three things stand out.
+
+1. **R7 (predicted fill-in) reaches 39.5%.** That is 9.1 points above the EXP-3 rule, 6.5
+   points above frozen eyes, and only 1.6 points under open-book (41.0%). It does this
+   without keeping one old picture. Of the 10.7 points that EXP-3 lost to the unfair
+   comparison (41.0 − 30.4), R7 wins back 9.1, which is **85%**.
+2. **R7 pays for it on the first group.** The first group falls to 39.5%, against 56.2% for
+   frozen eyes. That is 16.7 points lower, and step 3 allows only 5.
+3. **The two "stranger" rules (R4, R5), which I expected to win, changed almost nothing
+   overall** (31.0 and 28.7 against 30.4). They removed the bias but did not raise the score.
+
+![Score per group, oldest to newest, photos](figures/fig2_per_group_photos.svg)
+
+*Figure 3. Under R0 (orange) the oldest group scores 61% and the newest 13%. Under R7 (green)
+all groups sit between 35% and 45%, almost on top of the open-book line (dashed).*
+
+![Overall score after each stage, photos](figures/fig4_over_time_photos.svg)
+
+*Figure 4. R7 (green) stays above frozen eyes (blue) from stage 3 onwards and follows the
+open-book line closely.*
+
+### 12.4 Which rule did the written procedure select?
+
+Section 4 said: on the practice half, drop every rule that fails step 3, then take the
+highest score among those left. On the practice half only R0, R2 and R6 kept the first
+group within 5 points of frozen eyes (54.9%). Their practice scores were 29.1, 20.9 and
+20.7. **So the procedure selected R0, the unchanged EXP-3 rule.** R7 had the highest
+practice score (38.1) but was dropped because its first group was 37.6%.
+
+### 12.5 Cost
+
+| | Photos | Digits, then clothes |
+|---|---|---|
+| Training, grow and lock, all stages, per seed | 122 s | 137 s |
+| Training, frozen eyes, per seed | 23 s | 88 s |
+| Training, retrain on everything once, per seed | 181 s | 176 s |
+| Writing all cards and extras for all eight rules | 1.8 s | 0.8 s |
+| Scoring the whole test set with R0 | 10.4 ms | 4.3 ms |
+| Scoring the whole test set with R7 | 7.4 ms | 3.2 ms |
+| Scoring the whole test set with R6 (slowest) | 41.8 ms | 7.6 ms |
+
+All on the Kaggle T4. R7 adds no cost when answering: once the old cards are filled in, it
+is a plain comparison. Energy was not measured in this experiment.
+
+## 13. The readings on digits, then clothes
+
+Exam half, after both stages, mean of 5 seeds:
+
+| | All 20 classes | Digits (first group) |
+|---|---|---|
+| Frozen eyes (floor) | 82.3 | 98.9 |
+| R0 as in EXP-3 | 89.1 | 99.1 |
+| **R6 spread-aware (selected)** | **91.5** | 97.6 |
+| R7 predicted fill-in | 91.5 | 97.3 |
+| Open-book, same eyes | 92.9 | 98.9 |
+| Retrain everything (ceiling) | 94.0 | 99.1 |
+
+Here six of the eight rules passed step 3 on the practice half, and R6 was selected (91.64
+against 91.63 for R7, a tie in practice). On the exam half it closes **79% of the gap**
+between frozen and retrain and keeps the digits within 1.3 points. By the same rule the
+verdict on this easier pair is **"works"**. Under R0, 98.4% of cross-group wrong answers
+went to the older group, so the same bias was present here too.
+
+![Overall score of each rule, digits then clothes](figures/fig1_rules_digits_clothes.svg)
+
+*Figure 5. On the easy pair, R6 and R7 both sit just under the open-book line.*
+
+Figures for the per-group scores and wrong answers of this pair are in `figures/`
+(`fig2_per_group_digits_clothes.svg`, `fig3_wrong_answers_digits_clothes.svg`).
+
+## 14. The verdict, by the rule written in section 6
+
+Photos, exam half, selected rule R0:
+
+| Step | Reading | Result |
+|---|---|---|
+| 0. Rebuild check | 29.7, 32.4, 52.2 against 29.9, 32.3, 52.6 | passed |
+| 1. Cause | 84.2% of cross-group wrong answers go to older groups | **cause confirmed** |
+| 2. Share of the gap closed | (30.4 − 32.9) ÷ (52.7 − 32.9) = **−13%** | under 25% |
+| 3. First group kept | 60.8 against 56.2 for frozen | passed |
+| Beats frozen eyes at all? | 30.4 against 32.9 | no |
+
+**Verdict: does not work on photos.** The cause was confirmed, but no rule both fixed the
+unfair comparison and kept the first group within 5 points of frozen eyes.
+
+For the record, and not as the verdict: if R7 had been allowed, it would have closed
+(39.5 − 32.9) ÷ (52.7 − 32.9) = **33%** of the gap, which is the "partly works" band. It
+failed step 3, so by the written rule it does not count.
+
+## 15. Was the expectation in section 6 right?
+
+| What I wrote before the run | What happened | |
+|---|---|---|
+| Cause confirmed, 75% or more to older groups | 84.2% | right |
+| Selected rule will be R4 or R5 | R0 was selected; R4 and R5 failed step 3 and barely moved the score | wrong |
+| About 36% on all 80 classes | selected rule 30.4%; best rule (R7) 39.5% | wrong both ways |
+| Verdict "does not work", by a small margin, while beating frozen | "does not work", and the selected rule does not beat frozen | verdict right, reason wrong |
+| R1 will favour the newest classes | 95% of its wrong answers go to newer classes; first group 0.0% | right |
+
+I also wrote "no rule can add information the card never had". R7 shows that a good part of
+the missing information can be guessed from the old units, so that sentence was too
+pessimistic.
+
+## 16. What it means for the project
+
+**1. The comparison problem is mostly solved, and cheaply.** A short old card can be
+completed by guessing its missing part from the part it has. No old pictures are needed,
+the fitting takes under 2 seconds for all stages, and answering costs nothing extra. With
+this, cards on grown eyes score 39.5%, close to the 41.0% that cards could reach if old
+pictures were allowed.
+
+**2. Part of EXP-3's "old knowledge kept" was an illusion.** EXP-3 reported 60.4% on the
+first group and called it kept. The locked units really did not change. But the 60% was
+helped by the same unfair comparison: old cards won too often, which props up old classes
+and hurts new ones. Once the comparison is fair, the first group scores 39 to 47% on these
+eyes (R7 and open-book). This is my reading of the numbers; the experiment did not test it
+separately.
+
+**3. Step 3 turned out stricter than I understood when I wrote it.** Even the open-book
+cards, which use every old picture, land 9 points under frozen eyes on the first group
+(47.0 against 56.2). So on these eyes no fair rule could have passed. Frozen eyes get 56%
+on the first group partly because their other 70 classes are weak rivals. The rule stays as
+written and the verdict stands. The next experiment needs a test of "old knowledge kept"
+that separates real forgetting from simply having stronger rivals.
+
+**4. The remaining gap is in the eyes, not the cards.** Retrain reaches 52.7%; the best any
+card rule can do on grown eyes is 41.0%. Those 11.7 points cannot be won by a better
+comparison. The likely reason, not tested here: units added at a stage are trained only to
+tell that stage's 10 classes apart. Nothing ever teaches them to tell a new class from an
+old one, because old pictures are gone.
+
+**5. What carries beyond pictures.** R7 works on lists of numbers only. It does not know
+they came from pictures: it learns how new units follow from old units and uses that to
+bring old knowledge up to date. The same step would apply to any model whose stored
+knowledge is a vector written at an earlier, smaller size. Whether it holds for language is
+untested.
+
+## 17. What is still unverified
+
+- **No literature search was done for the eight rules.** Ideas like R7 (bringing old
+  class averages up to date after the features change) may well exist in published work
+  under other names. Nothing is cited here because nothing was opened.
+- R7's settings (ridge 0.01, fitted on the current stage's pictures only) were fixed once
+  and not tuned. Other settings may be better or worse.
+- The reading in point 2 of section 16 (the first-group score in EXP-3 was inflated) is an
+  interpretation of the per-group numbers, not a separate test.
+- The reason given in point 4 (new units never learn old-against-new) is a guess.
+- One network size, one growth size (16 units per stage), one photo dataset, 5 seeds.
+- Rule selection on digits-then-clothes was a tie between R6 and R7 (91.64 against 91.63
+  on the practice half).
+- Energy was not measured. Timings are from a Kaggle T4, not the laptop.
+- Images only.
+
+## 18. What the next experiment should be, and why
+
+**Proposed EXP-5: better eyes at each stage, with R7 as the fixed card rule.**
+
+Why: EXP-4 shows the card comparison is now within 1.6 points of its ceiling (39.5 against
+41.0), while the ceiling itself is 11.7 points under retraining (41.0 against 52.7). The
+next gain has to come from what the newly added units learn.
+
+Question: can the units added at each stage be trained so that they are useful beyond that
+stage's 10 classes, still without old pictures and without touching locked units?
+
+What it should contain:
+
+1. Keep grow and lock, and keep R7 as the one card rule (no more rule search).
+2. Change only how the new units are trained. First candidate: besides the usual "tell
+   these 10 classes apart" signal, add a signal that needs no labels (two altered copies of
+   the same picture should get similar features), so the new units learn general shapes
+   and not only this stage's classes. EXP-2 found that a label-free signal alone gave weak
+   features on photos (9.7% against 16.6% with labels), so this is tested as an addition,
+   not a replacement.
+3. Measure the open-book score (the ceiling for cards on those eyes) and the R7 score. The
+   aim is to move the 41.0 upward toward 52.7.
+4. Replace step 3 with a test that separates forgetting from rivalry: score the first
+   group with only the first group's 10 cards allowed as answers. With locked units that
+   number should stay the same at every stage; report the all-classes first-group score
+   next to it and compare it with retrain (54.3), not with frozen.
+5. Before designing it, have a subagent read what is published on updating stored class
+   averages after features change, and on label-free signals in class-by-class learning,
+   so EXP-5 does not repeat known work.
+
+This is a proposal. It needs its own Part A before any code is run.

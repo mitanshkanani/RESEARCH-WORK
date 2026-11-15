@@ -1,0 +1,39 @@
+{
+ "gpu": "Tesla T4",
+ "torch": "2.11.0+cu130",
+ "on_kaggle": true,
+ "smoke": false,
+ "seeds": 5,
+ "epochs": 30,
+ "batch": 128,
+ "lr": 0.001,
+ "rules": [
+  "R0",
+  "R1",
+  "R2",
+  "R3",
+  "R4",
+  "R5",
+  "R6",
+  "R7"
+ ],
+ "var_floor": 0.1,
+ "ridge": 0.01,
+ "split_seed": 4321,
+ "configs": {
+  "digits_clothes": {
+   "stages": 2,
+   "per_stage": 10,
+   "start": 32,
+   "add": 32
+  },
+  "cifar100": {
+   "stages": 8,
+   "per_stage": 10,
+   "start": 32,
+   "add": 16
+  }
+ },
+ "total_minutes": 64.0,
+ "finished": "2026-11-15 05:53:49"
+}

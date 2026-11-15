@@ -1,4 +1,4 @@
-# Handoff: state of the project on 2026-11-13
+# Handoff: state of the project on 2026-11-15
 
 Read `CLAUDE.md` first (project goal and working rules). This file says where things stand.
 
@@ -20,6 +20,7 @@ researched both ways.
 | EXP-2 (feature ladder) | `EXP-2-FEATURE-LADDER/` | complete. Pushed to GitHub branch `exp-2-feature-ladder` (commit 88ceeb5). PDF journal: `EXP-2-JOURNAL.pdf` |
 | EXP-1 | `EXP-1-CATASTROPHIC-FORGETTING/` | a design only, written by the earlier agent. Never run: no code, no results. Its plain "train A, then B" baseline is reused inside EXP-3 |
 | EXP-3 (growing features) | `EXP-3-GROWING-FEATURES/` | complete (2026-11-15). Run on a private Kaggle GPU job (Tesla T4, 157 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-3-JOURNAL.pdf` has Part A and Part B (14 pages). Verdict by the pre-written rule: **does not work on photos**. Not committed |
+| EXP-4 (fair cards) | `EXP-4-FAIR-CARDS/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 64 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds_*.npz`. Journal `EXP-4-JOURNAL.pdf` has Part A and Part B (15 pages). Verdict by the pre-written rule: **does not work on photos**; cause confirmed. Branch `exp-4-fair-cards` |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
 The local repo is on branch `exp-2-feature-ladder`, not `main`. `01-continual-learning/PAPER 4.PDF`
@@ -84,6 +85,36 @@ examples, no task hint, nearest-class-mean memory. CIFAR-100, 8 stages, 5 seeds,
 - Proposed EXP-4: make prototypes of different sizes compete fairly without old examples, and log
   the confusions so the cause is checked directly. Not designed yet; needs a Part A first.
 
+## EXP-4 result (read the journal for detail)
+
+Same grown network as EXP-3, eight rules for comparing a picture with prototypes of different
+sizes, no old examples. Rule picked on a practice half of the test set, judged on the exam half.
+CIFAR-100, after stage 8, exam half, 5 seeds (`results/summary.json`):
+
+| | All 80 classes | First group | Cross-group errors going to older groups |
+|---|---|---|---|
+| Frozen (floor) | 32.9 | 56.2 | 56% |
+| R0, the EXP-3 rule (selected by the written procedure) | 30.4 | 60.8 | 84% |
+| R4 stranger-calibrated | 31.0 | 33.0 | 49% |
+| R7 predicted fill-in (best score, failed step 3) | 39.5 | 39.5 | 50% |
+| Open-book prototypes, same network (not allowed) | 41.0 | 47.0 | 54% |
+| Retrain (ceiling) | 52.7 | 54.3 | 50% |
+
+- Cause confirmed: under R0, 84.2% of cross-group errors went to older classes.
+- R7 (ridge regression from old units to new units, used to complete old prototypes) wins back
+  85% of the points lost to the unfair comparison, with no old examples and no extra cost at
+  answer time. It would have closed 33% of the frozen-to-retrain gap.
+- Step 3 (first group within 5 points of frozen) failed for every balanced rule, and would fail
+  for open-book too. So the written procedure selected R0 and the verdict is "does not work".
+  The 60% first-group score in EXP-3 was partly produced by the bias (interpretation).
+- MNIST then Fashion-MNIST: R6 selected, 91.5 against frozen 82.3 and retrain 94.0 (79% of the
+  gap), verdict "works".
+- The remaining gap (41.0 to 52.7) is in the features, not the prototypes.
+- No literature search was done for the rules; R7-like ideas may exist in published work.
+- Proposed EXP-5: keep grow and lock and R7, change how the added units are trained (add a
+  label-free signal), and replace step 3 with a test that separates forgetting from stronger
+  rivals. Needs a literature pass by a subagent and a Part A first.
+
 ## Other literature facts worth keeping (from `RESEARCH_GROWING_STRUCTURE.md`)
 
 - Zero-forgetting growth methods mostly need a task hint; no-hint growth methods mostly rely on replay.
@@ -106,7 +137,7 @@ examples, no task hint, nearest-class-mean memory. CIFAR-100, 8 stages, 5 seeds,
 
 ## Open decisions for the owner
 
-1. Push the rest (CLAUDE.md, report, papers, archive move) and merge `exp-2-feature-ladder` into `main`?
-2. Go ahead with EXP-4 as proposed in section 18 of `EXP-3-GROWING-FEATURES/EXP-3-JOURNAL.pdf`
-   (fair comparison between memory cards of different sizes), or pick a different next step?
-3. Commit and push EXP-3?
+1. Merge the experiment branches into `main`? Everything is pushed (`exp-2-feature-ladder`,
+   `exp-3-growing-features`, `exp-4-fair-cards`), nothing is merged.
+2. Go ahead with EXP-5 as proposed in section 18 of `EXP-4-FAIR-CARDS/EXP-4-JOURNAL.pdf`, or
+   pick a different next step?
