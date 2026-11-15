@@ -272,3 +272,40 @@ different dataset cost only 0.4 points).
 - Unknowns that only an experiment can settle: accuracy on 80 to 100 classes with class-mean
   cards instead of a trained linear classifier, and whether patches taken from the first 10
   classes serve later classes.
+
+---
+
+## 7. Making backprop-free patch eyes stronger (2026-11-16)
+
+Question: once fixed patch eyes are in place (EXP-7), what are the known ways to improve them
+without backprop?
+
+| Paper | Tag | What it gives | Numbers seen (CIFAR-10 unless stated) |
+|---|---|---|---|
+| Coates and Ng, "Selecting Receptive Fields in Deep Networks", NIPS 2011 | passages (whole body) | **A second and third layer without backprop.** Average the first layer's answers over 3x3 blocks. Group first-layer detectors that tend to be active together (correlation of their squared answers; 32 groups of 200). Inside each group, pick new detectors by K-means on the group's answers | 1 layer 78.3; 2 layers 81.2; 3 layers 82.0. **A second layer wired at random or to everything gives nothing** (77.4 to 77.6). With only 400 labelled pictures per class: 64.6, then 69.2, then 70.7 |
+| Coates and Ng, "The Importance of Encoding Versus Training...", ICML 2011 | passages | How a detector answers matters more than how the detectors were found. Splitting each answer into a positive and a negative part "always improved" | Random patches with a threshold of 0.25: 79.1. K-means: 79.4. Pure noise as detectors: 73.2. 6,000 detectors: 81.5 |
+| Jia, Huang, Darrell, "Beyond Spatial Pyramids" (workshop version of the CVPR 2012 paper) | passages | Finer regions than four quarters | With 200 detectors: quarters 70.2, a 4x4 grid 72.2 (average) or 73.0 (max), three-level pyramid 74.8. **CIFAR-100**, 1,600 detectors, 6,400 features, linear classifier: about 54.5 to 54.9 |
+| Thiry et al., arXiv:2101.07528 | passages | More detectors | 512: 79, 1,024: 81, 2,048: 83, 4,096: 84 (read from figure data), 10,000: 85.6. Their way of shrinking the description is trained by backprop; no backprop-free alternative is given |
+| Prabhu et al., RanDumb, arXiv:2402.08823 | passages | Mirror every picture when filling the tables | CIFAR-100: 26.9 without, 28.6 with mirrored copies. Removing the shared table: 16.6 points worse |
+| Mairal, supervised convolutional kernel networks, arXiv:1605.06265 | passages | Layers built by K-means plus one matrix calculation each | Two label-free layers: 14.2% error (85.8%), details sparse |
+| Boureau, Ponce, LeCun, "A Theoretical Analysis of Feature Pooling", ICML 2010 | passages | Max pooling suits very sparse answers; average suits dense ones | No CIFAR numbers |
+| Guo and Hastie, regularized discriminant analysis, 2005 | passages (section 2.1) | Standard covariance shrinkage formulas | – |
+
+### What this means for us (our reading)
+
+Cheapest improvements, in the order we would try them after EXP-7:
+
+1. **Mirrored copies** when filling the tables: free, about +1.7 points in the one paper that
+   measured it on CIFAR-100.
+2. **Positive and negative parts** of each detector's answer as separate numbers.
+3. **Finer regions** (3x3 or a pyramid) at the cost of a longer description.
+4. **A second layer** built by grouping detectors that fire together. This is the largest
+   documented gain (+3 to +5 points, and more when labelled pictures are few), but only if the
+   grouping step is done; random wiring gives nothing. Units stay independent if the grouping
+   and its whitening are fixed after the first fit (our suggestion, not from the paper).
+
+A published reference point for one layer of such features on all 100 CIFAR-100 classes with a
+trained linear classifier is about 55%.
+
+Not opened: Friedman 1989 (scanned, unreadable); Mairal et al. 2014; Recht et al. random-feature
+baseline (only as cited by Thiry).
