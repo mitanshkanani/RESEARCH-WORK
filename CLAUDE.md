@@ -98,6 +98,9 @@ of any few-shot ability comes from the pretraining rather than from the learning
   Warnings: the references used plain class means (comparison not yet fair), 3-shot accuracy
   is poor (17.0% against 29.7%), and peak GPU memory was 5.5 GB. Section 17 proposes EXP-8
   (same memory on every feature extractor, and the true ceiling).
+- `EXP-8-SAME-MEMORY/`: applies the same memories (class means, shared covariance, ridge)
+  to every feature extractor (patch, frozen, grow and lock, retrain) and measures the
+  retrained network with its own output layer as the ceiling. Part A written 2026-11-16.
 - `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
   2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that
