@@ -198,3 +198,40 @@ and how do they compare with ordinary methods?
 Not opened: Draelos et al. "Neurogenesis deep learning"; Dynamically Expandable Networks;
 Growing When Required networks; self-organising incremental neural networks; FearNet;
 differentiable plasticity; HebbCL arXiv:2207.04874.
+
+---
+
+## 5. Background for later: what a "memory card" could be for a language model (2026-11-15)
+
+No language experiment is planned until the owner asks. This is background for the open
+question in the journals: a language model predicts the next word instead of picking a class,
+so what plays the role of one card per thing learned?
+
+| Paper | Tag | What is stored as a "card" | Numbers seen |
+|---|---|---|---|
+| Khandelwal et al., "Nearest Neighbor Language Models" (kNN-LM), arXiv:1911.00172 | passages | One card per word of text: key = the model's description of the text so far, value = the word that came next. Added by one forward pass, no training | 247M-parameter model, Wikitext-103: perplexity 18.65 to 16.12 (lower is better) with 103M cards. A model trained on 100M words plus a 3-billion-word memory (13.73) beat a model trained on all 3 billion words (15.17) |
+| He, Neubig, Berg-Kirkpatrick, "Efficient Nearest Neighbor Language Models", arXiv:2109.04212 | passages | Same | Lookup makes it about 14 times slower (277 against 3,847 words per second); tricks bring that to about 2 times. New domain (law text): base model 106.6, **memory only 12.6, fine-tuning 8.6**. **Replacing groups of cards by their average made it worse than no memory at all**; only merging near-identical cards worked |
+| Alon et al., "RetoMaton", arXiv:2201.12431 | passages | Same, with links between consecutive cards | Saves 81% of lookups at equal quality. Memory on top of fine-tuning: 8.61 to 7.10, so the two add up |
+| Grave et al., continuous cache, arXiv:1612.04426; unbounded cache, arXiv:1711.02604 | passages | Recent (or all past) hidden states with the word that followed | Wikitext-103, LSTM: 48.7 to 40.8. Far domain with a tiny model: 687 to 237 |
+| Min et al., "Nonparametric Masked Language Modeling", arXiv:2212.01349 | passages | One card per phrase of a text collection; no fixed vocabulary | Updating the collection updates the answers (2.9 to 17.5 on changed facts) with unchanged facts kept. Cannot generate text. Very large index (about 70 GB memory for Wikipedia) |
+| Lan et al., "Copy is All You Need", arXiv:2307.06962 | passages | Phrases copied from a collection while generating | New domain with no training scored better than a fine-tuned model on a text-quality measure (28.1 against 26.9) |
+| Hartvigsen et al., "Aging with GRACE", arXiv:2211.11031 | passages | **Closest to our cards.** At one layer: a key vector, a radius, and a stored replacement output. An input landing inside the radius uses the card; everything else is untouched. New cards are added, old ones never change | 1,000 corrections on a 60M model needed 137 cards; old corrections kept at 0.96, original ability 0.69 against 0.56 for plain fine-tuning. The stored output is trained with a small backprop step |
+| Mitchell et al., "Memory-Based Model Editing at Scale" (SERAC), arXiv:2206.06520 | passages | The correction kept as plain text, plus a small trained model deciding when it applies | Edit success 0.99 with almost no damage elsewhere (0.009). About 3 KB per card |
+| Eldan and Li, "TinyStories", arXiv:2305.07759 | passages | – | Models of 1 to 35 million parameters trained on simple stories write fluent, consistent text; all trained on one GPU within 30 hours. Under 10M parameters is still fluent |
+| Warstadt et al., BabyLM findings, arXiv:2504.08165 | passages | – | Training on only 10M or 100M words; winners were not text generators |
+| Luo et al., forgetting in large language models, arXiv:2308.08747 | passages | – | Sequential tuning on 5 tasks: for example 36.2% to 26.1% on one knowledge test; larger models forgot more |
+
+### What this means for us (our reading)
+
+- The language version of our memory already exists and works: store "what the text looked
+  like" together with "what came next", and look it up. New text is learned in one pass with no
+  training and nothing old is overwritten. Its price is a very large memory and slower answers.
+- **One average card per word does not work for language** (averaging cards made things worse).
+  The working form is one card per situation, merged only when situations are nearly the same.
+- Memory alone did not match fine-tuning on a new domain (12.6 against 8.6), but memory plus
+  fine-tuning beat both. So here too, the memory helps and the eyes still matter.
+- A laptop-sized test exists when the owner wants it: a TinyStories-size model, then a second
+  kind of text added by memory against added by fine-tuning, measuring what is forgotten.
+  This is the language twin of EXP-3.
+
+Not opened: ROME, MEMIT, Progressive Prompts, AdapterFusion arXiv:2005.00247 (abstract only).
