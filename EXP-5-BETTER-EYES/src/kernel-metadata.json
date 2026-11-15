@@ -1,0 +1,13 @@
+{
+  "id": "mitanshkanani/exp5-better-eyes",
+  "title": "exp5-better-eyes",
+  "code_file": "exp5.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}
