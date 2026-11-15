@@ -235,3 +235,40 @@ so what plays the role of one card per thing learned?
   This is the language twin of EXP-3.
 
 Not opened: ROME, MEMIT, Progressive Prompts, AdapterFusion arXiv:2005.00247 (abstract only).
+
+---
+
+## 6. Eyes without backprop from picture patches (2026-11-15)
+
+Question: is there a feature extractor that is learned without backprop, ideally in one pass,
+and that can grow by adding units without changing old ones?
+
+| Paper | Tag | Recipe | Numbers seen |
+|---|---|---|---|
+| Coates, Lee, Ng, "An Analysis of Single-Layer Networks in Unsupervised Feature Learning", AISTATS 2011 | passages (whole paper scraped) | Cut random 6x6 patches from the pictures. Normalise each patch, whiten the patch set, run K-means to get K typical patches ("centroids"). To describe a picture: compare every 6x6 window with every centroid ("triangle" rule: how much closer than average), sum the answers over the four quarters of the picture. No labels, no backprop. Linear classifier on top | **CIFAR-10: 77.9% with 1,600 centroids, 79.6% with 4,000.** By number of centroids (whitened): 100: 65.8, 400: 72.8, 1,600: 77.0. **Whitening is worth 7 to 8 points** (1,600 centroids: 77.0 whitened, 69.0 not). Step between windows matters: every pixel 77.0, every 2nd 73.5, every 4th 67.2. No CIFAR-100 result |
+| Coates and Ng, "Learning Feature Representations with K-means", 2012 (book chapter) | passages | Practical settings: add 10 to the patch variance before dividing; whitening constant 0.01 to 0.1; about 10 K-means rounds; simpler rule max(0, match minus a threshold) | CIFAR-10: one layer 78.3%, one wider layer 80.6%, three layers 82.0%. A second layer helped only with a careful way of choosing its inputs |
+| Thiry, Arbel, Belilovsky, Oyallon, "The Unreasonable Effectiveness of Patches in Deep Convolutional Kernels Methods", arXiv:2101.07528 | passages | **No learning of the dictionary at all**: it is made of randomly picked whitened 6x6 training patches. Only a linear classifier is trained | **CIFAR-10: 82.5% with 2,048 patches, 85.6% with 10,000, 86.7% with 60,000.** Training the dictionary end to end gave no gain over picking patches at random. Replacing patches by pure noise: 8 points worse. Using patches from a different dataset (ImageNet): only 0.4 points worse |
+| Chan et al., "PCANet", arXiv:1404.3606 | passages | Filters from PCA of patches, two stages | CIFAR-10: 77.1% |
+| Oyallon and Mallat, "Deep Roto-Translation Scattering", arXiv:1412.8659 | passages | Fixed wavelet filters, nothing learned | CIFAR-10: 82.3%. CIFAR-100: 56.8% (table rows inferred by the reader; check before citing) |
+| Jordan, airbench, arXiv:2404.00498 | passages | A frozen whitening first layer inside an ordinary network | More than halves training time to a given accuracy |
+| Chen et al., "Sparse Manifold Transform", arXiv:2209.15261 | abstract | One-layer label-free method | Abstract: 81.1% CIFAR-10, 53.2% CIFAR-100 with nearest neighbours |
+
+**Gaps found:** no CIFAR-100 result for the K-means or random-patch recipes; no paper that
+grows a patch dictionary class by class with old patches kept fixed; no test of whether
+whitening computed on a few classes is good for other classes (nearest evidence: patches from a
+different dataset cost only 0.4 points).
+
+### What this means for us (our reading)
+
+- This is the strongest lead so far for **eyes that need no backprop and one pass**. A fixed
+  set of whitened picture patches gives 78 to 86% on 10-class photos, in the range of small
+  backprop-trained networks, with nothing trained but the final classifier.
+- It fits grow and lock naturally: **adding patches adds units; old patches never change**, so
+  nothing old can be overwritten, and an old memory card only lacks the new units, which is
+  the situation R7 already handles.
+- EXP-2 tried "free" features (random expansion, random conv net) and they failed on photos
+  (6.5 to 6.9% at 3 pictures per class). Those had no whitening, no large patch dictionary and
+  no triangle rule, which are exactly the ingredients these papers say matter most.
+- Unknowns that only an experiment can settle: accuracy on 80 to 100 classes with class-mean
+  cards instead of a trained linear classifier, and whether patches taken from the first 10
+  classes serve later classes.
