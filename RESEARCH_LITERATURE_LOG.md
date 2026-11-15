@@ -191,7 +191,7 @@ and how do they compare with ordinary methods?
   our system that already works. EXP-2 tested our own version of the fruit-fly learner and it
   lost to plain class means in 18 of 18 cases.
 - For reference, our 39.6% on 80 classes is in the same range as the published 43.6% for the
-  best ordinary method on 100 classes in 10 steps, with a network about 30 times smaller. The
+  best ordinary method on 100 classes in 10 steps, with a much smaller network. The
   settings differ, so this is context, not a comparison.
 - Energy has been measured in one paper only, on special hardware, for the memory step only.
 
