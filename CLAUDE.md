@@ -77,6 +77,9 @@ of any few-shot ability comes from the pretraining rather than from the learning
   reached 39.5% against 32.9% frozen and 41.0% open-book, but dropped the first group by 17
   points, so the verdict by the written rule was again "does not work". Section 18 proposes
   EXP-5 (better features at each stage, R7 fixed).
+- `EXP-5-BETTER-EYES/`: tests whether the units added at each stage can be trained to give
+  more general features (three extra training signals, R7 fixed), and how the score falls
+  with fewer passes over the data. Part A written 2026-11-15; not run yet.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that
   misread the project (it treated brain-inspired and energy as side issues and steered toward
   benchmark-building). Their sourced facts about papers are still usable as reference. Their
