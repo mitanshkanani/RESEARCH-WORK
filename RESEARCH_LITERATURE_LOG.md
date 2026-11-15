@@ -128,3 +128,35 @@ Not opened (leads only): DeepInversion (known only through ABD), Generative Feat
 arXiv:2004.09199, brain-inspired replay (van de Ven et al.), Latent Replay arXiv:1912.01100,
 ACAE-REMIND arXiv:2105.08595, AdaGauss arXiv:2409.18265, "Adapt Your Teacher" arXiv:2308.09544,
 Progressive Neural Networks, DEN.
+
+---
+
+## 3. Upgrading the memory from "average only" to "average plus spread" (2026-11-15)
+
+Question: our memory card is one mean vector per class, compared by cosine. What is the
+practical recipe for also storing a covariance (how the features of a class spread and vary
+together), with no stored images and no backprop, when the feature vector grows over time?
+
+| Paper | Tag | What matters for us |
+|---|---|---|
+| Goswami et al., "FeCAM", arXiv:2309.14062 | passages | Frozen backbone, Mahalanobis distance to class means. CIFAR-100 average accuracy: plain nearest-mean 64.8, one shared covariance 68.8, a covariance per class 70.9. **Raw covariance with no care is far worse than nearest-mean (29.7)**; it needs three steps: (1) square-root every feature (valid because features after ReLU are non-negative), (2) shrink the covariance by adding the average variance to the diagonal, (3) for per-class covariances, rescale each to a correlation matrix so classes learned at different times are comparable. Square root alone: 64.8 to 66.6. With a first group of 20 classes: nearest-mean 30.6 / 50.0 (last / average), FeCAM 48.1 / 62.3. The paper says it is "not apt when training from scratch, starting with small tasks", because its backbone is frozen |
+| Hayes and Kanan, Deep Streaming LDA, arXiv:1909.01520 | passages | One running mean per class and **one shared covariance updated one example at a time**. Scores are linear: weight = inverse covariance times class mean. Shrinkage 0.0001 toward the identity. Updating the covariance online added only about 0.5 points over freezing it after the first classes |
+| Rypeść et al., "AdaGauss", arXiv:2409.18265 | passages | From scratch, equal steps of 10 classes, backbone keeps training. Stores mean and full covariance per class in a 64-number space and moves both when features change, with a small learned map fitted on current data. CIFAR-100, 10 steps, last / average: nearest-mean 36.4 / 54.0, diagonal covariance 41.1 / 56.3, **full covariance 46.1 / 60.2**. Explains the bias: early classes have lower-rank covariances, which inflates their distances |
+| Rypeść et al., "SEED", arXiv:2401.10191 | passages | Full covariance per class 61.7 against class means only 54.1 and diagonal 53.5. Removing the last ReLU (so features look more bell-shaped) is worth 3.9 points |
+| Nguyen et al., "EPEM: Efficient Parameter Estimation for Multiple Class Monotone Missing Data", arXiv:2009.11360 | passages | Exact one-pass formulas for a shared covariance when all samples have the first block of variables and only some have the later blocks. **This is exactly our pattern**: old units exist for every class, new units only for newer classes. The missing blocks are filled through the regression of new on old, which is what R7 already fits |
+| Chen et al., "Shrinkage Algorithms for MMSE Covariance Estimation" (OAS), arXiv:0907.4698 | passages | A closed-form choice of how much to shrink a covariance toward a scaled identity when samples are few |
+
+### What this means for us (our reading)
+
+- A **single shared covariance** is the safe first step: every class is scored with the same
+  ruler, it needs little shrinkage, and the missing blocks for grown units have an exact
+  formula. Published gain over plain nearest-mean: about 4 to 6 points on a strong frozen
+  backbone, larger (12 or more) where the backbone is weak, which is closer to our case.
+- **Square-rooting the features** is free and helped by about 2 points on its own in one paper.
+- A covariance **per class** is worth a further 2 to 8 points in the papers, but with 500
+  pictures and 576 numbers per class it needs heavy shrinkage and the rescaling step, and old
+  classes would need their missing blocks filled.
+- None of these papers tests a feature vector that grows. That part would be new here.
+
+Not opened: Ledoit and Wolf 2004; Mensink et al. (nearest class mean metric learning);
+EFC arXiv:2402.03917 for its covariance handling.
