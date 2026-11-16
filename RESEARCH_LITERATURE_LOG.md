@@ -309,3 +309,39 @@ trained linear classifier is about 55%.
 
 Not opened: Friedman 1989 (scanned, unreadable); Mairal et al. 2014; Recht et al. random-feature
 baseline (only as cited by Thiry).
+
+---
+
+## 8. Learning a new class from a few pictures on top of fixed eyes (2026-11-16)
+
+Question: EXP-7's no-backprop system learns well from 500 pictures per class but badly from 3
+(17.0% against 29.7% for grow and lock). What closed-form tricks exist for few pictures on top
+of fixed features, and what do the papers say about the limit?
+
+| Paper | Tag | Recipe | Numbers seen |
+|---|---|---|---|
+| Wang et al., "SimpleShot", arXiv:1911.04623 | passages (whole text) | Subtract the average of all base-class features, scale each description to length 1, then nearest class average | CIFAR-100, 20 new classes, 5 at a time, 1 / 5 pictures: plain 36.4 / 52.7; length-1 scaling 38.5 / 53.3; with the average subtracted 40.1 / 53.6. Gains of 3 to 6 points at 1 picture, small at 5 |
+| Yang, Liu, Xu, "Free Lunch for Few-shot Learning: Distribution Calibration", arXiv:2101.06395 | passages | (1) Square root of every (non-negative) feature. (2) Blend the new class's average with its 2 nearest base classes and borrow their spread | miniImageNet, 1 picture: nothing 56.4; **square root only 64.3**; both 68.6. Only small positive powers help (power 2: 43.5) |
+| Zhang et al., MetaQDA, arXiv:2101.02833 | passages | Class averages and spreads with a strong pull toward a simple prior | 5 pictures: shared-table classifier with no pull 51.8, **with the pull 81.1**. States that un-smoothed tables are "very poor" with few pictures |
+| Bateni et al., Simple CNAPS, arXiv:1912.03432 | passages | Blend each class's spread with the overall spread and the identity; weight = shots / (shots + 1) | The blending matters most when features were not adapted to the task |
+| Tian et al., "Rethinking Few-Shot Image Classification: a Good Embedding Is All You Need?", arXiv:2003.11539 | passages | A small trained classifier on fixed features | Length-1 scaling adds about 2 points at 1 picture. Title and findings: the quality of the features decides |
+| Mensink et al., "Distance-Based Image Classification: Generalizing to New Classes at Near-Zero Cost", TPAMI 2013 (HAL preprint) | passages | Hand-made (not learned) features; a projection learned on 800 classes; new classes added by their average only | New classes with 100+ pictures each: close to seen classes (40.0 against 36.5 top-5 error). **With 1 picture: nearly useless** (about 91 error, read from a chart). Closed-form projections (whitening 46.1, Fisher 50.5) are better than none (68.0) but worse than the trained projection (37.0) |
+| Chen et al., "A Closer Look at Few-shot Classification", arXiv:1904.04232 | passages | Cosine-style classifier reduces spread within a class | Differences between methods shrink as the feature network gets better |
+
+### What this means for us (our reading)
+
+- **Every paper puts few-picture ability in the learned features**, not in the step on top.
+  The one paper with hand-made features found them fine with 100 pictures per class and
+  nearly useless with 1. Our 17% against 26 to 38% for trained eyes fits that picture.
+- Cheap things that may recover a few points, in order: subtract the base average and scale
+  to length 1 after the square root; pull the tables hard toward the identity (EXP-7 already
+  saw accuracy rise with more smoothing); blend a new class's average with its nearest known
+  classes; project onto the directions that separate the 80 known classes before comparing.
+- No paper read shows non-learned eyes matching learned ones from a few pictures. So the
+  honest expectation is: patch eyes can be made less bad at few pictures, not good.
+- This suggests a **two-part design** as the thing to test later: class-blind eyes for
+  learning from plenty of pictures without forgetting, plus something learned for few-picture
+  generalisation.
+
+Not opened: Prototypical Networks with Mahalanobis; adaptive-subspace and transductive
+few-shot methods; the ECCV 2012 version of Mensink et al.
