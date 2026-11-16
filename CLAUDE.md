@@ -100,7 +100,13 @@ of any few-shot ability comes from the pretraining rather than from the learning
   (same memory on every feature extractor, and the true ceiling).
 - `EXP-8-SAME-MEMORY/`: applies the same memories (class means, shared covariance, ridge)
   to every feature extractor (patch, frozen, grow and lock, retrain) and measures the
-  retrained network with its own output layer as the ceiling. Part A written 2026-11-16.
+  retrained network with its own output layer as the ceiling. Complete (2026-11-16); journal
+  `EXP-8-JOURNAL.pdf`. Ceiling 61.1%. With the same memory (class means plus shared
+  covariance): retrain 58.8%, patch features 55.2%, frozen 44.1%, grow and lock 43.7%. So
+  the no-backprop system is 6 points under the ceiling at about an eighth of the cost, and
+  grow and lock no longer beats frozen features. 3-shot accuracy is not fixed by any memory
+  (patch 21.2%, grow and lock 29.8%, retrain 38.5%). Section 17 proposes EXP-9 (few-shot
+  learning on patch features with closed-form steps only).
 - `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
   2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that

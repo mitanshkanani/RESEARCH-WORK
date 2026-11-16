@@ -24,6 +24,7 @@ researched both ways.
 | EXP-5 (better eyes) | `EXP-5-BETTER-EYES/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 216 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds.npz`. Journal `EXP-5-JOURNAL.pdf` has Part A and Part B (15 pages). Verdict by the pre-written rule: **does not work** |
 | EXP-6 (what limits the eyes) | `EXP-6-WHAT-LIMITS-THE-EYES/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 173 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds.npz`. Journal `EXP-6-JOURNAL.pdf` has Part A and Part B. A diagnosis: **locking and building in steps is the main cause** |
 | EXP-7 (patch eyes) | `EXP-7-PATCH-EYES/` | complete (2026-11-16). Private Kaggle job (Tesla T4, 64 min), results in `results/runs.jsonl`, `summary.json`, `sanity.json`, `meta.json`, `preds.npz`. Journal `EXP-7-JOURNAL.pdf` has Part A and Part B. Verdict by the pre-written rule: **works**, with three warnings |
+| EXP-8 (same memory) | `EXP-8-SAME-MEMORY/` | complete (2026-11-16). Private Kaggle job (Tesla T4, 47 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-8-JOURNAL.pdf` has Part A and Part B. Patch features with LDA are "close, at a fraction of the cost" to the ceiling |
 | Literature log | `RESEARCH_LITERATURE_LOG.md` | six sections written 2026-11-15 from subagent reading (passages, not full papers) |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
@@ -201,6 +202,29 @@ Memories filled in one pass with no stored images. Same 80-class protocol, exam 
   retraining's own softmax accuracy as the ceiling; patch features rebuilt alongside with
   smaller shrinkage; 3-shot test for all; time and energy including the tables.
 
+## EXP-8 result (read the journal for detail)
+
+The same memories on four feature extractors, same 80-class protocol, exam half, 5 seeds
+(`results/summary.json`). Memory chosen per extractor on the practice half.
+
+| Feature extractor | Plain class means | Best table memory | 3 shots, best of any memory | Time / energy per seed |
+|---|---|---|---|---|
+| Patch features (no backprop) | 15.4 | **55.2** (LDA, shrinkage 0.01) | 21.2 | 24 s / 0.25 Wh |
+| Frozen backprop features | 32.9 | 44.1 (LDA, 0.1) | 25.6 | 24 s / 0.25 Wh |
+| Grow and lock | 39.7 (R7) | 43.7 (LDA with filled-in blocks, 1.0); open-book LDA 46.5 | 29.8 | 127 s / 1.32 Wh |
+| Retrain (keeps all data) | 53.1 | 58.8 (LDA, 0.1) | 38.5 | 190 s / 2.00 Wh |
+| Retrain with its own softmax layer (ceiling) | | **61.1** | | 190 s / 2.00 Wh |
+
+- LDA beat ridge on every extractor. Forgetting with the selected memory is at most 2.1 points.
+- The memory was a bottleneck in all earlier experiments (+11 on frozen, +6 on retrain, +40 on patch).
+- Grow and lock has no advantage over frozen features under the same memory, except at 3 shots.
+- 3-shot accuracy follows how much the features learned from labels; no memory changed it for
+  backprop features. LDA with very strong shrinkage (10 to 100) adds about 4 points on patch features.
+- Patch features used 5.6 GB of GPU memory as written.
+- Proposed EXP-9: few-shot learning on patch features with closed-form steps (centering and
+  normalising, projecting onto the discriminant directions of the known classes, borrowing from
+  nearest known classes), at 1, 3 and 10 shots and with 10, 40 or 80 known classes.
+
 ## Other literature facts worth keeping (from `RESEARCH_GROWING_STRUCTURE.md`)
 
 - Zero-forgetting growth methods mostly need a task hint; no-hint growth methods mostly rely on replay.
@@ -223,5 +247,5 @@ Memories filled in one pass with no stored images. Same 80-class protocol, exam 
 
 ## Open decisions for the owner
 
-1. Go ahead with EXP-8 as proposed in section 17 of `EXP-7-PATCH-EYES/EXP-7-JOURNAL.pdf`, or
+1. Go ahead with EXP-9 as proposed in section 17 of `EXP-8-SAME-MEMORY/EXP-8-JOURNAL.pdf`, or
    pick a different next step?
