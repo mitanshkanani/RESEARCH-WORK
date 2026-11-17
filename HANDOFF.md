@@ -1,11 +1,11 @@
-# Handoff: state of the project on 2026-11-17 (after EXP-9)
+# Handoff: state of the project on 2026-11-17 (after EXP-10)
 
 Read `CLAUDE.md` first (project goal and working rules). This file says where things stand.
 
 ## RESUME HERE (written 2026-11-17, for a fresh session after /clear)
 
-**Where we are (updated 2026-11-17 after EXP-9).** EXP-1 to EXP-9 are done, with journals.
-EXP-10 is only proposed (section 17 of `EXP-9-JOURNAL.pdf`). No other branches (owner's rule).
+**Where we are (updated 2026-11-17 after EXP-10).** EXP-1 to EXP-10 are done, with journals.
+EXP-11 is only proposed (section 17 of `EXP-10-JOURNAL.pdf`). No other branches (owner's rule).
 
 **Standing rules from the owner (all in memory and `CLAUDE.md`):**
 - Work on `main` only, no branches.
@@ -18,8 +18,9 @@ EXP-10 is only proposed (section 17 of `EXP-9-JOURNAL.pdf`). No other branches (
   figures from real results, Part B appended, update `CLAUDE.md` and this file.
 - Explain in plain language; the owner is not an ML researcher. Paper reading goes to Sonnet
   subagents; never cite a paper that was not opened; tag read/abstract/unverified.
-- Kaggle free GPU cap is about 30 h/week; about 22.5 h used since 2026-11-15 (EXP-3 to EXP-9).
-  CIFAR-100 downloads slowly on Kaggle (about 20 of EXP-9's 28.5 minutes).
+- Kaggle free GPU cap is about 30 h/week; about 23.7 h used since 2026-11-15 (EXP-3 to EXP-10).
+  CIFAR-100 downloads slowly on Kaggle (20 of EXP-9's 28.5 min; 53.5 of EXP-10's 70 min). Proposed
+  fix (needs owner approval): upload CIFAR-100 once as a private Kaggle dataset.
 
 **The story in six lines (exam half, CIFAR-100, 80 classes in 8 stages, no stored old pictures):**
 1. Plain class-mean memory + trained eyes: frozen 33%, grow-and-lock 40%, retrain 53%.
@@ -37,14 +38,20 @@ EXP-10 is only proposed (section 17 of `EXP-9-JOURNAL.pdf`). No other branches (
    angle, plus borrowing from the 2 nearest known cards: **33.5% from 3 pictures** on patch eyes
    (frozen 29.6%), beating grow and lock 29.8%. Rises with known classes (16.1 / 29.9 / 33.5 at
    10 / 40 / 80). Peak GPU 2.9 GB now. But among all 100 classes the new ones score only 7.1%.
+8. **EXP-10 ("does not work")**: a handicap on old classes' scores lifts the harmonic mean of old
+   and new from 12.4 to 31.5 (new 26.8%), but old classes fall 52.2 -> 38.1 (limit 48.3). Score
+   shifting only trades old for new; with all their pictures new classes would reach 47.6% (old
+   50.3%), so the limit is the card from few pictures. Certainty correction (distance / (1+1/n),
+   no setting) 28.5. New classes in the view: worse. Stream: forgetting tiny (57.7 -> 54.6).
+   Lesson: choose handicaps under the old-class limit, and never judge by plain all-class accuracy.
 
 **Next steps, in order (owner decides):**
 - **Commit/push anything pending** (check `git status`; `PAPER 4.PDF` is an old unrelated change,
   leave it unstaged).
-- **EXP-10 (proposed, section 17 of `EXP-9-JOURNAL.pdf`):** new classes among old ones: a
-  per-class correction for cards learned from few pictures (literature pass by a subagent first),
-  adding new classes to the learned view, a stream where later classes arrive with few pictures;
-  report new and old classes among all classes. Write Part A first.
+- **EXP-11 (proposed, section 17 of `EXP-10-JOURNAL.pdf`):** better cards through better eyes:
+  mirrored copies of each picture, +/- parts, finer regions, more detectors (under 4 GB GPU);
+  all three tests (80 classes; 20 new from 3 pictures; 100 together with handicap chosen so old
+  stays within 5 points). Write Part A first.
 - Later: cheap boosts to patch eyes (mirrored images, +/- parts, finer regions, more detectors,
   second layer by grouping co-active detectors); make patch eyes fit 4 GB; a laptop-sized language
   test only when the owner asks (see literature log section 5).
@@ -78,7 +85,8 @@ researched both ways.
 | EXP-7 (patch eyes) | `EXP-7-PATCH-EYES/` | complete (2026-11-16). Private Kaggle job (Tesla T4, 64 min), results in `results/runs.jsonl`, `summary.json`, `sanity.json`, `meta.json`, `preds.npz`. Journal `EXP-7-JOURNAL.pdf` has Part A and Part B. Verdict by the pre-written rule: **works**, with three warnings |
 | EXP-8 (same memory) | `EXP-8-SAME-MEMORY/` | complete (2026-11-16). Private Kaggle job (Tesla T4, 47 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-8-JOURNAL.pdf` has Part A and Part B. Patch features with LDA are "close, at a fraction of the cost" to the ceiling |
 | EXP-9 (few pictures) | `EXP-9-FEW-PICTURES/` | complete (2026-11-17). Private Kaggle job (Tesla T4, 28.5 min, 20 of them dataset download), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-9-JOURNAL.pdf` has Part A and Part B. Verdict by the pre-written rule: **works** (33.5% from 3 pictures) |
-| Literature log | `RESEARCH_LITERATURE_LOG.md` | eight sections written 2026-11-15/16 from subagent reading (passages, not full papers) |
+| EXP-10 (new among old) | `EXP-10-NEW-AMONG-OLD/` | complete (2026-11-17). Private Kaggle job (Tesla T4, 70 min, 53.5 of them dataset download), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-10-JOURNAL.pdf` has Part A and Part B. Verdict by the pre-written rule: **does not work** |
+| Literature log | `RESEARCH_LITERATURE_LOG.md` | nine sections written 2026-11-15/17 from subagent reading (passages, not full papers) |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
 Everything is on `main`; the owner wants no other branches (2026-11-15). `01-continual-learning/PAPER 4.PDF`
@@ -301,6 +309,26 @@ stages 7-8 as pretend-new), 5 seeds (`results/summary.json`). 3 pictures, 80 kno
 - Cost per seed: patch eyes ~65 s on T4 including all ways, 0.69 Wh, peak GPU 2.9 GB.
 - My prediction was "helps, but not enough" (about 26%); wrong.
 
+## EXP-10 result (read the journal for detail)
+
+20 new classes (1/3/10 pictures) named among all 100; handicap chosen in a rehearsal (memory after
+stage 6, stages 7-8 pretend-new, among 80) by highest harmonic mean (`results/summary.json`).
+Patch eyes, 3 pictures: old / new / harmonic mean:
+
+| Correction | Old | New | H |
+|---|---|---|---|
+| C0 none (EXP-9) | 52.2 | 7.0 | 12.4 |
+| **C1 handicap 0.18 on cosine scores** (selected) | 38.1 | 26.8 | **31.5** |
+| C2 Mahalanobis in the view / (1 + 1/n), no setting | 37.5 | 23.0 | 28.5 |
+| C3 C2 + handicap | 35.4 | 24.0 | 28.6 |
+| C4 new classes added to the view + handicap | 35.5 | 22.9 | 27.8 |
+| Reference: new classes from all pictures | 50.3 | 47.6 | 48.9 |
+
+- Best on the C1 curve with old >= 48.3 (read on the test, diagnosis): handicap 0.08, new 16.5, H 24.6.
+- Stream (60 + 8 x 5 classes, 5 pictures): after session 8, all-class accuracy C0 37.1 vs C1 30.8;
+  H 18.0 vs 29.3. Old 60 classes without correction 57.7 -> 54.6.
+- Peak GPU 2.6 GB (patch). Rehearsal picked the right correction.
+
 ## Other literature facts worth keeping (from `RESEARCH_GROWING_STRUCTURE.md`)
 
 - Zero-forgetting growth methods mostly need a task hint; no-hint growth methods mostly rely on replay.
@@ -323,5 +351,6 @@ stages 7-8 as pretend-new), 5 seeds (`results/summary.json`). 3 pictures, 80 kno
 
 ## Open decisions for the owner
 
-1. Go ahead with EXP-10 as proposed in section 17 of `EXP-9-FEW-PICTURES/EXP-9-JOURNAL.pdf`, or
+1. Go ahead with EXP-11 as proposed in section 17 of `EXP-10-NEW-AMONG-OLD/EXP-10-JOURNAL.pdf`, or
    pick a different next step?
+2. Upload CIFAR-100 as a private Kaggle dataset to skip the slow download?

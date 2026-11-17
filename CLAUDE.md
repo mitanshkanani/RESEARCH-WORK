@@ -116,6 +116,16 @@ of any few-shot ability comes from the pretraining rather than from the learning
   Knowing more helps (16.1% with 10 known classes, 33.5% with 80). Patch eyes now fit in
   2.9 GB of GPU memory. Open: among all 100 classes the new ones score only 7.1%. Section 17
   proposes EXP-10 (new classes among old ones).
+- `EXP-10-NEW-AMONG-OLD/`: tests closed-form corrections that let new classes (1-10 pictures)
+  compete with old ones (about 500 pictures): a handicap on old classes' scores, a certainty
+  correction (distance divided by 1 + 1/n), both, and new classes added to the learned view;
+  plus a stream (60 classes, then 8 sessions of 5 new classes with 5 pictures). Complete
+  (2026-11-17); journal `EXP-10-JOURNAL.pdf`. Verdict "does not work": the handicap lifts the
+  harmonic mean of old and new from 12.4 to 31.5, but old classes fall from 52.2% to 38.1%
+  (limit 48.3%). Shifting scores only trades old against new; with all their pictures the new
+  classes would reach 47.6% (old 50.3%), so the limit is the card from few pictures. Forgetting
+  stays tiny (stream: 57.7% to 54.6% for the first 60 classes). Section 17 proposes EXP-11
+  (better cards through better eyes: mirrored pictures, cheap patch-eye upgrades).
 - `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
   2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that
