@@ -19,8 +19,13 @@ EXP-11 is only proposed (section 17 of `EXP-10-JOURNAL.pdf`). No other branches 
 - Explain in plain language; the owner is not an ML researcher. Paper reading goes to Sonnet
   subagents; never cite a paper that was not opened; tag read/abstract/unverified.
 - Kaggle free GPU cap is about 30 h/week; about 23.7 h used since 2026-11-15 (EXP-3 to EXP-10).
-  CIFAR-100 downloads slowly on Kaggle (20 of EXP-9's 28.5 min; 53.5 of EXP-10's 70 min). Proposed
-  fix (needs owner approval): upload CIFAR-100 once as a private Kaggle dataset.
+  CIFAR-100 downloads slowly on Kaggle (20 of EXP-9's 28.5 min; 53.5 of EXP-10's 70 min). **Fixed
+  2026-11-17 (owner approved):** private Kaggle dataset `mitanshkanani/cifar100-python` holds the
+  official `train`, `test`, `meta` files (md5-checked against torchvision before upload). To use it:
+  add `"dataset_sources": ["mitanshkanani/cifar100-python"]` to `kernel-metadata.json`, and in the
+  script copy those 3 files (find them under `/kaggle/input` with a glob, as the mount path can vary)
+  into `<DATA>/cifar-100-python/` before calling torchvision; its checksum test then passes and
+  nothing is downloaded.
 
 **The story in six lines (exam half, CIFAR-100, 80 classes in 8 stages, no stored old pictures):**
 1. Plain class-mean memory + trained eyes: frozen 33%, grow-and-lock 40%, retrain 53%.
@@ -353,4 +358,4 @@ Patch eyes, 3 pictures: old / new / harmonic mean:
 
 1. Go ahead with EXP-11 as proposed in section 17 of `EXP-10-NEW-AMONG-OLD/EXP-10-JOURNAL.pdf`, or
    pick a different next step?
-2. Upload CIFAR-100 as a private Kaggle dataset to skip the slow download?
+2. (Done 2026-11-17: CIFAR-100 uploaded as a private Kaggle dataset, see the rules above.)
