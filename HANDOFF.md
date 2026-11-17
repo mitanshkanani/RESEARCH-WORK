@@ -1,6 +1,53 @@
-# Handoff: state of the project on 2026-11-15
+# Handoff: state of the project on 2026-11-17
 
 Read `CLAUDE.md` first (project goal and working rules). This file says where things stand.
+
+## RESUME HERE (written 2026-11-17, for a fresh session after /clear)
+
+**Where we are.** EXP-1 to EXP-8 are done, with journals. EXP-9 is only proposed, not started.
+Everything through EXP-8 is on `main`. No other branches (owner's rule).
+
+**Standing rules from the owner (all in memory and `CLAUDE.md`):**
+- Work on `main` only, no branches.
+- **Ask before** pushing to GitHub, pushing/running anything on Kaggle, or downloading anything.
+  The overnight "work without asking" mode (2026-11-15 night) ended 2026-11-16 08:44 IST. Do not
+  assume it carries over.
+- Each experiment: own folder `EXP-<n>-<NAME>/`, its own `.venv`, Part A of `JOURNAL.md` rendered to
+  PDF and committed **before any code runs**, then code, tiny smoke check on the laptop (borrow
+  `EXP-2-FEATURE-LADDER/.venv` and `data/`), private Kaggle T4 job, results into `results/`,
+  figures from real results, Part B appended, update `CLAUDE.md` and this file.
+- Explain in plain language; the owner is not an ML researcher. Paper reading goes to Sonnet
+  subagents; never cite a paper that was not opened; tag read/abstract/unverified.
+- Kaggle free GPU cap is about 30 h/week; about 22 h used since 2026-11-15 (EXP-3 to EXP-8).
+
+**The story in six lines (exam half, CIFAR-100, 80 classes in 8 stages, no stored old pictures):**
+1. Plain class-mean memory + trained eyes: frozen 33%, grow-and-lock 40%, retrain 53%.
+2. EXP-4 fixed a bias (R7 fill-in of old short cards); EXP-5 showed extra training jobs do not
+   help; EXP-6 showed locking-and-building-in-steps costs 78% of the gap.
+3. EXP-7: eyes of fixed whitened 6x6 patches (no backprop, one pass) + class means with one
+   shared covariance (LDA) = 55.2%, 24 s.
+4. EXP-8, same memory for all: ceiling (retrain, own softmax layer) **61.1%**; retrain+LDA 58.8%;
+   **patch+LDA 55.2%**; frozen+LDA 44.1%; grow-and-lock 43.7%. Grow-and-lock no longer pays.
+5. Open problem: **3-shot learning of new classes** (patch 21%, frozen 26%, grow-and-lock 30%,
+   retrain 38.5%). No memory fixes it; it depends on how much the eyes learned from labels.
+6. Patch eyes need 5.6 GB GPU as written (laptop has 4 GB) and 6 points to the ceiling remain.
+
+**Next steps, in order (owner decides):**
+- **Commit/push anything pending** (check `git status`; `PAPER 4.PDF` is an old unrelated change,
+  leave it unstaged).
+- **EXP-9 (proposed, section 17 of `EXP-8-JOURNAL.pdf`):** few-shot learning on patch features with
+  closed-form steps only: sqrt + subtract base mean + length-1 scaling; project onto the
+  discriminant directions of the known classes; borrow from nearest known classes; strong
+  shrinkage; test 1/3/10 shots and 10/40/80 known classes; frozen backprop features as comparison.
+  Write Part A first.
+- Later: cheap boosts to patch eyes (mirrored images, +/- parts, finer regions, more detectors,
+  second layer by grouping co-active detectors); make patch eyes fit 4 GB; a laptop-sized language
+  test only when the owner asks (see literature log section 5).
+
+**Useful facts.** Kaggle status: `PYTHONUTF8=1 kaggle kernels status mitanshkanani/<name>`; download
+logs with `PYTHONIOENCODING=utf-8 PYTHONUTF8=1`. PDF render: `.venv/Scripts/python.exe src/render_pdf.py`
+inside each experiment. No `gh`, no `pdftoppm`; check SVG figures by headless Chrome screenshot.
+Literature notes: `RESEARCH_LITERATURE_LOG.md` (8 sections, subagent passages-only reading).
 
 ## The project in one paragraph
 
@@ -25,7 +72,7 @@ researched both ways.
 | EXP-6 (what limits the eyes) | `EXP-6-WHAT-LIMITS-THE-EYES/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 173 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds.npz`. Journal `EXP-6-JOURNAL.pdf` has Part A and Part B. A diagnosis: **locking and building in steps is the main cause** |
 | EXP-7 (patch eyes) | `EXP-7-PATCH-EYES/` | complete (2026-11-16). Private Kaggle job (Tesla T4, 64 min), results in `results/runs.jsonl`, `summary.json`, `sanity.json`, `meta.json`, `preds.npz`. Journal `EXP-7-JOURNAL.pdf` has Part A and Part B. Verdict by the pre-written rule: **works**, with three warnings |
 | EXP-8 (same memory) | `EXP-8-SAME-MEMORY/` | complete (2026-11-16). Private Kaggle job (Tesla T4, 47 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-8-JOURNAL.pdf` has Part A and Part B. Patch features with LDA are "close, at a fraction of the cost" to the ceiling |
-| Literature log | `RESEARCH_LITERATURE_LOG.md` | six sections written 2026-11-15 from subagent reading (passages, not full papers) |
+| Literature log | `RESEARCH_LITERATURE_LOG.md` | eight sections written 2026-11-15/16 from subagent reading (passages, not full papers) |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
 Everything is on `main`; the owner wants no other branches (2026-11-15). `01-continual-learning/PAPER 4.PDF`
