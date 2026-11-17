@@ -1,6 +1,6 @@
 # EXP-9 · A NEW CLASS FROM A FEW PICTURES
 
-**Experiment ID:** EXP-9 · **Part A written:** 2026-11-17, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** PLANNED. Nothing has been run yet
+**Experiment ID:** EXP-9 · **Part A written:** 2026-11-17, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** COMPLETE. Run and Part B added 2026-11-17. Result: "works": patch eyes learn a new class from 3 pictures at 33.5%, against 29.8% for grow and lock (section 12)
 
 This journal has two parts. **Part A** (this part) explains the experiment before it starts.
 **Part B** will be added to the end of this same PDF when the experiment finishes. Part A
@@ -275,3 +275,273 @@ and for the 3-picture memories. If any of this is wrong, it stays in the journal
 | Backpropagation | The usual way to train a network: measure the error and push corrections back through all layers, many times |
 | Grow and lock | Add units for each new group of classes; never change old units (EXP-3 to EXP-6) |
 | Seed | One repeat with a different random shuffle |
+
+<div class="pagebreak"></div>
+
+# Part B: the readings (added after the run, 2026-11-17)
+
+Part A above was not changed after the run, except the one status line at the top of page 1.
+
+## 10. What was actually run
+
+The plan in section 3 was run once, on a free Kaggle GPU (Tesla T4), as a private job named
+`exp9-few-pictures`. It took **28.5 minutes**, of which about 20 were Kaggle downloading the
+photo dataset slowly (visible in `results/kaggle_run.log`); the experiment itself took about
+8 minutes for all 5 seeds. The result files were downloaded into `results/`: `runs.jsonl`
+(4,510 lines, one per way, setting, seed and test), `meta.json` and `kaggle_run.log`. There
+were no errors. `src/figures.py` turned `runs.jsonl` into `results/summary.json` and the
+figures. **Every number below comes from `results/summary.json`**: mean of 5 seeds, with the
+spread between seeds where useful.
+
+**Things that differ from Part A, or that the code had to fix:**
+
+| Item | What was done |
+|---|---|
+| Small code checks before the run | A tiny trial (1 pass, a tenth of the data, 1 seed) was run on the laptop twice, borrowing EXP-2's Python environment and CIFAR-100 (read only): once with small patch eyes, once with the full 1,600 patches to measure GPU memory. Neither is a result |
+| Choosing settings | Every setting of every way was run and logged; the choosing was done afterwards from the rehearsal rows only, exactly by the rule in section 3. This gives the same choice as choosing during the run, and lets every setting be shown (figure 4) |
+| Known cards in the 100-class check | For the learned view and tidy ways, the card of a known class is its average description passed through the view (from the tables), not the average of each picture's view. No pictures are kept, so the second is not available |
+| 100-class check | uses 5 of the 20 draws, and all 10,000 test pictures of the 100 classes (not only the exam half), because nothing is chosen on it |
+| Rehearsal draws | a separate random stream from the surprise draws, so the two never share a draw |
+| GPU memory | descriptions were made 50 pictures at a time (100 in EXP-8), and the smoothed tables one at a time |
+| Python environment | this folder's own `.venv` (146 MB) was made after the owner approved it, for the figures and the PDF. Part A's PDF was rendered with EXP-8's environment before that |
+
+Nothing in sections 1 to 9 was changed.
+
+## 11. The readings
+
+### 11.1 Step 0: are the earlier numbers rebuilt? Yes, exactly
+
+| From 3 pictures, 80 known | EXP-8 | EXP-9 |
+|---|---|---|
+| Patch eyes, plain cards (W0) | 17.0 | 17.0 |
+| Patch eyes, shared table at smoothing 100 (W1) | 21.2 | 21.2 |
+| Frozen eyes, plain cards (W0) | 25.2 | 25.2 |
+
+The same pictures were drawn as in EXP-8, so these match to the decimal.
+
+### 11.2 Every way, 3 pictures, 80 known classes
+
+![Every way at 3 pictures](figures/fig1_ways.svg)
+
+*Figure 1. 20 never-seen classes, each learned from 3 pictures, after 80 classes are known.
+Each bar is the way at the setting chosen in the rehearsal. Dashed lines: the EXP-8 scores of
+grow and lock (29.8%) and of the retrained network (38.5%), quoted, not rebuilt.*
+
+| Way | Setting chosen in the rehearsal | Patch eyes | Frozen backprop eyes |
+|---|---|---|---|
+| W0 plain cards | – | 17.0 | 25.2 |
+| W1 shared table, smoothed | smoothing 100 | 21.2 | 25.5 |
+| W2 tidy | – | 18.0 | 25.6 |
+| W2+B tidy + borrowing | weight 0.5 | 17.9 | 26.0 |
+| W3 learned view | P: smoothing 0.1; F: 1. All directions, by angle | 32.0 | 28.5 |
+| **W3+B learned view + borrowing** (selected for both eyes) | as W3, weight 1 picture | **33.5 ± 0.5** | **29.6 ± 1.1** |
+| *EXP-8's shared table at smoothing 0.01 (reference)* | | *8.2* | *14.2* |
+
+Among the learned-view settings, comparing by angle beat comparing by straight distance in
+every case (by 2 to 3 points), and moderate smoothing (0.1 or 1) was best; smoothing 100 lost
+about 8 points on patch eyes.
+
+### 11.3 Does knowing more classes help?
+
+![Known classes](figures/fig2_known_classes.svg)
+
+*Figure 2. The same 3-picture test with the memory as it stood after 10, 40 and 80 known
+classes.*
+
+| Patch eyes, 3 pictures | 10 known | 40 known | 80 known |
+|---|---|---|---|
+| W0 plain cards | 17.0 | 17.0 | 17.0 |
+| W1 shared table | 21.0 | 21.2 | 21.2 |
+| W3 learned view | 16.3 | 29.3 | 32.0 |
+| W3+B learned view + borrowing | 16.1 | 29.9 | 33.5 |
+
+With 10 known classes the learned view has only 9 directions and is slightly **worse** than
+plain cards. With 40 it is already 12 points better. From 40 to 80 it gains another 3.6.
+Frozen backprop eyes show the same shape, smaller: 17.2, 28.1, 29.6.
+
+### 11.4 Number of pictures
+
+![Pictures per class](figures/fig3_pictures.svg)
+
+*Figure 3. 80 known classes. Grow and lock and retrain are quoted from EXP-8 (best memory).*
+
+| 80 known | 1 picture | 3 pictures | 10 pictures |
+|---|---|---|---|
+| Patch eyes, plain cards | 12.1 | 17.0 | 22.9 |
+| **Patch eyes, learned view + borrowing** | **23.3** | **33.5** | **44.2** |
+| Frozen eyes, plain cards | 16.7 | 25.2 | 34.6 |
+| Frozen eyes, learned view + borrowing | 20.5 | 29.6 | 40.5 |
+| Grow and lock (EXP-8, quoted) | 19.4 | 29.8 | 41.1 |
+| Retrain (EXP-8, quoted; keeps all pictures) | 25.4 | 38.5 | 51.5 |
+
+The gain holds at every number of pictures. Patch eyes are now second only to the retrained
+network: about 2 points under it from 1 picture, and 5 to 7 points under it from 3 or 10.
+
+### 11.5 Can the rehearsal be trusted?
+
+![Rehearsal against test](figures/fig4_rehearsal.svg)
+
+*Figure 4. Each dot is one setting of one way: its rehearsal score (60 known, the classes of
+stages 7 and 8 as pretend-new) against its real score (80 known, the 20 surprise classes).
+The circled dot is the selected one.*
+
+The rehearsal scores are 3 to 4 points higher than the real ones (the pretend-new classes
+are apparently easier), but the order is almost the same. The setting picked in the
+rehearsal is also the best of all settings on the real test, for both kinds of eyes.
+
+### 11.6 All 100 classes together
+
+![All 100 classes](figures/fig5_all100.svg)
+
+*Figure 5. After stage 8 the 20 surprise classes, 3 pictures each, join the 80 known
+classes. Grey: known classes' pictures sorted among the 80 known classes only. Blue: the
+same pictures sorted among all 100. Red: the new classes' pictures sorted among all 100.*
+
+| Patch eyes | Known classes, among 80 | Known classes, among 100 | New classes, among 100 |
+|---|---|---|---|
+| Plain cards | 17.5 | 16.6 | 4.1 |
+| EXP-8's shared table (smoothing 0.01) | 54.2 | 54.2 | **0.05** |
+| Learned view + borrowing (selected) | 53.3 | 52.2 | 7.1 |
+
+Two things show here. First, **one memory now does both jobs**: the learned view scores the
+80 known classes at 53.3%, close to EXP-8's shared table (54.2% on the same pictures), while
+also being the best way for new classes. Second, **classes learned from 3 pictures cannot yet
+hold their place among classes learned from 500**: only 7.1% of their pictures are named
+correctly among 100 (chance is 1%). The shared table of EXP-8 ignores them almost entirely
+(0.05%). Adding them costs the known classes about 1 point.
+
+### 11.7 Cost
+
+| Per seed, Kaggle T4 | Patch eyes | Frozen backprop eyes |
+|---|---|---|
+| Building or training the eyes | 0.3 s | 23 s |
+| Describing every picture once | 15 s | 4 s |
+| Filling the tables | 13 s | 0.3 s |
+| Testing every setting of every way at 4 points in time | 36 s | 1.7 s |
+| GPU energy, everything above | 0.69 Wh | 0.27 Wh |
+| **Peak GPU memory** | **2.9 GB** | 1.0 GB |
+
+The testing time covers every setting of every way; one chosen way is a small part of it.
+Patch eyes now fit the laptop's 4 GB (5.6 GB in EXP-8).
+
+## 12. The verdict, by the rule written in section 5
+
+| Step | Reading | Result |
+|---|---|---|
+| 0. Rebuild | 17.0, 21.2, 25.2 against 17.0, 21.2, 25.2 | passed |
+| **1. Main verdict** | patch eyes, learned view + borrowing, 3 pictures, 80 known: **33.5%** (29.8% needed) | **works** |
+| 2. Does knowing more help? | 16.1% with 10 known, 33.5% with 80: a rise of 17.4 (3 needed) | **yes** |
+| 3. Which piece does the work? | W0 → W2: +1.0 (does not count); W2 → W3: **+14.0**; W3 → W3+B: +1.6 (counts, just) | the learned view |
+| 4. Do the fixes help trained eyes? | frozen eyes 29.6% against 25.6%: +4.0 (3 needed) | **yes** |
+| 5. Can the rehearsal be trusted? | selected way is also the best on the real test, for both eyes | **yes** |
+
+## 13. Was the expectation in section 5 right?
+
+| What I wrote before the run | What happened | |
+|---|---|---|
+| Tidy cards about 19% | 18.0% | close |
+| Learned view about 25%, with borrowing about 26% | 32.0%, 33.5% | **too low by 7 points** |
+| Verdict "helps, but not enough" | "works" | **wrong** |
+| 1 picture about 15%, 10 pictures about 38% | 23.3%, 44.2% | too low |
+| Knowing more helps: about 19% with 10 known, 25% with 80 | 16.1%, 33.5% | right in direction; the rise is larger |
+| Frozen eyes: about 27% at best, gain under 3, "no" | 29.6%, gain 4.0, "yes" | wrong |
+| All 100 together: new classes about 12%, known classes lose about 2 | 7.1%, known lose 1.1 | new classes worse than expected |
+| The rehearsal picks the right way | it did | right |
+
+The papers read before (literature log, section 8) led me to expect a modest gain, because
+the one paper with hand-made features found them nearly useless from 1 picture. The gain
+here is much larger. A possible reason, not tested: the patch descriptions are very long
+(6,400 numbers) and the view cuts them to 79, removing most of the noise that makes a
+3-picture card shaky.
+
+## 14. What it means for the project
+
+**1. For the first time, one system meets all three goals on this test.** Patch eyes with
+the shared-table memory and the learned view:
+
+- **No forgetting**, by construction (EXP-7, EXP-8): nothing learned is ever overwritten.
+- **Cheap**: no backpropagation, one look at each picture, about a minute per seed on the
+  Kaggle GPU including all the tests, under 3 GB of GPU memory.
+- **A new class from a handful of pictures**: 33.5% from 3 pictures among 20 new classes,
+  better than any system in this project that keeps no old pictures (grow and lock 29.8%,
+  frozen backprop eyes 25.6%), and 5 points under a network retrained on everything (38.5%).
+
+**2. The few-picture ability came from the memory, not the eyes.** The eyes are the same as
+in EXP-8 and have learned nothing from labels. What changed is that the memory's knowledge
+of 80 classes (their averages and the shared table) was turned, in one calculation, into a
+view of which combinations of numbers matter. EXP-8 concluded that few-picture ability
+"sits in the eyes". That was true for the memories tried then; it is not true in general.
+
+**3. Knowing more makes the next class easier.** With 10 known classes the view does not
+help; with 40 it adds 12 points; with 80 it adds 16. This is the property a system that keeps
+learning needs: each class learned makes the next one cheaper to learn. Nothing in the
+earlier experiments had it (plain cards stay at 17.0% however much is known).
+
+**4. Tidying and borrowing are small.** Subtracting the average and scaling added 1 point;
+borrowing from the 2 nearest known classes added 1.6. The large step is the learned view.
+
+**5. The open problem has moved.** A new class from 3 pictures is recognised well **among
+other new classes**, but among 100 classes it is named correctly for only 7% of its pictures,
+because classes learned from 500 pictures take most of the answers. Real use is the mixed
+case. This is the next thing to fix.
+
+## 15. What is still unverified
+
+- **The mixed case.** The headline 33.5% is among the 20 new classes only, as in every
+  earlier experiment. Among all 100 classes the new ones score 7.1%. Whether a simple
+  correction (for example a starting score for each class that depends on how many
+  pictures it was learned from) can lift this without harming old classes is untested.
+- **Whether the view keeps improving after 80 classes.** Only 10, 40 and 80 known classes
+  were tried; the rise slows between 40 and 80.
+- **Whether new classes should be added to the view.** Here the view is recomputed from the
+  tables at each test point (one calculation, no pictures). A class learned from 3 pictures
+  is never added to it; whether it should be is untested.
+- **Why the gain is much larger than the literature suggested** (section 13). Not tested.
+- **The comparison targets are quoted** (grow and lock, retrain), from the same test in
+  EXP-8 with the same draws of pictures. They were not rebuilt.
+- **The test classes are fixed** (the same 20 surprise classes for every seed). Other new
+  classes might be easier or harder; the rehearsal on other classes gave a similar order.
+- **Energy** is GPU-only, as before. 5 seeds, one dataset, images only.
+
+## 16. What carries over beyond pictures
+
+| Part | Depends on pictures? |
+|---|---|
+| Patch eyes | yes |
+| The learned view (directions that separate known classes, from the class averages and the shared table) | **no**. It needs only lists of numbers with class labels |
+| Borrowing from the nearest known classes | no |
+| The rehearsal (pretend the newest classes are unknown, to choose settings) | no |
+| "Each class learned makes the next one easier" | no. It is a property of the memory, not the eyes |
+
+This is the first result in the project where the part doing the work is the part meant to
+carry over to language.
+
+## 17. What the next experiment should be, and why
+
+**Proposed EXP-10: new classes among old ones.**
+
+Why: EXP-9 makes a new class learnable from 3 pictures, but only when it competes with
+other new classes. Among all 100 classes the new ones are named correctly for 7% of their
+pictures, while classes learned from 500 pictures keep about 52%. A real system meets every
+new class in the company of everything it already knows. Until this works, the few-picture
+result cannot be used.
+
+What it should contain, all closed-form, on EXP-9's system (patch eyes, learned view,
+borrowing):
+
+1. **Fair scores for classes of different experience.** A card from 3 pictures is less
+   certain than one from 500. Give each class an allowance that depends on how many
+   pictures it was learned from, with its strength chosen in a rehearsal as in EXP-9. A
+   literature pass by a subagent should first check how published work handles this.
+2. **Add new classes to the view.** After a new class is learned, recompute the view with
+   its pictures included, and see whether this helps it or harms the others.
+3. **The full stream.** Instead of 80 classes from 500 pictures and then 20 from 3, let the
+   later classes arrive with few pictures, so the test matches the project's goal from
+   start to end.
+4. Report the new-class score, the old-class score and their balance, each among all
+   classes, and keep the 20-new-class score as a link back to EXP-9.
+
+Separately, later: the cheap improvements to the patch eyes (mirrored copies, positive and
+negative parts, finer regions), which could raise every number here.
+
+This is a proposal. It needs its own Part A before any code is run.

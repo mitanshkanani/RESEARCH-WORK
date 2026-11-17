@@ -22,8 +22,8 @@ INK, INK2, MUTED, GRID, AXIS, SURF, NEUTRAL = "#0b0b0b", "#52514e", "#898781", "
 EYES = ["P", "F"]
 ENAME = {"P": "patch eyes (no backprop)", "F": "frozen backprop eyes"}
 FAMILIES = ["W0", "W1", "W2", "W2+B", "W3", "W3+B"]
-FNAME = {"W0": "plain cards", "W1": "shared table,\nheavy smoothing", "W2": "tidy", "W2+B": "tidy +\nborrowing",
-         "W3": "learned view", "W3+B": "learned view +\nborrowing"}
+FNAME = {"W0": "plain\ncards", "W1": "shared table,\nsmoothed", "W2": "tidy", "W2+B": "tidy +\nborrow",
+         "W3": "learned\nview", "W3+B": "learned view\n+ borrow"}
 FCOL = {"W0": NEUTRAL, "W1": AMBER, "W2": BLUE, "W2+B": VIOLET, "W3": GREEN, "W3+B": RED}
 # EXP-8 numbers quoted as targets (EXP-8-SAME-MEMORY/results/summary.json, exam half, 5 seeds)
 EXP8 = {"P_W0_3": 17.01, "P_W1_g100_3": 21.17, "F_W0_3": 25.23, "P_best_3": 21.17, "F_best_3": 25.57,
@@ -162,19 +162,20 @@ def main():
     print(json.dumps(v, indent=1))
 
     # ---- figure 1: every way at 3 pictures, 80 known classes
-    fig, axes = plt.subplots(1, 2, figsize=(8.6, 3.4), sharey=True)
+    fig, axes = plt.subplots(1, 2, figsize=(10, 3.6), sharey=True)
     for ax, e in zip(axes, EYES):
         vals = [s["surprise"][e][f][str(K)]["3"] for f in FAMILIES]
         x = np.arange(len(FAMILIES))
         ax.bar(x, [a for a, _ in vals], yerr=[b for _, b in vals], color=[FCOL[f] for f in FAMILIES], width=0.65,
                error_kw=dict(ecolor=INK2, lw=0.8, capsize=2))
         for xi, (a, _) in zip(x, vals):
-            ax.text(xi, a + 1.2, f"{a:.1f}", ha="center", fontsize=8, color=INK)
+            ax.text(xi, a / 2, f"{a:.1f}", ha="center", fontsize=8, color=INK)
         ax.axhline(TARGET_G, color=RED, ls="--", lw=1)
         ax.axhline(TARGET_R, color=AMBER, ls="--", lw=1)
-        ax.text(len(FAMILIES) - 0.5, TARGET_G + 0.6, "grow and lock (EXP-8)", ha="right", fontsize=7.5, color=RED)
-        ax.text(len(FAMILIES) - 0.5, TARGET_R + 0.6, "retrain (EXP-8)", ha="right", fontsize=7.5, color=AMBER)
+        ax.text(-0.45, TARGET_G + 0.6, "grow and lock (EXP-8)", ha="left", fontsize=7.5, color=RED)
+        ax.text(-0.45, TARGET_R + 0.6, "retrain (EXP-8)", ha="left", fontsize=7.5, color=AMBER)
         ax.set_xticks(x, [FNAME[f] for f in FAMILIES], fontsize=7.5)
+        ax.grid(False, axis="x")
         ax.set_title(ENAME[e])
         ax.set_ylim(0, 45)
     axes[0].set_ylabel("20 new classes, 3 pictures each: accuracy %")

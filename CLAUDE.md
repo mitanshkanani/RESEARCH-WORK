@@ -107,6 +107,15 @@ of any few-shot ability comes from the pretraining rather than from the learning
   grow and lock no longer beats frozen features. 3-shot accuracy is not fixed by any memory
   (patch 21.2%, grow and lock 29.8%, retrain 38.5%). Section 17 proposes EXP-9 (few-shot
   learning on patch features with closed-form steps only).
+- `EXP-9-FEW-PICTURES/`: tests whether the memory's knowledge of known classes can make a
+  new class learnable from 1-10 pictures on patch features, by single calculations. Complete
+  (2026-11-17); journal `EXP-9-JOURNAL.pdf`. Verdict "works": a "learned view" (the
+  directions that separate the known classes, computed from the class means and the shared
+  covariance) plus borrowing from the 2 nearest known classes gives 33.5% from 3 pictures
+  among 20 new classes, against 17.0% before, 29.8% for grow and lock and 38.5% for retrain.
+  Knowing more helps (16.1% with 10 known classes, 33.5% with 80). Patch eyes now fit in
+  2.9 GB of GPU memory. Open: among all 100 classes the new ones score only 7.1%. Section 17
+  proposes EXP-10 (new classes among old ones).
 - `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
   2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that

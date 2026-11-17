@@ -1,11 +1,11 @@
-# Handoff: state of the project on 2026-11-17
+# Handoff: state of the project on 2026-11-17 (after EXP-9)
 
 Read `CLAUDE.md` first (project goal and working rules). This file says where things stand.
 
 ## RESUME HERE (written 2026-11-17, for a fresh session after /clear)
 
-**Where we are.** EXP-1 to EXP-8 are done, with journals. EXP-9 is only proposed, not started.
-Everything through EXP-8 is on `main`. No other branches (owner's rule).
+**Where we are (updated 2026-11-17 after EXP-9).** EXP-1 to EXP-9 are done, with journals.
+EXP-10 is only proposed (section 17 of `EXP-9-JOURNAL.pdf`). No other branches (owner's rule).
 
 **Standing rules from the owner (all in memory and `CLAUDE.md`):**
 - Work on `main` only, no branches.
@@ -18,7 +18,8 @@ Everything through EXP-8 is on `main`. No other branches (owner's rule).
   figures from real results, Part B appended, update `CLAUDE.md` and this file.
 - Explain in plain language; the owner is not an ML researcher. Paper reading goes to Sonnet
   subagents; never cite a paper that was not opened; tag read/abstract/unverified.
-- Kaggle free GPU cap is about 30 h/week; about 22 h used since 2026-11-15 (EXP-3 to EXP-8).
+- Kaggle free GPU cap is about 30 h/week; about 22.5 h used since 2026-11-15 (EXP-3 to EXP-9).
+  CIFAR-100 downloads slowly on Kaggle (about 20 of EXP-9's 28.5 minutes).
 
 **The story in six lines (exam half, CIFAR-100, 80 classes in 8 stages, no stored old pictures):**
 1. Plain class-mean memory + trained eyes: frozen 33%, grow-and-lock 40%, retrain 53%.
@@ -31,15 +32,19 @@ Everything through EXP-8 is on `main`. No other branches (owner's rule).
 5. Open problem: **3-shot learning of new classes** (patch 21%, frozen 26%, grow-and-lock 30%,
    retrain 38.5%). No memory fixes it; it depends on how much the eyes learned from labels.
 6. Patch eyes need 5.6 GB GPU as written (laptop has 4 GB) and 6 points to the ceiling remain.
+7. **EXP-9 fixed point 5 (verdict "works")**: project onto the discriminant directions of the
+   known classes (one calculation from the class means and the shared table), then plain cards by
+   angle, plus borrowing from the 2 nearest known cards: **33.5% from 3 pictures** on patch eyes
+   (frozen 29.6%), beating grow and lock 29.8%. Rises with known classes (16.1 / 29.9 / 33.5 at
+   10 / 40 / 80). Peak GPU 2.9 GB now. But among all 100 classes the new ones score only 7.1%.
 
 **Next steps, in order (owner decides):**
 - **Commit/push anything pending** (check `git status`; `PAPER 4.PDF` is an old unrelated change,
   leave it unstaged).
-- **EXP-9 (proposed, section 17 of `EXP-8-JOURNAL.pdf`):** few-shot learning on patch features with
-  closed-form steps only: sqrt + subtract base mean + length-1 scaling; project onto the
-  discriminant directions of the known classes; borrow from nearest known classes; strong
-  shrinkage; test 1/3/10 shots and 10/40/80 known classes; frozen backprop features as comparison.
-  Write Part A first.
+- **EXP-10 (proposed, section 17 of `EXP-9-JOURNAL.pdf`):** new classes among old ones: a
+  per-class correction for cards learned from few pictures (literature pass by a subagent first),
+  adding new classes to the learned view, a stream where later classes arrive with few pictures;
+  report new and old classes among all classes. Write Part A first.
 - Later: cheap boosts to patch eyes (mirrored images, +/- parts, finer regions, more detectors,
   second layer by grouping co-active detectors); make patch eyes fit 4 GB; a laptop-sized language
   test only when the owner asks (see literature log section 5).
@@ -72,6 +77,7 @@ researched both ways.
 | EXP-6 (what limits the eyes) | `EXP-6-WHAT-LIMITS-THE-EYES/` | complete (2026-11-15). Private Kaggle job (Tesla T4, 173 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `preds.npz`. Journal `EXP-6-JOURNAL.pdf` has Part A and Part B. A diagnosis: **locking and building in steps is the main cause** |
 | EXP-7 (patch eyes) | `EXP-7-PATCH-EYES/` | complete (2026-11-16). Private Kaggle job (Tesla T4, 64 min), results in `results/runs.jsonl`, `summary.json`, `sanity.json`, `meta.json`, `preds.npz`. Journal `EXP-7-JOURNAL.pdf` has Part A and Part B. Verdict by the pre-written rule: **works**, with three warnings |
 | EXP-8 (same memory) | `EXP-8-SAME-MEMORY/` | complete (2026-11-16). Private Kaggle job (Tesla T4, 47 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-8-JOURNAL.pdf` has Part A and Part B. Patch features with LDA are "close, at a fraction of the cost" to the ceiling |
+| EXP-9 (few pictures) | `EXP-9-FEW-PICTURES/` | complete (2026-11-17). Private Kaggle job (Tesla T4, 28.5 min, 20 of them dataset download), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-9-JOURNAL.pdf` has Part A and Part B. Verdict by the pre-written rule: **works** (33.5% from 3 pictures) |
 | Literature log | `RESEARCH_LITERATURE_LOG.md` | eight sections written 2026-11-15/16 from subagent reading (passages, not full papers) |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
@@ -272,6 +278,29 @@ The same memories on four feature extractors, same 80-class protocol, exam half,
   normalising, projecting onto the discriminant directions of the known classes, borrowing from
   nearest known classes), at 1, 3 and 10 shots and with 10, 40 or 80 known classes.
 
+## EXP-9 result (read the journal for detail)
+
+20 surprise classes learned from 1/3/10 pictures with the memory after 10/40/80 known classes,
+square-rooted descriptions, settings chosen in a rehearsal (memory after stage 6, classes of
+stages 7-8 as pretend-new), 5 seeds (`results/summary.json`). 3 pictures, 80 known:
+
+| Way (setting from rehearsal) | Patch eyes | Frozen backprop eyes |
+|---|---|---|
+| W0 plain cards | 17.0 | 25.2 |
+| W1 shared table, smoothing 100 | 21.2 | 25.5 |
+| W2 subtract known mean, angle | 18.0 | 25.6 |
+| W3 learned view (P: smoothing 0.1, F: 1; all C-1 directions; angle) | 32.0 | 28.5 |
+| **W3+B + borrow 2 nearest known cards, weight 1 picture** | **33.5** | 29.6 |
+
+- 1 / 3 / 10 pictures, patch W3+B: 23.3 / 33.5 / 44.2 (grow and lock 19.4 / 29.8 / 41.1; retrain
+  25.4 / 38.5 / 51.5, quoted from EXP-8).
+- Known classes 10 / 40 / 80: 16.1 / 29.9 / 33.5. With 10 known the view is slightly worse than plain.
+- Rehearsal picked the best way on the real test for both eyes (rehearsal 3-4 points optimistic).
+- All 100 classes together (new from 3 pictures): new classes 7.1%, known 52.2% (53.3% without the
+  new ones). EXP-8's LDA at 0.01: new 0.05%, known 54.2%.
+- Cost per seed: patch eyes ~65 s on T4 including all ways, 0.69 Wh, peak GPU 2.9 GB.
+- My prediction was "helps, but not enough" (about 26%); wrong.
+
 ## Other literature facts worth keeping (from `RESEARCH_GROWING_STRUCTURE.md`)
 
 - Zero-forgetting growth methods mostly need a task hint; no-hint growth methods mostly rely on replay.
@@ -294,5 +323,5 @@ The same memories on four feature extractors, same 80-class protocol, exam half,
 
 ## Open decisions for the owner
 
-1. Go ahead with EXP-9 as proposed in section 17 of `EXP-8-SAME-MEMORY/EXP-8-JOURNAL.pdf`, or
+1. Go ahead with EXP-10 as proposed in section 17 of `EXP-9-FEW-PICTURES/EXP-9-JOURNAL.pdf`, or
    pick a different next step?
