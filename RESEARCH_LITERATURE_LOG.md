@@ -345,3 +345,45 @@ of fixed features, and what do the papers say about the limit?
 
 Not opened: Prototypical Networks with Mahalanobis; adaptive-subspace and transductive
 few-shot methods; the ECCV 2012 version of Mensink et al.
+
+---
+
+## 9. New classes from a few pictures competing with classes from many (2026-11-17)
+
+Question: EXP-9's new classes (3 pictures) score 33.5% among themselves but 7.1% among all 100
+classes, because classes learned from 500 pictures take the answers. What closed-form ways exist
+to balance the two? One Sonnet subagent, all tags "passages". Every title and arXiv ID was
+confirmed on the opened page (the subagent itself caught a wrong guessed ID for CEC; the right
+one is below).
+
+| Paper | Tag | Recipe | Numbers seen |
+|---|---|---|---|
+| Chao, Changpinyo, Gong, Sha, "An Empirical Study and Analysis of Generalized Zero-Shot Learning for Object Recognition in the Wild", ECCV 2016, arXiv:1605.04253 | passages | **Calibrated stacking**: answer = the class with the highest score after subtracting one constant from every seen (old) class. The constant is chosen on classes held out from the old ones, pretending they are new. Sweeping it gives a curve of old against new accuracy | One area-under-curve value seen without its dataset; no per-setting numbers seen |
+| Qi, Brown, Lowe, "Low-Shot Learning with Imprinted Weights", arXiv:1712.07136 | passages | A new class's weight is the length-1 average of its length-1 descriptions (our "card by angle") | CUB-200, 100 old + 100 new, no fine-tuning, new-class accuracy at 1/2/5/10/20 pictures: 21.3/28.7/39.5/45.8/49.3 |
+| Gidaris, Komodakis, "Dynamic Few-Shot Visual Learning without Forgetting", arXiv:1804.09458 | passages | Cosine classifier with a learned scale; new weights from averaged descriptions (plus a learned part) | Mini-ImageNet, 5 pictures: cosine classifier 72.8 new only, 70.7 old only, **51.9 both together**. The drop when both compete is the same problem as ours |
+| Bateni et al., "Improved Few-Shot Visual Classification" (Simple CNAPS), arXiv:1912.03432 | passages | Covariance per class blended with the shared one by weight n/(n+1), n = pictures of that class | Episodic test only (73.8 in-domain); no old-vs-new competition |
+| Hayes, Kanan, "Lifelong Machine Learning with Deep Streaming Linear Discriminant Analysis", arXiv:1909.01520 | passages | Our memory: running class means plus one shared covariance on fixed features, no old pictures | Updating the shared table as classes arrive gave only about 0.5 points on ImageNet over freezing it |
+| Zhang et al., "Few-Shot Incremental Learning with Continually Evolved Classifiers" (CEC), arXiv:2104.03047 | passages | Frozen backbone, class-mean classifier, plus a trained module that adjusts all class means | Abstract: a pretrained backbone with class means "can beat state-of-the-art methods". Reports accuracy over all classes per session, no old/new split |
+| Zhou et al., "Forward Compatible Few-Shot Class-Incremental Learning" (FACT), arXiv:2203.06953 | passages (no tables seen) | Training on old classes reserves room for future ones | none seen |
+| Tao et al., "Few-Shot Class-Incremental Learning" (TOPIC), arXiv:2004.10956 | abstract | Defines the few-shot class-incremental benchmark | none |
+| Goswami et al., FeCAM, arXiv:2309.14062 | passages | Distances made comparable across classes (shrinkage, power transform, correlation normalisation) | CIFAR-100, 50 old + 50 new, trained on the old 50, old/new/all: class means 76.7/26.5/51.6; shared covariance 75.9/38.4/57.2; per-class covariance 77.2/47.0/62.1 |
+| McDonnell et al., RanPAC, arXiv:2307.02251 | passages | Fixed random projection, then a ridge classifier from accumulated tables; setting by cross-validation | Pretrained ViT; not comparable |
+| Xian et al., "Zero-Shot Learning – A Comprehensive Evaluation of the Good, the Bad and the Ugly", arXiv:1707.00600 | passages | **Harmonic mean** H = 2·old·new/(old+new) as the single score when old and new compete | E.g. ALE on CUB: new 23.7, old 62.8, H 34.4. Old classes "act as distractors" |
+
+### What this means for us (our reading)
+
+- **The problem is known and expected**, not a bug of ours (Gidaris: 72.8 / 70.7 alone, 51.9
+  together). The standard single score is the harmonic mean of old and new accuracy.
+- **Calibrated stacking is the standard fix**: one constant subtracted from the old classes'
+  scores, chosen by pretending some old classes are new. Our EXP-9 rehearsal already does that
+  pretending without leakage (its tables never saw the pretend-new classes).
+- **Score by certainty** (the subagent's own derivation, not from a paper read): a class mean from
+  n pictures is uncertain, so a picture of that class lies on average farther from it, by a factor
+  of about (1 + 1/n) in squared distance. Dividing each class's squared distance by (1 + 1/n)
+  needs no tuned setting. It needs comparison by distance in the learned view, not by angle.
+- **Adding new classes to the view: weak evidence** (only the 0.5-point result for the shared
+  table, on many-picture classes). Untested for few-picture classes.
+- Learned modules (CEC, Gidaris's attention, FACT) need training on old data; not candidates.
+
+Not opened: Bayesian few-shot papers with a full posterior-predictive (Student-t) class model;
+incremental LDA with few-picture classes; Hou et al. 2019 (rebalancing); Ren et al. 2019.
