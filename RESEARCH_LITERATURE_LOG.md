@@ -387,3 +387,40 @@ one is below).
 
 Not opened: Bayesian few-shot papers with a full posterior-predictive (Student-t) class model;
 incremental LDA with few-picture classes; Hou et al. 2019 (rebalancing); Ren et al. 2019.
+
+---
+
+## 10. A switch between known and new classes (2026-11-19)
+
+Question: EXP-11's new classes score 36.2% among themselves but 17% among all 100 at the
+old-class limit; a perfect "old or new?" switch would give a harmonic mean of about 45 instead
+of 26 (arithmetic). Which closed-form switches exist? One Sonnet subagent. **Caveat on the tags:**
+direct PDF reading failed, so the subagent read arXiv abstract pages and ar5iv HTML pages through
+a fetch tool that returns a summary made by a small model. Numbers below are as relayed by that
+summary, not re-read by us.
+
+| Paper | Tag | Recipe | Numbers relayed |
+|---|---|---|---|
+| Socher, Ganjoo, Sridhar, Bastani, Manning, Ng, "Zero-Shot Learning Through Cross-Modal Transfer", NIPS 2013, arXiv:1301.3666 | passages (relayed) | Switch first: novelty = low likelihood under a mixture of Gaussians, one per known class; threshold swept, no rule given | No combined accuracy; at 70% known-class accuracy, new classes roughly 15-30% (CIFAR-10, chance 10%) |
+| Atzmon, Chechik, "Adaptive Confidence Smoothing for Generalized Zero-Shot Learning" (COSMO), CVPR 2019, arXiv:1812.09903 | passages (relayed) | Soft switch: a small logistic regression on the sorted top scores of both experts, trained on known classes pretending to be new | Same experts, handicap (calibrated stacking) vs COSMO, new/old/H: AWA 45.4/68.2/54.5 vs 52.8/80.0/63.6; SUN 41.7/25.9/31.9 vs 44.9/37.7/41.0; CUB 43.1/53.7/47.9 vs 44.4/57.8/50.2 |
+| Ren et al., "A Simple Fix to Mahalanobis Distance for Improving Near-OOD Detection", 2021, arXiv:2106.09022 | passages (relayed) | Relative distance: Mahalanobis to nearest class minus Mahalanobis to one background Gaussian fitted to all training features | CIFAR-100 (known) vs CIFAR-10 (unknown), no pretraining, AUROC: plain 74.9, relative 81.0, max-softmax 80.1 |
+| Kamoi, Kobayashi, "Why is the Mahalanobis Distance Effective for Anomaly Detection?", 2020, arXiv:2003.00402 | abstract + passages (relayed) | Partial Mahalanobis over chosen principal components | CIFAR-10 vs SVHN AUROC: full 93.9; components 10-512 94.1; components 1-9 88.1. The low-variance components carry the novelty signal but little class information (20.5% accuracy alone) |
+| Wang et al., "ViM: Out-Of-Distribution with Virtual-logit Matching", CVPR 2022, arXiv:2203.10807 | abstract + passages (relayed) | Novelty from the norm of the feature outside the top principal subspace, turned into an extra "virtual" class score | ImageNet-1K average AUROC: 90.9 (BiT), Mahalanobis 86.6; not a CIFAR split |
+| Lee, Lee, Lee, Shin, "A Simple Unified Framework for Detecting Out-of-Distribution Samples and Adversarial Attacks", NeurIPS 2018, arXiv:1807.03888 | abstract | Class-conditional Gaussians with a tied covariance; Mahalanobis to the nearest class as novelty score; abstract says it extends to class-incremental learning without retraining | none seen |
+
+Not opened (leads only): MetaQDA (arXiv:2101.02833); a Student-t predictive for few-picture
+classes; Atzmon et al. arXiv:2004.02235.
+
+### What this means for us (our reading)
+
+- A **switch first, then name within the group** is an established design (Socher 2013; COSMO).
+  COSMO's trained version beats the handicap by 2-9 harmonic-mean points; ours must be closed-form.
+- The papers agree the novelty signal sits in directions that matter little for naming known
+  classes (Kamoi; ViM). Our learned view keeps only the naming directions, so the part **outside
+  the view** is a natural candidate.
+- **Relative distance** (Ren) helps most on "near" unknowns, which is our case. With a background
+  built from our own tables (within-class table plus the spread of the class averages), the part
+  outside the view cancels exactly, so the relative signal lives inside the view (our derivation,
+  not from the paper).
+- Telling near unknowns from known classes is hard even with trained features (AUROC about 81 for
+  CIFAR-100 vs CIFAR-10). Expect a real switch to land well under the perfect one.
