@@ -1,0 +1,109 @@
+{
+ "note": "extra check, not in Part A; test rows; every rule at the never rule's settings",
+ "gamma": 0.03,
+ "h": 0.1,
+ "at_never_settings": {
+  "never": {
+   "score": 36.53,
+   "old": 54.77,
+   "gain_vs_never": 0.0,
+   "gain_sd": 0.0,
+   "seeds_positive": 0,
+   "sessions": [
+    31.15,
+    35.99,
+    38.98,
+    40.01
+   ]
+  },
+  "once": {
+   "score": 27.1,
+   "old": 57.9,
+   "gain_vs_never": -9.43,
+   "gain_sd": 0.96,
+   "seeds_positive": 0,
+   "sessions": [
+    18.28,
+    23.11,
+    29.96,
+    37.05
+   ]
+  },
+  "at10": {
+   "score": 33.01,
+   "old": 56.8,
+   "gain_vs_never": -3.52,
+   "gain_sd": 0.44,
+   "seeds_positive": 0,
+   "sessions": [
+    31.15,
+    29.02,
+    33.09,
+    38.8
+   ]
+  },
+  "at30": {
+   "score": 36.28,
+   "old": 55.8,
+   "gain_vs_never": -0.25,
+   "gain_sd": 0.23,
+   "seeds_positive": 1,
+   "sessions": [
+    31.15,
+    35.99,
+    37.01,
+    40.97
+   ]
+  },
+  "at100": {
+   "score": 36.97,
+   "old": 55.06,
+   "gain_vs_never": 0.43,
+   "gain_sd": 0.07,
+   "seeds_positive": 5,
+   "sessions": [
+    31.15,
+    35.99,
+    38.98,
+    41.75
+   ]
+  }
+ },
+ "gain_vs_never_by_handicap": {
+  "0.0": {
+   "never": 0.0,
+   "once": -1.72,
+   "at10": -0.36,
+   "at30": 0.98,
+   "at100": 0.99
+  },
+  "0.05": {
+   "never": 0.0,
+   "once": -6.72,
+   "at10": -2.71,
+   "at30": -0.04,
+   "at100": 0.58
+  },
+  "0.1": {
+   "never": 0.0,
+   "once": -9.43,
+   "at10": -3.52,
+   "at30": -0.25,
+   "at100": 0.43
+  },
+  "0.15": {
+   "never": 0.0,
+   "once": -9.21,
+   "at10": -2.77,
+   "at30": 0.07,
+   "at100": 0.42
+  },
+  "0.2": {
+   "never": 0.0,
+   "once": -6.74,
+   "at10": -1.31,
+   "at30": 0.55,
+   "at100": 0.47
+  }
+ }
+}

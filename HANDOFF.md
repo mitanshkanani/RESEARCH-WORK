@@ -1,13 +1,13 @@
-# Handoff: state of the project on 2026-11-19 (after EXP-13)
+# Handoff: state of the project on 2026-11-19 (after EXP-14)
 
 Read `CLAUDE.md` first (project goal and working rules). This file says where things stand.
 
 ## RESUME HERE (written 2026-11-19, for a fresh session after /clear)
 
-**Where we are (updated 2026-11-19 after EXP-13).** EXP-1 to EXP-13 are done, with journals.
-EXP-14 is only proposed (section 17 of `EXP-13-JOURNAL.pdf`). No other branches (owner's rule).
-The owner approved EXP-11, EXP-12 ("Go for exp 12") and EXP-13 ("Start exp 13") end to end on
-2026-11-19; each approval was for that experiment only. The owner will review the journals on 2026-11-21/22.
+**Where we are (updated 2026-11-19 after EXP-14).** EXP-1 to EXP-14 are done, with journals.
+EXP-15 is only proposed (section 17 of `EXP-14-JOURNAL.pdf`). No other branches (owner's rule).
+The owner approved EXP-11, EXP-12 ("Go for exp 12"), EXP-13 ("Start exp 13") and EXP-14 ("Yes go
+ahead") end to end on 2026-11-19; each approval was for that experiment only. The owner will review the journals on 2026-11-21/22.
 
 **Standing rules from the owner (all in memory and `CLAUDE.md`):**
 - Work on `main` only, no branches.
@@ -20,7 +20,7 @@ The owner approved EXP-11, EXP-12 ("Go for exp 12") and EXP-13 ("Start exp 13") 
   figures from real results, Part B appended, update `CLAUDE.md` and this file.
 - Explain in plain language; the owner is not an ML researcher. Paper reading goes to Sonnet
   subagents; never cite a paper that was not opened; tag read/abstract/unverified.
-- Kaggle free GPU cap is about 30 h/week; about 25.3 h used since 2026-11-15 (EXP-3 to EXP-13; EXP-11 took 61 min, EXP-12 18, EXP-13 16).
+- Kaggle free GPU cap is about 30 h/week; about 26.1 h used since 2026-11-15 (EXP-3 to EXP-14; EXP-11 took 61 min, EXP-12 18, EXP-13 16, EXP-14 46).
   CIFAR-100 downloads slowly on Kaggle (20 of EXP-9's 28.5 min; 53.5 of EXP-10's 70 min). **Fixed
   2026-11-17 (owner approved):** private Kaggle dataset `mitanshkanani/cifar100-python` holds the
   official `train`, `test`, `meta` files (md5-checked against torchvision before upload). To use it:
@@ -67,14 +67,19 @@ The owner approved EXP-11, EXP-12 ("Go for exp 12") and EXP-13 ("Start exp 13") 
    no correction 10/14/23/29/34/36.5. With all 500 pictures but outside the view, new classes get
    26.8% among 100 (EXP-11's reference inside tables+view: 51.7%, H 52.9). Two limits: card (to ~30
    pictures), then the view built only from old classes.
+12. **EXP-14 ("helps, but not enough")**: new classes join the learned view (one extra direction per
+   class from its card and the old table, equal to a rebuild with the old table). Gain with handicap
+   +0.5/-1.1/-0.8/+3.5/+9.4/+12.9 at 1/3/10/30/100/all pictures: crossover 30. All pictures joined:
+   H 58.0 (old 54.0, new 62.8). Rebuilding the table too adds only +0.5. Stream (4 sessions): join at
+   30 gives 38.8 vs never 36.5 (+2.2, 3.0 needed), but at never's handicap the gain vanishes; joined
+   classes need their own handicap. Laptop check stopped for low RAM (not GPU); T4 peak 2.4 GB.
 
 **Next steps, in order (owner decides):**
 - **Commit/push anything pending** (check `git status`; `PAPER 4.PDF` is an old unrelated change,
   leave it unstaged).
-- **EXP-14 (proposed, section 17 of `EXP-13-JOURNAL.pdf`):** when should a new class join the view?
-  (1) crossover: new classes out of the view / in the view / in tables and view, at 3-500 pictures;
-  (2) a stream where new classes gain pictures over time and join the view after N pictures
-  (consolidation), N from the rehearsal. Write Part A first; needs the owner's go-ahead.
+- **EXP-15 (proposed, section 17 of `EXP-14-JOURNAL.pdf`):** gradual joining (a new direction
+  weighted n / (n + k), k from the rehearsal), a separate handicap for joined classes, and a longer
+  stream (8 sessions, up to 500 pictures). Write Part A first; needs the owner's go-ahead.
 - Later: cheap boosts to patch eyes (mirrored images, +/- parts, finer regions, more detectors,
   second layer by grouping co-active detectors); make patch eyes fit 4 GB; a laptop-sized language
   test only when the owner asks (see literature log section 5).
@@ -112,6 +117,7 @@ researched both ways.
 | EXP-11 (sharper eyes) | `EXP-11-SHARPER-EYES/` | complete (2026-11-19). Private Kaggle job (Tesla T4, 61 min; data from the private dataset in 0.2 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `kaggle_run.log`. Journal `EXP-11-JOURNAL.pdf` has Part A and Part B (17 pages). Verdict by the pre-written rule: **helps, but not enough** |
 | EXP-12 (old or new) | `EXP-12-OLD-OR-NEW/` | complete (2026-11-19). Private Kaggle job (Tesla T4, 18 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `kaggle_run.log`. Journal `EXP-12-JOURNAL.pdf` has Part A and Part B (17 pages). Verdict by the pre-written rule: **does not work** |
 | EXP-13 (how many pictures) | `EXP-13-HOW-MANY-PICTURES/` | complete (2026-11-19). Private Kaggle job (Tesla T4, 16 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `kaggle_run.log`. Journal `EXP-13-JOURNAL.pdf` has Part A and Part B (14 pages). Verdict by the pre-written rule: **does not work** (copies) |
+| EXP-14 (when to join) | `EXP-14-WHEN-TO-JOIN/` | complete (2026-11-19). Private Kaggle job (Tesla T4, 46 min), results in `results/runs.jsonl`, `summary.json`, `extra_matched.json`, `meta.json`, `kaggle_run.log`. Journal `EXP-14-JOURNAL.pdf` has Part A and Part B (16 pages). Verdict by the pre-written rule: **helps, but not enough** |
 | Literature log | `RESEARCH_LITERATURE_LOG.md` | nine sections written 2026-11-15/17 from subagent reading (passages, not full papers) |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
@@ -417,6 +423,27 @@ A2 eyes, new classes kept out of the view; settings from the rehearsal under the
 - GPU 2.2 GB (T4 3.0 reserved; laptop 2.22/2.7), 194 s and 1.9 Wh per seed. Prediction "does not work" right;
   "handicap not needed with all pictures" wrong.
 
+## EXP-14 result (read the journal for detail)
+
+A2 eyes; "view" = each new class adds one direction to the learned view (old table unchanged);
+settings from the rehearsal (`EXP-14-WHEN-TO-JOIN/results/summary.json`). Test:
+
+| Pictures per new class | 1 | 3 | 10 | 30 | 100 | all (500) |
+|---|---|---|---|---|---|---|
+| H with handicap, apart | 18.4 | 26.0 | 35.8 | 41.1 | 44.2 | 45.1 |
+| H with handicap, joined | 18.8 | 24.9 | 35.0 | 44.6 | 53.6 | 58.0 |
+| H no correction, joined | 8.8 | 10.7 | 18.4 | 30.4 | 45.9 | 56.4 |
+
+- Table and view vs view only (same draws): within 0.5 everywhere; the view is enough.
+- Stream (10 runs, 4 sessions of 5 classes, 3/10/30/100 pictures): never 36.5, once 37.1, at10 37.9,
+  at30 38.8 (selected, also best on test), at100 38.2. At never's settings (gamma 0.03, h 0.10):
+  once -9.4, at10 -3.5, at30 -0.3, at100 +0.4 (`results/extra_matched.json`).
+- Handicap still worth +1.7 with all pictures joined (apart: +8.7).
+- T4 peak 2.4 GB (3.0 reserved), RAM 5.3 GB; 544 s and 5.4 Wh per seed. Laptop full check was killed
+  for low RAM after the apart part (which matched EXP-13); not rerun (the owner chose Kaggle).
+- Predictions: crossover 10 (wrong, 30); verdict, view enough, N* at 10/30, holding apart: right;
+  handicap not needed: wrong.
+
 ## Other literature facts worth keeping (from `RESEARCH_GROWING_STRUCTURE.md`)
 
 - Zero-forgetting growth methods mostly need a task hint; no-hint growth methods mostly rely on replay.
@@ -439,6 +466,6 @@ A2 eyes, new classes kept out of the view; settings from the rehearsal under the
 
 ## Open decisions for the owner
 
-1. Go ahead with EXP-14 as proposed in section 17 of `EXP-13-HOW-MANY-PICTURES/EXP-13-JOURNAL.pdf`,
+1. Go ahead with EXP-15 as proposed in section 17 of `EXP-14-WHEN-TO-JOIN/EXP-14-JOURNAL.pdf`,
    or pick a different next step?
 2. (Done 2026-11-17: CIFAR-100 uploaded as a private Kaggle dataset, see the rules above.)

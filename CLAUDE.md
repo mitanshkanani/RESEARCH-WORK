@@ -156,6 +156,15 @@ of any few-shot ability comes from the pretraining rather than from the learning
   in the tables and view (EXP-11's reference). Two limits: the card up to about 30 pictures, then
   the view. Section 17 proposes EXP-14 (when a new class should join the view; a stream with
   consolidation).
+- `EXP-14-WHEN-TO-JOIN/`: tests after how many pictures a new class should join the learned view
+  (one extra direction per class, computed from its card and the old shared table), and a stream
+  where new classes are held apart and join once they have N pictures. Complete (2026-11-19);
+  journal `EXP-14-JOURNAL.pdf`. Verdict "helps, but not enough": joining hurts a little below 30
+  pictures (-1.1 at 3) and helps a lot above (harmonic mean 45.1 to 58.0 with all pictures; new
+  classes 62.8% among 100 with old at 54.0%); rebuilding the shared table too adds only 0.5. In a
+  4-session stream, joining at 30 pictures gives 38.8 against 36.5 for never (3.0 needed), and the
+  gain needs a handicap re-chosen for joined classes. Section 17 proposes EXP-15 (gradual joining,
+  a separate handicap for joined classes, a longer stream).
 - `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
   2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that
