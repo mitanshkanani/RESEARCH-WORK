@@ -1,0 +1,13 @@
+{
+  "id": "mitanshkanani/exp13-how-many-pictures",
+  "title": "exp13-how-many-pictures",
+  "code_file": "exp13.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": ["mitanshkanani/cifar100-python"],
+  "competition_sources": [],
+  "kernel_sources": []
+}
