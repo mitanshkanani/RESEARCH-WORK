@@ -146,6 +146,16 @@ of any few-shot ability comes from the pretraining rather than from the learning
   26.0, and that half point comes from where the old-class limit falls, not from the signal.
   EXP-10 to EXP-12 all say the limit is the new card from few pictures. Section 17 proposes EXP-13
   (how many pictures a new class needs; more from each picture by shifted copies).
+- `EXP-13-HOW-MANY-PICTURES/`: measures how the score among all 100 classes grows with pictures
+  per new class (1 to 500), and whether moved or enlarged copies of each new picture make it count
+  for more (no backprop). Complete (2026-11-19); journal `EXP-13-JOURNAL.pdf`. Verdict on copies
+  "does not work": moved copies +0.35 at 3 pictures (worth 3.1 pictures), enlarged copies hurt. The
+  curve with the handicap: 18 / 26 / 36 / 41 / 44 / 45 at 1 / 3 / 10 / 30 / 100 / 500 pictures; 90%
+  is reached at about 27 pictures. Even with all 500 pictures, new classes left out of the learned
+  view score only 26.8% among 100 without correction (harmonic mean 36.5), against 52.9 when they are
+  in the tables and view (EXP-11's reference). Two limits: the card up to about 30 pictures, then
+  the view. Section 17 proposes EXP-14 (when a new class should join the view; a stream with
+  consolidation).
 - `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
   2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that

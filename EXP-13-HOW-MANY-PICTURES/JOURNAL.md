@@ -1,6 +1,6 @@
 # EXP-13 · HOW MANY PICTURES DOES A NEW CLASS NEED?
 
-**Experiment ID:** EXP-13 · **Part A written:** 2026-11-19, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** PLANNED. Part A only; nothing has been run
+**Experiment ID:** EXP-13 · **Part A written:** 2026-11-19, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** COMPLETE (run 2026-11-19 on Kaggle). Verdict: **does not work**. Part B added at the end
 
 This journal has two parts. **Part A** (this part) explains the experiment before it starts.
 **Part B** will be added to the end of this same PDF when the experiment finishes. Part A
@@ -241,3 +241,220 @@ in EXP-9, EXP-10 and EXP-12 and right in EXP-11. If it is wrong again, it stays 
 | Seed | One repeat with a different random shuffle |
 
 <div class="pagebreak"></div>
+
+# Part B: the readings (added after the run, 2026-11-19)
+
+Part A above was not changed after the run, except the one status line at the top of page 1.
+
+## 10. What was actually run
+
+The plan in section 3 was run once, on a free Kaggle GPU (Tesla T4), as a private job named
+`exp13-how-many-pictures`. It took **16 minutes** for 5 seeds (photos read from the private
+Kaggle copy of CIFAR-100). The result files were downloaded into `results/`: `runs.jsonl`,
+`meta.json` and `kaggle_run.log`. There were no errors. `src/figures.py` turned `runs.jsonl` into
+`results/summary.json` and the figures, with the choosing rules of section 3. **Every number below
+comes from `results/summary.json`** unless another file is named: means of 5 seeds on the test.
+
+**Things that differ from Part A, or that need saying:**
+
+| Item | What was done |
+|---|---|
+| Code checks on the laptop | A small trial (1 seed, a tenth of the stencils and pictures) ran the whole code; its no-copies numbers were identical to EXP-12's small trial. The full-size eyes ran on the laptop's RTX 3050 through the stage-6 rehearsal: peak **2.22 GB** of GPU memory in use (2.7 GB including reserve). The trials' numbers were thrown away |
+| Run time | 16 minutes, not 25. About 0.3 Kaggle hours used |
+| Python environment | copied from EXP-12's folder (146 MB), so nothing was downloaded |
+
+Nothing in sections 1 to 9 was changed.
+
+## 11. The readings
+
+### 11.1 Step 0: is EXP-12 rebuilt? Yes, exactly
+
+No copies, smoothing 0.1, handicap 0.08, 3 pictures: old **52.47%**, new **17.28%** (EXP-12: the
+same).
+
+### 11.2 The curve: more pictures per new class
+
+![The curve](figures/fig1_curve.svg)
+
+*Figure 1. Harmonic mean of old and new among all 100 classes, against pictures per new class,
+with the handicap (black) and without correction (grey, dashed). Orange: the new classes named
+among themselves only. Coloured dots: 1, 3 and 10 pictures with copies.*
+
+| Pictures per new class | 1 | 3 | 10 | 30 | 100 | all (500) |
+|---|---|---|---|---|---|---|
+| **Harmonic mean, with the handicap** | 18.4 | 26.0 | 35.8 | 41.1 | 44.2 | **45.1** |
+| Old / new, with the handicap | 51.6 / 11.2 | 52.5 / 17.3 | 54.0 / 26.7 | 53.7 / 33.3 | 50.9 / 39.1 | 53.2 / 39.2 |
+| Harmonic mean, no correction | 9.7 | 14.3 | 22.7 | 29.2 | 34.3 | **36.5** |
+| Old / new, no correction | 48.5 / 5.4 | 48.9 / 8.4 | 48.8 / 14.8 | 57.6 / 19.6 | 57.2 / 24.5 | 57.0 / 26.8 |
+| New classes among themselves | 24.9 | 36.2 | 46.9 | 53.8 | 58.1 | 59.4 |
+
+![Old and new](figures/fig4_old_new.svg)
+
+*Figure 4. Old (blue) and new (red) classes separately, with the handicap (solid) and without
+(dashed). Without correction, the rule picks the smoothing with the best rehearsal score, which
+is 1 up to 10 pictures and 0.03 from 30 on; that is why the old classes jump at 30.*
+
+In plain words:
+
+- **More pictures help a lot, then stop helping.** From 3 to 30 pictures the harmonic mean rises
+  from 26 to 41. From 100 pictures on it is flat at about 45.
+- **Even with all 500 pictures, as many as the old classes have, the new classes lose.** They
+  score 59.4% among themselves, but only 26.8% among all 100 without correction, and 39.2% with
+  the handicap. The old classes, with the same number of pictures, score 57.0%.
+- **So a card from few pictures is not the only limit.** In EXP-11, the reference with all
+  pictures also added the new classes to the memory's tables and to the learned view, and reached
+  a harmonic mean of **52.9 with no correction** (old 54.1, new 51.7;
+  `EXP-11-SHARPER-EYES/results/summary.json`, A2). Here the new classes are left out of the view,
+  and the same cards reach only **36.5** without correction and 45.1 with the handicap. The view
+  is built from the old classes: its directions are the ones that tell **old** classes apart. New
+  classes are squeezed into those directions and overlap with the old classes.
+
+### 11.3 Copies
+
+![Copies](figures/fig2_copies.svg)
+
+*Figure 2. Harmonic mean among 100 (left) and the new classes among themselves (right), at 1, 3
+and 10 pictures, with each kind of copy.*
+
+| Harmonic mean among 100 (new among themselves) | 1 picture | 3 pictures | 10 pictures |
+|---|---|---|---|
+| No copies | 18.4 (24.9) | 26.0 (36.2) | 35.8 (46.9) |
+| **Moved, 8 copies** (selected) | 18.6 (24.9) | 26.4 (36.3) | 35.3 (47.0) |
+| Enlarged, 5 copies | 15.1 (22.8) | 21.3 (34.2) | 27.2 (44.0) |
+| Both, 13 copies | 17.7 (24.6) | 24.9 (36.1) | 33.6 (46.5) |
+
+**Moved copies change almost nothing** (+0.3, +0.4, −0.5). **Enlarged copies hurt**, by up to 8.6
+points at 10 pictures. As Part A expected, the eyes add up each stencil's matches over each
+quarter of the picture, so a 3-pixel move barely changes the description. An enlarged copy does
+change it, but in the wrong way: the test pictures are not enlarged, so the card drifts away from
+what a real fox picture looks like.
+
+### 11.4 Old against new
+
+![Old against new](figures/fig3_tradeoff.svg)
+
+*Figure 3. Old against new among all 100 as the handicap varies: 3 pictures with no copies (grey,
+hidden under the blue line because the two are almost identical), 3 pictures with moved copies
+(blue), 30 pictures (orange) and all pictures (black). Circles: the settings chosen in the
+rehearsal.*
+
+More pictures move the whole curve outwards; copies do not move it. With all pictures, the curve
+still bends sharply. Without a handicap (the right-hand end of each curve), the new classes are
+still far down.
+
+### 11.5 Cost
+
+| | Reading |
+|---|---|
+| Peak GPU memory in use | **2.2 GB** (3.0 GB including reserve) on the T4; 2.22 GB (2.7 GB) on the laptop through the rehearsal |
+| Ordinary memory | 1.4 GB at its peak |
+| Time per seed (T4) | 194 s: describing 59 s, copies 89 s, tables 6 s, views 39 s, scoring under 1 s |
+| GPU energy per seed | 1.9 Wh |
+
+## 12. The verdict, by the rule written in section 5
+
+| Step | Reading | Result |
+|---|---|---|
+| 0. Rebuild | old 52.47, new 17.28 (EXP-12: the same) | passed, exactly |
+| 1(a) gain at 3 pictures | moved copies 26.35 − no copies 26.00 = **+0.35** (3.0 needed) | **fails** |
+| 1(b) gain at 1 and 10 pictures | +0.28 and −0.50 (1.5 needed) | **fails** |
+| 1(c) new-among-themselves gain at 3 pictures | +0.07 (2.0 needed) | **fails** |
+| 1(d) peak GPU memory | 2.2 GB (3.5 GB allowed) | holds |
+| **1. Main verdict on copies** | the gain at 3 pictures is under 1.0 | **does not work** |
+| 2. Picture-equivalent | 3 pictures with moved copies count as **3.1** pictures (4.5 needed) | **no** |
+| 3. How many pictures are needed? | 90% of the all-pictures score (40.6) is reached at about **27 pictures** | — |
+| 4. Is the handicap still needed with good cards? | all pictures: 45.1 with the handicap, 36.5 without: **+8.7** | **yes, still needed** |
+| 5. Can the rehearsal be trusted? | the selected copies (moved) are also the best on the test | **yes** |
+
+## 13. Was the expectation in section 5 right?
+
+| What I wrote before the run | What happened | |
+|---|---|---|
+| Step 0 passes exactly | exactly | right |
+| With the handicap: 18 / 26 / 36 / 43 / 47 / 50 | 18.4 / 26.0 / 35.8 / 41.1 / 44.2 / 45.1 | right up to 10 pictures; too high from 30 on |
+| No correction: 9 / 13 / 21 / 32 / 42 / 49 | 9.7 / 14.3 / 22.7 / 29.2 / 34.3 / 36.5 | right up to 10; **much too high** with many pictures |
+| About 60 pictures for 90% | about 27 (because the curve flattens lower) | wrong |
+| The handicap is not needed with all pictures | still worth +8.7 | **wrong** |
+| Moved copies +1 on new-among-themselves, enlarged +0.5, both +1; selected: both | +0.1, −2.0, −0.1; selected: moved | wrong in detail; enlarged copies hurt |
+| Picture-equivalent about 3.5 | 3.1 | close |
+| Verdict "does not work" | "does not work" | right |
+| About 2.3 GB; the rehearsal picks well | 2.2 GB; yes | right |
+
+The wrong part is the one that matters: I expected that new classes with as many pictures as the
+old ones would compete as equals. They do not, as long as the view leaves them out.
+
+## 14. What it means for the project
+
+**1. There are two limits, not one.** Up to about 30 pictures, the limit is the card: more
+pictures lift the harmonic mean from 26 (3 pictures) to 41 (30). Beyond that, **the limit is the
+view.** With all 500 pictures, new classes that are left out of the view score 26.8% among 100
+without correction. The same classes inside the view (EXP-11's reference) score 51.7%.
+
+**2. The view is the memory's "way of looking", and it is fitted to what it already knows.** It
+keeps the directions that separate the old classes. A fox that is new to the view is seen only
+through "dog-or-cat-or-wolf" directions, so it looks like one of them. In brain terms, the memory
+has learned what to pay attention to, and a new kind of thing is forced into the old categories.
+
+**3. Adding a class to the view at the right time looks like the missing step.** EXP-10 found that
+adding new classes to the view from 3 pictures **hurts** (−3.6): a 3-picture class shapes the view
+badly. EXP-11's reference shows that adding them with all their pictures **helps** a great deal
+(36.5 → 52.9 with no correction, comparing EXP-13 and EXP-11 at all pictures). Somewhere in
+between there is a point where a new class has enough pictures to join the view. That is like
+consolidation in the brain: a new memory is first held separately and only later woven into the
+general structure.
+
+**4. Copies of a picture do not make it count for more** with these eyes: moved copies change
+nothing, enlarged copies hurt. More real pictures help; transformed copies of the same picture do
+not.
+
+**5. Against the three goals.** No forgetting: still achieved. Cheap: achieved (2.2 GB, about 3
+minutes per seed, 1.9 Wh). A new class from a handful of pictures among old ones: **not achieved**. A new
+class needs about 30 pictures before it competes reasonably, and even then it is held back by a
+view that does not include it.
+
+## 15. What is still unverified
+
+- **The comparison of "in the view" and "not in the view" with all pictures** uses two experiments
+  (EXP-11's reference and EXP-13). Both use A2's eyes, the same seeds and the same classes, but
+  EXP-11's reference also added the new classes' pictures to the shared table. Which of the two
+  (table or view) matters was not separated.
+- **At how many pictures adding a class to the view starts to help** was not measured (EXP-10:
+  hurts at 3; EXP-11: helps at 500).
+- **Other kinds of copies** (small rotations, colour changes, copies used as separate pictures
+  rather than averaged) were not tried.
+- **Points at 100 and all pictures** use 10 draws and 1 draw.
+- 5 seeds, one dataset (CIFAR-100), images only. The surprise classes are fixed.
+
+## 16. What carries over beyond pictures
+
+| Part | Depends on pictures? |
+|---|---|
+| The curve of score against examples per new class, flattening at about 30 | **no** |
+| The finding that a memory's learned view, fitted to old classes, holds back new classes even with many examples | **no**. It applies to any memory that compresses its descriptions to directions chosen from what it already knows |
+| The need for a step that adds a class to the view once it has enough examples | **no** |
+| Moved and enlarged copies (do not help) | **yes** |
+
+## 17. What the next experiment should be, and why
+
+**Proposed EXP-14: when should a new class join the view?**
+
+Why: EXP-13 shows that, past about 30 pictures, the limit is a view built only from the old
+classes. EXP-10 showed that adding new classes to the view from 3 pictures hurts; EXP-11 showed
+that adding them with all their pictures helps (no-correction harmonic mean 52.9 against 36.5).
+The crossover between the two is unknown, and it decides how a growing memory should work.
+
+What it should contain, all closed-form, on A2's eyes:
+
+1. **The crossover.** For 3, 10, 30, 100 and 500 pictures per new class: the new classes kept out
+   of the view (as EXP-13), added to the view only, and added to both the shared table and the
+   view. Old, new and harmonic mean, with and without the handicap.
+2. **A stream with consolidation.** New classes arrive with a few pictures and receive more over
+   time; a class joins the view once it has at least N pictures, N chosen in the rehearsal. Compared
+   with never joining and with always joining. This is the brain-like step: hold a new memory
+   apart, then fold it into the general structure once it is reliable.
+3. Keep the old-class limit and the rehearsal rule as in EXP-11 to EXP-13.
+
+Nothing in it is image-specific: a language memory with a learned view would face the same
+question of when a new word or topic is allowed to reshape the view.
+
+This is a proposal. It needs its own Part A before any code is run.
