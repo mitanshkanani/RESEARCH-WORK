@@ -449,3 +449,32 @@ Not opened: Chen et al. 2019 "A Closer Look at Few-shot Classification"; an FSCI
   our eyes (since EXP-7, every pooled match is square-rooted).
 - No paper found tests plain moved or enlarged copies averaged into a class average on fixed features,
   or a 1-to-500 picture curve for new classes among old ones. EXP-13 measures both without a reference.
+
+## 12. When a new class should join a shared discriminant view (2026-11-19)
+
+Question: EXP-13 found that new classes kept out of the learned view are held back even with 500
+pictures, while EXP-10 found that adding them to the view at 3 pictures hurts. Is there published
+work on when (after how many examples) a new class should be folded into a shared discriminant
+subspace, and on holding new knowledge apart and consolidating it later? One Sonnet subagent.
+
+| Paper | Tag | Recipe | Numbers seen |
+|---|---|---|---|
+| McClelland, McNaughton, Lampinen, "Integration of new information in memory: new insights from a complementary learning systems perspective", Phil. Trans. R. Soc. B 375(1799):20190637, 2020, DOI 10.1098/rstb.2019.0637 | passages (PMC7209926, first ~100k of 150k characters) | Fast store learns new items at once; slow network absorbs them by interleaving with known items (small simulations) | Abstract: "The projection onto the known dimensions can be learned rapidly without interleaving", but "learning the new dimension requires gradual interleaved learning". Schema-consistent items learned from 2 experiences with slight interference; similarity-weighted interleaving: 3.4 presentations per epoch against 9, about the same result per epoch |
+| Zhou, Wang, Ye, Ma, Pu, Zhan, "Forward Compatible Few-Shot Class-Incremental Learning" (FACT), arXiv:2203.06953 | passages | Reserves virtual prototypes in the base session; later sessions keep the embedding fixed and give new classes an average prototype | Table 1, CIFAR-100: 73.07 at session 0, 49.14 at session 8 (CEC 47.68; Decoupled-Cosine 29.37; iCaRL 2.65). Fig. 7c text only: more shots help, "the improvement trend becomes trivial for K > 20" |
+| Akyürek, Akyürek, Wijaya, Andreas, "Subspace Regularizers for Few-Shot Class Incremental Learning", ICLR 2022, arXiv:2110.07059 | passages | New-class weights regularized toward the span of base-class weights; the span is not changed | Table 1, miniImageNet, 5-way 5-shot sessions, sessions 1 / 2 / 8 without stored examples: 71.7 / 66.9 / 46.8; fine-tuning 61.8 / 49.9 / 26.5 |
+| Chumachenko, Raitoharju, Gabbouj, Iosifidis, "Incremental Fast Subclass Discriminant Analysis", arXiv:2002.04348 | passages (abstract and method; tables did not extract) | Exact and approximate closed-form (Woodbury) updates of a discriminant subspace for one sample or a batch | Abstract: accuracy "equal or close" to batch recomputation, faster, eight image datasets |
+| Khawand, Hanappe, Colliaux, "Continual Learning with Deep Streaming Regularized Discriminant Analysis", arXiv:2309.08353 | passages (text; table did not extract) | Streaming class means and class covariances; each class covariance shrunk toward the pooled one with weight alpha | Best alpha 0.55 by grid search (0 = streaming LDA, 1 = per-class QDA); per-class covariance alone fails in high dimension; text claims +5% over streaming state of the art on ImageNet |
+
+Not opened: Pang et al. 2005 and other incremental LDA papers; Kumaran, Hassabis & McClelland 2016;
+McClelland, McNaughton & O'Reilly 1995 (search excerpt only). CEC (Zhang et al. 2021): the ID tried
+(2104.00597) is a different paper, so no ID is given; CEC appears only as a row in FACT's table.
+
+### What this means for us (our reading)
+
+- No opened paper measures after how many examples a new class should join a shared view. EXP-14
+  measures this without a reference.
+- The few-shot class-incremental methods keep new classes out of the shared directions at 1 to 5
+  shots; none tests folding them in later.
+- The complementary-learning-systems paper separates fitting a new item inside known directions
+  (fast; our card) from adding a new direction (slow; our joining the view). That is the
+  consolidation idea EXP-14's stream tests.
