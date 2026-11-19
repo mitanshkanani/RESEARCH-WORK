@@ -270,17 +270,20 @@ def main():
     ax.legend(fontsize=7, frameon=False, loc="center left", bbox_to_anchor=(1.0, 0.5))
     save(fig, "fig4_pictures")
 
-    # ---- figure 5: familiarity of old, new and in-hand pictures (selected signal, test, mean of seeds' deciles)
+    # ---- figure 5: familiarity of old, new and in-hand pictures (test, mean of seeds' deciles):
+    #      the selected switch's signal, and the signal that separates best (F4)
     dq = meta["deciles"]
-    fig, ax = plt.subplots(figsize=(6.4, 3.4))
-    for part, col, lab in (("old", BLUE, "old classes' test pictures"), ("new", RED, "new classes' test pictures"),
-                           ("pool", AMBER, "new pictures in hand (set the threshold)")):
-        v = np.mean([dd[sel_sig][part] for dd in DEC[("part1", gs)]], 0)
-        ax.plot(v, dq, color=col, label=lab)
-    ax.set_xlabel(f"{SNAME[sel_sig]} (larger = less familiar)")
-    ax.set_ylabel("fraction of pictures below")
-    ax.set_title(f"Familiarity, {SNAME[sel_sig]}, smoothing {gs} (test)")
-    ax.legend(fontsize=7, frameon=False, loc="lower right")
+    panels = [(sel_sig, gs)] + ([("F4", out["F4 + h"]["3"]["gamma"])] if sel_sig != "F4" else [])
+    fig, axes = plt.subplots(1, len(panels), figsize=(5.2 * len(panels), 3.4), squeeze=False)
+    for ax, (sig, gg) in zip(axes[0], panels):
+        for part, col, lab in (("old", BLUE, "old classes' test pictures"), ("new", RED, "new classes' test pictures"),
+                               ("pool", AMBER, "new pictures in hand (set the threshold)")):
+            v = np.mean([dd[sig][part] for dd in DEC[("part1", gg)]], 0)
+            ax.plot(v, dq, color=col, label=lab)
+        ax.set_xlabel(f"{SNAME[sig]} (larger = less familiar)")
+        ax.set_title(f"{SNAME[sig]}, smoothing {gg} (test)", fontsize=9)
+    axes[0][0].set_ylabel("fraction of pictures below")
+    axes[0][-1].legend(fontsize=7, frameon=False, loc="upper left")
     save(fig, "fig5_familiarity")
 
 

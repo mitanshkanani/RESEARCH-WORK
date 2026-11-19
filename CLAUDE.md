@@ -136,6 +136,16 @@ of any few-shot ability comes from the pretraining rather than from the learning
   mean 24.8 to 26.0; 3 needed). Mirroring alone gives +3.0 on 80 classes. The gap to "all
   pictures" grows. Section 17 proposes EXP-12 (a closed-form "old or new?" switch; a perfect
   switch would give a harmonic mean of about 45, by arithmetic).
+- `EXP-12-OLD-OR-NEW/`: tests a switch that first decides "old class or new class?" from what
+  the memory stores (four familiarity signals from the class averages and the shared table, alone
+  or with the handicap), then names the picture within that group, on EXP-11's eyes. Complete
+  (2026-11-19); journal `EXP-12-JOURNAL.pdf`. Verdict "does not work": a perfect switch would give
+  a harmonic mean of 45.1 at 3 pictures (confirmed), but distance to the known cards cannot tell a
+  new class's picture from an old one (AUC 0.47 to 0.51, guessing); only the relative signal
+  separates partly (0.68), less than the handicap's own score (0.73). Best real switch 26.6 against
+  26.0, and that half point comes from where the old-class limit falls, not from the signal.
+  EXP-10 to EXP-12 all say the limit is the new card from few pictures. Section 17 proposes EXP-13
+  (how many pictures a new class needs; more from each picture by shifted copies).
 - `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
   2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that

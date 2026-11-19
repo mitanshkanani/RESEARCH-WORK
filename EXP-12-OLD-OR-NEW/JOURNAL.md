@@ -1,6 +1,6 @@
 # EXP-12 · OLD OR NEW? A SWITCH IN FRONT OF THE MEMORY
 
-**Experiment ID:** EXP-12 · **Part A written:** 2026-11-19, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** PLANNED. Part A only; nothing has been run
+**Experiment ID:** EXP-12 · **Part A written:** 2026-11-19, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** COMPLETE (run 2026-11-19 on Kaggle). Verdict: **does not work**. Part B added at the end
 
 This journal has two parts. **Part A** (this part) explains the experiment before it starts.
 **Part B** will be added to the end of this same PDF when the experiment finishes. Part A
@@ -281,3 +281,268 @@ EXP-11. If it is wrong again, it stays in the journal as written.
 | Seed | One repeat with a different random shuffle |
 
 <div class="pagebreak"></div>
+
+# Part B: the readings (added after the run, 2026-11-19)
+
+Part A above was not changed after the run, except the one status line at the top of page 1.
+
+## 10. What was actually run
+
+The plan in section 3 was run once, on a free Kaggle GPU (Tesla T4), as a private job named
+`exp12-old-or-new`. It took **18 minutes** for 5 seeds (the photos were ready in 0.2 minutes,
+read from the private Kaggle copy of CIFAR-100). The result files were downloaded into
+`results/`: `runs.jsonl` (1,005 lines), `meta.json` and `kaggle_run.log`. There were no errors.
+`src/figures.py` turned `runs.jsonl` into `results/summary.json` and the figures, with the
+choosing rules of section 3. **Every number below comes from `results/summary.json`** unless
+another file is named: means of 5 seeds on the test.
+
+**Things that differ from Part A, or that need saying:**
+
+| Item | What was done |
+|---|---|
+| Code checks on the laptop | A small trial (1 seed, a tenth of the stencils and pictures) ran the whole code. On the same small trial, EXP-11's code and this code gave **identical** handicap numbers at every smoothing and number of pictures compared. A second check ran the full-size eyes on the laptop's RTX 3050 through the stage-6 rehearsal: peak **2.39 GB** of GPU memory in use (2.8 GB including reserve). The trials' numbers were thrown away |
+| Smoothing for step 2 and step 3 | Part A did not say at which smoothing the perfect switch and the AUCs are read. Done here: the perfect switch at the smoothing with the best rehearsal harmonic mean; each signal's AUC at the smoothing its own "F only" switch chose in the rehearsal. Figure 2 shows every smoothing, and the conclusions are the same at all of them |
+| Run time | 18 minutes, not the 45 expected. About 0.3 Kaggle hours used |
+| Python environment | copied from EXP-11's folder (146 MB), so nothing was downloaded |
+
+Nothing in sections 1 to 9 was changed.
+
+## 11. The readings
+
+### 11.1 Step 0: is EXP-11 rebuilt? Yes, exactly
+
+S0 at smoothing 0.1, handicap 0.08, 3 pictures: old **52.47%**, new **17.28%** (EXP-11, A2:
+52.47 and 17.28).
+
+### 11.2 Every switch
+
+![Every switch](figures/fig1_switches.svg)
+
+*Figure 1. Harmonic mean at 3 pictures on the test, for every switch at the settings chosen in
+the rehearsal, with the old classes kept within the limit. Hatched: familiarity combined with
+the handicap. Last bar: the perfect switch (a ceiling, not a method).*
+
+| Switch, 3 pictures | Smoothing | q | Handicap | Old | New | **Harmonic mean** |
+|---|---|---|---|---|---|---|
+| **S0 handicap** (EXP-11's way) | 0.1 | – | 0.08 | 52.5 | 17.3 | **26.0** |
+| F1 inside the view, alone | 0.01 | 0.90 | – | 52.9 | 3.5 | 6.5 |
+| F2 outside the view, alone | 1 | 0.88 | – | 41.0 | 3.8 | 7.0 |
+| F3 everything, alone | 1 | 0.88 | – | 41.0 | 3.8 | 7.0 |
+| F4 relative, alone | 0.1 | 0.60 | – | 51.1 | 12.4 | 20.0 |
+| **F1 + handicap** (selected) | 0.1 | 0.02 | 0.09 | 52.0 | 17.9 | **26.6** |
+| F2 + handicap | 0.03 | 0.00 | 0.09 | 54.4 | 17.8 | 26.8 |
+| F3 + handicap | 0.03 | 0.00 | 0.09 | 54.4 | 17.8 | 26.8 |
+| F4 + handicap | 0.03 | 0.02 | 0.09 | 54.5 | 17.9 | 27.0 |
+| *Perfect switch* | 0.03 | – | – | *59.4* | *36.4* | ***45.1*** |
+
+In plain words: **the perfect switch is real**, at 45.1, as EXP-11's arithmetic said. **None of
+the real switches comes close.** Alone, the familiarity signals are far worse than the handicap.
+Combined with it, they add about half a point, and section 11.4 shows that this half point does
+not come from the familiarity signals.
+
+### 11.3 Can the signals tell old pictures from new ones?
+
+![AUC](figures/fig2_auc.svg)
+
+*Figure 2. How well each signal separates old classes' test pictures from new classes' test
+pictures (AUC: 0.5 = guessing, 1 = perfect), at every smoothing. Grey: the handicap's own score
+(best new card minus best old card), which uses the new cards.*
+
+| Signal | AUC (test) |
+|---|---|
+| F1 inside the view | 0.51 (smoothing 0.01; 0.49 to 0.51 at the others) |
+| F2 outside the view | **0.47**: below guessing |
+| F3 everything | 0.47 |
+| F4 relative | **0.68** (smoothing 0.1; 0.66 to 0.70 at the others) |
+| The handicap's score, 1 / 3 / 10 pictures | 0.69 / **0.73** / 0.76 (smoothing 0.1) |
+
+**Distance to the nearest known card says nothing about whether a picture is new.** F1, F2 and
+F3 are at or below guessing at every smoothing. A fox picture is as close to the "dog" card as
+a dog picture is. Outside the view, the new pictures even look slightly *more* familiar than the
+old test pictures.
+
+**The relative signal (F4) does separate them partly** (0.68), as Ren et al. reported for near
+unknowns. But it is still weaker than the handicap's own score (0.73 at 3 pictures), which uses
+the new cards.
+
+![Familiarity](figures/fig5_familiarity.svg)
+
+*Figure 5. How the familiarity values are spread, for old classes' test pictures (blue), new
+classes' test pictures (red), and the new pictures the memory was shown (amber, which set the
+threshold). Left: F1. Right: F4. Each curve is the fraction of pictures below a given value.*
+
+In F1 the three curves lie on top of each other. In F4 about a third of the old pictures are
+clearly more familiar than any new one (the blue tail on the left); the rest overlap. The amber
+and red curves match in both, so **setting the threshold from the pictures in hand worked as
+planned**. The weak point is the signal, not the threshold.
+
+### 11.4 Where the half point comes from
+
+At the chosen settings, the switches with the handicap use q = 0 or 0.02, so the familiarity
+test is almost switched off. Read directly from `results/runs.jsonl` (test, 3 pictures, mean of
+5 seeds):
+
+| F4 + handicap, smoothing 0.03, handicap 0.09 | q: none | 0 | 0.02 | 0.1 | 0.2 | 0.5 |
+|---|---|---|---|---|---|---|
+| Harmonic mean | **27.3** | 27.2 | 27.0 | 25.7 | 23.7 | 16.2 |
+
+**Every familiarity test lowers the score; the more it is used, the lower it goes.** The half
+point over S0 comes from the handicap: the combined switches end up at 0.09 instead of 0.08. S0
+alone at a handicap of 0.09 would reach 27.4 on the test, but in the rehearsal its old classes
+fall 0.2 points past the 5-point limit, so the rule did not allow it. A familiarity test at q
+of about 0 throws away a handful of new answers, and that keeps the old classes just inside the
+limit. The gain is a side effect of where the limit falls, not of the familiarity signal.
+
+As a diagnosis only, choosing on the test instead of the rehearsal (still within the limit),
+the best harmonic mean at 3 pictures is 28.6 for S0, and 28.3, 28.1 and 28.5 with F1, F2 and F4
+added. Nothing beats the handicap alone.
+
+### 11.5 Old against new
+
+![Old against new](figures/fig3_tradeoff.svg)
+
+*Figure 3. 3 pictures, every picture named among all 100. Grey: S0 as the handicap varies.
+Blue: the best that the selected switch (F1 + handicap) can reach, over all its settings.
+Circles: the settings chosen in the rehearsal. Star: the perfect switch.*
+
+The two curves lie on top of each other; the familiarity signal does not move the curve. The
+perfect switch sits far outside both.
+
+### 11.6 1, 3 and 10 pictures
+
+![Pictures per new class](figures/fig4_pictures.svg)
+
+*Figure 4. Harmonic mean against pictures per new class: S0, the selected switch, and the
+perfect switch.*
+
+| Pictures per new class | S0 | Selected (F1 + handicap) | Gain | Perfect switch |
+|---|---|---|---|---|
+| 1 | 18.4 | 18.3 | −0.1 | 35.5 |
+| 3 | 26.0 | 26.6 | +0.6 | 45.1 |
+| 10 | 35.8 | 35.6 | −0.1 | 52.4 |
+
+The gap to the perfect switch is 17 to 19 points at every number of pictures.
+
+### 11.7 Cost
+
+| | Reading |
+|---|---|
+| Peak GPU memory in use | **2.4 GB** (2.9 GB including reserve) on the T4; 2.39 GB on the laptop through the rehearsal |
+| Ordinary memory | 2.5 GB at its peak (EXP-11: 1.5 GB), because the test pictures' descriptions are kept while the views are computed |
+| Time per seed | 213 s: describing 53 s, tables 6 s, views and the full-table calculation for F2 and F3 150 s, scoring 3 s |
+| GPU energy per seed | 2.1 Wh |
+
+## 12. The verdict, by the rule written in section 5
+
+| Step | Reading | Result |
+|---|---|---|
+| 0. Rebuild | old 52.47, new 17.28 (EXP-11: 52.47, 17.28) | passed, exactly |
+| 1(a) gain at 3 pictures | F1 + handicap 26.6 − S0 26.0 = **+0.6** (3.0 needed); old 52.0 against 55.9 without correction, within 6 | **fails** |
+| 1(b) gain at 1 and 10 pictures | −0.1 and −0.1 (1.5 needed) | **fails** |
+| 1(c) peak GPU memory | 2.4 GB (3.5 GB allowed) | holds |
+| **1. Main verdict** | (c) holds, but the gain at 3 pictures is under 1.0 | **does not work** |
+| 2. Is the ceiling real? | perfect switch 45.1 against "about 45" | **confirmed** |
+| 3. Where is the signal? | outside the view minus inside: −0.05 (+0.02 needed); relative minus inside: **+0.17** | outside: **no**; relative: **yes** |
+| 4. How much of the gap is closed? | (26.6 − 26.0) / (45.1 − 26.0) | **3%** |
+| 5. Can the rehearsal be trusted? | selected 26.6 against best on the test (F4 + handicap) 27.0 | **yes** |
+
+## 13. Was the expectation in section 5 right?
+
+| What I wrote before the run | What happened | |
+|---|---|---|
+| Step 0 passes exactly | exactly | right |
+| Perfect switch about 44 | 45.1 | right |
+| AUC: handicap's score about 0.80 | 0.73 | too high |
+| AUC: F4 about 0.72 | 0.68 | close |
+| AUC: F1 about 0.68, F3 about 0.66, F2 about 0.62 | 0.51, 0.47, 0.47 | **wrong**: all at or below guessing |
+| Outside the view does not beat inside; relative does | as written | right |
+| Selected switch: F4 with the handicap | F1 with the handicap (F4 + handicap was best on the test) | wrong |
+| Gain about +1.5 at 3 pictures, under 1.5 at 1 picture | +0.6; −0.1 | too high; right |
+| Verdict "helps, but not enough" | "does not work" | **wrong** |
+| Under a fifth of the gap closed | 3% | right |
+| About 2.3 GB of GPU memory; the rehearsal picks well | 2.4 GB; yes | right |
+| About 45 minutes; about 1 GB more ordinary memory | 18 minutes; 1.05 GB more | too high; right |
+
+## 14. What it means for the project
+
+**1. The "old or new?" decision cannot be made from old knowledge alone, with these eyes.** The
+memory knows its 80 classes very well, yet "how far is this picture from everything I know?"
+does not tell a fox from a dog. A photo of a new animal is built from the same kinds of patches
+(fur, edges, eyes, grass) as the known ones, so it is no farther from the known cards than a
+known animal's own photo is.
+
+**2. Only the relative signal carries information,** because it removes how unusual a picture is
+overall. Even so, it is weaker than the score the handicap already uses, and adding it to the
+handicap does not help. Whatever F4 knows, the handicap's score already knows.
+
+**3. What separates the groups is how well the picture fits the new cards.** The only signal that
+beats guessing clearly is the handicap's score (best new card minus best old card), and it gets
+better with more pictures per new class (0.69, 0.73, 0.76). So the decision depends on the new
+card again. **Three experiments (EXP-10, EXP-11, EXP-12) now point the same way: the limit is how
+little a new card from a few pictures says, not how the answer is picked.** EXP-11 improved the
+eyes, and the old classes took the benefit. EXP-12 tried to avoid the new card in the decision,
+and found nothing else to decide with.
+
+**4. The perfect switch is a real target.** With a perfect old-or-new decision, the same cards
+give 45.1 at 3 pictures and 52.4 at 10 pictures, close to the 52.9 of new classes learned from
+all their pictures (EXP-11). Naming within each group is not the problem.
+
+**5. A useful negative finding.** Familiarity through one shared table does not detect near
+unknowns in this setting. The textbook rule (EXP-12, page 1) and the "distance to everything I
+know" rule both fail for the same reason: the shared table describes how pictures vary, not what
+makes a class new.
+
+**6. Against the three goals.** No forgetting: still achieved. Cheap: achieved (3.5 minutes per
+seed, 2.4 GB of GPU memory, 2.1 Wh). A new class from a handful of pictures among old ones: **not
+achieved**. The best balance stays at a harmonic mean of about 26 to 27 at 3 pictures.
+
+## 15. What is still unverified
+
+- **Why the outside-the-view signal is below guessing** (new pictures look slightly more familiar
+  there). Not looked into.
+- **A switch fitted on the score pattern** (several of the top old and new scores together,
+  instead of one difference), as the trained switch in COSMO does. Not tried.
+- **Familiarity from eyes trained by backpropagation**, or from larger pretrained eyes. These
+  signals may work with eyes that know more about objects; not tested here.
+- **Per-class thresholds** (each old class's own spread). Not tried.
+- **The rule's edge effect** (section 11.4) means a handicap of 0.09 for S0 was just outside the
+  limit in the rehearsal. The verdict does not depend on it: no switch beats S0 on the test either.
+- 5 seeds, one dataset (CIFAR-100), images only. The surprise classes are fixed.
+
+## 16. What carries over beyond pictures
+
+| Part | Depends on pictures? |
+|---|---|
+| The finding that distance to known class averages does not detect near unknowns | **no**. It is about class averages and one shared table, which a language model's memory could also use |
+| The relative signal works partly where plain distance fails (0.68 against 0.51) | **no** |
+| Setting a threshold from the few new examples in hand | **no**. It worked as planned (figure 5) |
+| The perfect-switch ceiling as a measuring tool | **no** |
+| The eyes | **yes** |
+
+## 17. What the next experiment should be, and why
+
+**Proposed EXP-13: how many pictures does a new class need, and can more be made of each one?**
+
+Why: EXP-10, EXP-11 and EXP-12 all show the limit is the new card from few pictures, not the
+answering rule. Shifting scores (EXP-10), sharper eyes (EXP-11) and a familiarity switch (EXP-12)
+each fail for the same reason. Two things are not known yet:
+
+1. **How many pictures are enough?** At 3 pictures the harmonic mean is 26; with all 500 it is
+   52.9 (EXP-11). The curve in between (3, 10, 30, 100, 500 pictures, with no correction and with
+   the handicap) shows how much better a card must get, and whether the handicap is still needed
+   once cards are good. This costs almost nothing to measure.
+2. **Can each picture count for more?** EXP-11 found the mirror worth 3 points on known classes.
+   Shifted and slightly cropped copies of each new picture (still no backpropagation) could make a
+   3-picture card behave like a card from more pictures. Measure where 3 pictures × 8 copies lands
+   on the curve from point 1.
+
+The second part is image-specific (copies of a picture). Its language version would be rephrasing
+a sentence, which is not part of this plan. Point 1 is not image-specific.
+
+**An alternative, if the owner prefers to stay with the switch:** fit a switch on the pattern of
+the top old and new scores, in one step from the rehearsal (a straight-line rule between "old" and
+"new" computed from averages and one shared table, the same kind of calculation as the memory
+itself), as COSMO does with training. That is not image-specific, but EXP-12 suggests the scores
+hold little beyond what the handicap already uses.
+
+This is a proposal. It needs its own Part A before any code is run.

@@ -1,13 +1,13 @@
-# Handoff: state of the project on 2026-11-19 (after EXP-11)
+# Handoff: state of the project on 2026-11-19 (after EXP-12)
 
 Read `CLAUDE.md` first (project goal and working rules). This file says where things stand.
 
 ## RESUME HERE (written 2026-11-19, for a fresh session after /clear)
 
-**Where we are (updated 2026-11-19 after EXP-11).** EXP-1 to EXP-11 are done, with journals.
-EXP-12 is only proposed (section 17 of `EXP-11-JOURNAL.pdf`). No other branches (owner's rule).
-The owner approved EXP-11 end to end (venv, Kaggle, push) on 2026-11-19; that approval was for
-EXP-11 only. The owner will review EXP-2 to EXP-11 on 2026-11-21/22.
+**Where we are (updated 2026-11-19 after EXP-12).** EXP-1 to EXP-12 are done, with journals.
+EXP-13 is only proposed (section 17 of `EXP-12-JOURNAL.pdf`). No other branches (owner's rule).
+The owner approved EXP-11 and then EXP-12 end to end ("Go for exp 12") on 2026-11-19; each
+approval was for that experiment only. The owner will review the journals on 2026-11-21/22.
 
 **Standing rules from the owner (all in memory and `CLAUDE.md`):**
 - Work on `main` only, no branches.
@@ -20,7 +20,7 @@ EXP-11 only. The owner will review EXP-2 to EXP-11 on 2026-11-21/22.
   figures from real results, Part B appended, update `CLAUDE.md` and this file.
 - Explain in plain language; the owner is not an ML researcher. Paper reading goes to Sonnet
   subagents; never cite a paper that was not opened; tag read/abstract/unverified.
-- Kaggle free GPU cap is about 30 h/week; about 24.7 h used since 2026-11-15 (EXP-3 to EXP-11; EXP-11 took 61 min).
+- Kaggle free GPU cap is about 30 h/week; about 25 h used since 2026-11-15 (EXP-3 to EXP-12; EXP-11 took 61 min, EXP-12 18 min).
   CIFAR-100 downloads slowly on Kaggle (20 of EXP-9's 28.5 min; 53.5 of EXP-10's 70 min). **Fixed
   2026-11-17 (owner approved):** private Kaggle dataset `mitanshkanani/cifar100-python` holds the
   official `train`, `test`, `meta` files (md5-checked against torchvision before upload). To use it:
@@ -57,14 +57,20 @@ EXP-11 only. The owner will review EXP-2 to EXP-11 on 2026-11-21/22.
    but among 100 the new classes stay at 17% at the old-class limit: H 24.8 -> 26.0. Mirroring alone
    +3.0 on 80 classes. The gap to "all pictures" grows (ratio 0.537 -> 0.492). A perfect old/new
    switch would give H about 45 (arithmetic, not measured): the loss is in the "old or new?" decision.
+10. **EXP-12 ("does not work")**: a switch that decides old/new from familiarity (distance to the old
+   cards through the shared table: in-view, outside-view residual, full, relative), then names within
+   the group. Perfect switch confirmed: H 45.1 at 3 pictures (52.4 at 10). But familiarity AUC is
+   guessing (0.47-0.51) except relative (0.68), below the handicap's own score (0.73). Best switch
+   26.6 vs 26.0, from the old-limit edge, not the signal. Lesson: the limit is the few-picture card.
 
 **Next steps, in order (owner decides):**
 - **Commit/push anything pending** (check `git status`; `PAPER 4.PDF` is an old unrelated change,
   leave it unstaged).
-- **EXP-12 (proposed, section 17 of `EXP-11-JOURNAL.pdf`):** a closed-form "is it something I
-  know?" switch between old and new classes on A2's eyes: measure the perfect switch first, then
-  familiarity scores from the stored cards and shared table, then switch-then-name under the same
-  old-class limit. A short Sonnet paper check first. Write Part A first.
+- **EXP-13 (proposed, section 17 of `EXP-12-JOURNAL.pdf`):** (1) the curve of H against pictures
+  per new class (3, 10, 30, 100, 500) with and without the handicap, to know how good a card must
+  be; (2) shifted/cropped copies of each new picture (no backprop) to see where 3 pictures x 8 copies
+  lands on that curve. Alternative: a switch fitted in one step on the pattern of top scores. Write
+  Part A first; needs the owner's go-ahead.
 - Later: cheap boosts to patch eyes (mirrored images, +/- parts, finer regions, more detectors,
   second layer by grouping co-active detectors); make patch eyes fit 4 GB; a laptop-sized language
   test only when the owner asks (see literature log section 5).
@@ -100,6 +106,7 @@ researched both ways.
 | EXP-9 (few pictures) | `EXP-9-FEW-PICTURES/` | complete (2026-11-17). Private Kaggle job (Tesla T4, 28.5 min, 20 of them dataset download), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-9-JOURNAL.pdf` has Part A and Part B. Verdict by the pre-written rule: **works** (33.5% from 3 pictures) |
 | EXP-10 (new among old) | `EXP-10-NEW-AMONG-OLD/` | complete (2026-11-17). Private Kaggle job (Tesla T4, 70 min, 53.5 of them dataset download), results in `results/runs.jsonl`, `summary.json`, `meta.json`. Journal `EXP-10-JOURNAL.pdf` has Part A and Part B. Verdict by the pre-written rule: **does not work** |
 | EXP-11 (sharper eyes) | `EXP-11-SHARPER-EYES/` | complete (2026-11-19). Private Kaggle job (Tesla T4, 61 min; data from the private dataset in 0.2 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `kaggle_run.log`. Journal `EXP-11-JOURNAL.pdf` has Part A and Part B (17 pages). Verdict by the pre-written rule: **helps, but not enough** |
+| EXP-12 (old or new) | `EXP-12-OLD-OR-NEW/` | complete (2026-11-19). Private Kaggle job (Tesla T4, 18 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `kaggle_run.log`. Journal `EXP-12-JOURNAL.pdf` has Part A and Part B (17 pages). Verdict by the pre-written rule: **does not work** |
 | Literature log | `RESEARCH_LITERATURE_LOG.md` | nine sections written 2026-11-15/17 from subagent reading (passages, not full papers) |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
@@ -366,6 +373,27 @@ in-place Cholesky); settings chosen in the rehearsal with old kept within 5 poin
 - Time per seed: A0 41 s, A2 155 s (1.39 Wh). My predictions: verdict right; gains on T1/T2 too low,
   on T3 too high; I expected A5 to be selected.
 
+## EXP-12 result (read the journal for detail)
+
+A2 eyes; switch first (old or new), then name within the group by angle. Thresholds q set as a
+fraction of the familiarity values of the new pictures in hand; settings from the rehearsal under
+the old-limit rule (`results/summary.json`). Test, 3 pictures:
+
+| Switch | Old | New | H |
+|---|---|---|---|
+| S0 handicap (EXP-11 C1, g 0.1, h 0.08) | 52.5 | 17.3 | 26.0 |
+| F1 / F2 / F3 alone | 41-53 | 3.5-3.8 | 6.5-7.0 |
+| F4 relative alone | 51.1 | 12.4 | 20.0 |
+| F1 + h (selected) / F4 + h | 52.0 / 54.5 | 17.9 / 17.9 | 26.6 / 27.0 |
+| Perfect switch (ceiling) | 59.4 | 36.4 | 45.1 |
+
+- AUC old vs new test pictures: F1 0.51, F2 0.47, F3 0.47, F4 0.68; handicap's score 0.69/0.73/0.76
+  at 1/3/10 pictures.
+- Any familiarity test lowers H at fixed h; the +h switches chose q of about 0. S0 at h 0.09 = 27.4
+  on test but 0.2 past the rehearsal limit. Test-chosen (diagnosis): S0 28.6 >= all F + h.
+- Laptop: 2.39 GB GPU through the rehearsal; T4 2.4 GB (2.9 reserved); CPU 2.5 GB; 213 s, 2.1 Wh/seed.
+- Rebuild of EXP-11 exact (52.47 / 17.28). My verdict prediction ("helps, but not enough") was wrong.
+
 ## Other literature facts worth keeping (from `RESEARCH_GROWING_STRUCTURE.md`)
 
 - Zero-forgetting growth methods mostly need a task hint; no-hint growth methods mostly rely on replay.
@@ -388,6 +416,6 @@ in-place Cholesky); settings chosen in the rehearsal with old kept within 5 poin
 
 ## Open decisions for the owner
 
-1. Go ahead with EXP-12 as proposed in section 17 of `EXP-11-SHARPER-EYES/EXP-11-JOURNAL.pdf`, or
-   pick a different next step?
+1. Go ahead with EXP-13 as proposed in section 17 of `EXP-12-OLD-OR-NEW/EXP-12-JOURNAL.pdf` (or its
+   alternative, a switch fitted on the score pattern), or pick a different next step?
 2. (Done 2026-11-17: CIFAR-100 uploaded as a private Kaggle dataset, see the rules above.)
