@@ -478,3 +478,41 @@ McClelland, McNaughton & O'Reilly 1995 (search excerpt only). CEC (Zhang et al. 
 - The complementary-learning-systems paper separates fitting a new item inside known directions
   (fast; our card) from adding a new direction (slow; our joining the view). That is the
   consolidation idea EXP-14's stream tests.
+
+## 13. Shrinking a new class's direction, and calibrating new against old (2026-11-19)
+
+Question for EXP-15: is there published work on (A) letting a new class's own direction count for
+less when it has few examples (shrinkage of class means, gradual integration), (B) correcting the
+scores of new classes against old ones with a separate offset or scale, and (C) gradual versus fast
+consolidation in the brain? One Sonnet subagent. Every paper below was read through an extraction
+of passages from the full PDF or page (tag: **passages**); conference names did not appear in the
+extracted text and are unverified. All five arXiv IDs were opened and carry the titles given.
+
+| Paper | Tag | Recipe | Numbers seen |
+|---|---|---|---|
+| Wu, Chen, Wang, Ye, Liu, Guo, Fu, "Large Scale Incremental Learning" (BiC), arXiv:1905.13260 | passages | After training, new-class logits become alpha * o + beta (old logits kept); alpha and beta are shared by all new classes and fitted on a small balanced validation set of stored old examples and new examples | CIFAR-100, 20 classes per step, at 20 / 40 / 60 / 80 / 100 classes: 84.00 / 74.69 / 67.93 / 61.25 / 56.69 |
+| Zhao, Xiao, Gan, Zhang, Xia, "Maintaining Discrimination and Fairness in Class Incremental Learning" (Weight Aligning), arXiv:1911.07053 | passages | New classes' weight vectors have larger norms, so new classes are over-predicted; fix without data: scale the new weights by mean old norm / mean new norm | CIFAR-100, 5 steps, average accuracy: cross-entropy 55.3, + weight aligning 61.5; with distillation 56.4 and 66.6; BiC 65.1; upper bound 70.1 |
+| Yang, Liu, Xu, "Free Lunch for Few-shot Learning: Distribution Calibration", arXiv:2101.06395 | passages | Tukey power transform; a support example's mean is averaged with the 2 nearest base-class means (equal weights, not adaptive to the number of examples); covariance borrowed from them plus a constant; sampled features train a classifier | 5-way, logistic regression: miniImageNet 68.57 (1-shot), 82.88 (5-shot); tieredImageNet 78.19, 89.90 |
+| McDonnell, Gong, Parveneh, Abbasnejad, van den Hengel, "RanPAC: Random Projections and Pre-trained Models for Continual Learning", arXiv:2307.02251 | passages | Frozen pretrained features, a fixed random projection with a nonlinearity, then a closed-form ridge classifier from accumulated G = sum h h^T and C = sum h y^T; one global ridge lambda chosen on an 80:20 split per task | Last-session accuracy as extracted: CIFAR-100 92.2, ImageNet-R 77.9, ImageNet-A 62.4, CUB 90.3 (backbone per number not stated in the extract). Pretrained backbone |
+| Goswami, Liu, Twardowski, van de Weijer, "FeCAM: Exploiting the Heterogeneity of Class Distributions in Exemplar-Free Continual Learning", arXiv:2309.14062 | passages | Prototypes plus per-class covariances with shrinkage (diagonal and off-diagonal), Mahalanobis distance, Tukey transform | CIFAR-100 exemplar-free, 5 / 10 / 20 steps: nearest mean 64.8 / 64.6 / 61.5; shared covariance 68.8 / 68.6 / 67.4; per-class covariance 70.9 / 70.8 / 69.4. Few-shot CIL (with ALICE), CIFAR-100: 80.03 at session 0 to 54.94 at session 8 |
+| Tibshirani, Hastie, Narasimhan, Chu, "Diagnosis of multiple cancer types by shrunken centroids of gene expression", PNAS 99(10):6567-6572, 2002, doi:10.1073/pnas.082099299 | passages | Nearest shrunken centroids: each class mean's standardized difference from the overall mean is soft-thresholded, d' = sign(d)(abs(d) - Delta)+, with one global Delta chosen by cross-validation; the standardization includes a factor for class size | Leukaemia: test error 2/34 with 21 genes (Golub et al. 4/34 with 50 genes); SRBCT: all 63 training and 20 test samples correct with 43 genes |
+| Kumaran, Hassabis, McClelland, "What Learning Systems do Intelligent Agents Need? Complementary Learning Systems Theory Updated", Trends in Cognitive Sciences 2016, doi:10.1016/j.tics.2016.05.004 | passages (university-hosted PDF) | Fast hippocampal and slow neocortical learning; replay supports integration | "incorporation of novel information into neocortical networks must be slow to avoid catastrophic interference: we now know that this statement only applies when new information is inconsistent with existing knowledge." No formula |
+
+Not opened: a James-Stein-for-class-means LDA paper (none found); Tse et al. 2007 and 2011 and
+McClelland 2013 (cited in Kumaran et al. only).
+
+### What this means for us (our reading)
+
+- No opened paper weights a new class's discriminant direction by its number of examples or by a
+  noise-to-signal factor. Nearest shrunken centroids is the closest precedent (subtract a noise level,
+  floor at zero, one global amount tuned on held-out data). EXP-15's "measured" weight,
+  max(0, 1 - noise / observed), has the same shape, with the noise taken from the shared table.
+- BiC's two parameters on new-class scores are the precedent for a second handicap; BiC fits them on
+  stored old examples, which we do not keep, so EXP-15 chooses them in the rehearsal instead.
+  Weight Aligning shows that new classes' scores can be biased by how their prototypes are built, and
+  corrected from stored statistics alone.
+- Distribution Calibration's mean calibration is our borrowing from the 2 nearest known cards, with a
+  fixed weight.
+- Kumaran et al. support integration that depends on how new knowledge fits what is known. EXP-15's
+  measured weight is a crude, measurable version: a class whose novelty is small against the noise
+  joins only a little.
