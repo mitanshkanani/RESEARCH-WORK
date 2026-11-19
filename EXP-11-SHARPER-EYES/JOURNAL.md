@@ -1,6 +1,6 @@
 # EXP-11 · SHARPER EYES FOR BETTER CARDS
 
-**Experiment ID:** EXP-11 · **Part A written:** 2026-11-19, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** PLANNED. Part A only; nothing has been run
+**Experiment ID:** EXP-11 · **Part A written:** 2026-11-19, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** COMPLETE (run 2026-11-19 on Kaggle). Verdict: **helps, but not enough**. Part B added at the end
 
 This journal has two parts. **Part A** (this part) explains the experiment before it starts.
 **Part B** will be added to the end of this same PDF when the experiment finishes. Part A
@@ -298,3 +298,287 @@ the journal as written.
 | Seed | One repeat with a different random shuffle |
 
 <div class="pagebreak"></div>
+
+# Part B: the readings (added after the run, 2026-11-19)
+
+Part A above was not changed after the run, except the one status line at the top of page 1.
+
+## 10. What was actually run
+
+The plan in section 3 was run once, on a free Kaggle GPU (Tesla T4), as a private job named
+`exp11-sharper-eyes`. It took **61 minutes** for all six versions and 5 seeds. The photos were
+read from the private Kaggle copy of CIFAR-100 and were ready in **0.2 minutes** (in EXP-10 the
+download took 53.5 of 70 minutes). The result files were downloaded into `results/`:
+`runs.jsonl` (4,080 lines), `meta.json` and `kaggle_run.log`. There were no errors.
+`src/figures.py` turned `runs.jsonl` into `results/summary.json` and the figures, with the
+choosing rules of section 3. **Every number below comes from `results/summary.json`** unless
+another file is named: means of 5 seeds on the test, with the spread between seeds (standard
+deviation) after ± where it matters.
+
+**Things that differ from Part A, or that need saying:**
+
+| Item | What was done |
+|---|---|
+| Code check on the laptop | Before the run, a small trial (1 seed, a tenth of the stencils) ran every version on the laptop. A second check built the largest description (A3, 14,400 numbers) at full size on the laptop's RTX 3050 through the stage-6 rehearsal: peak **2.74 GB** of GPU memory in use (3.31 GB including what PyTorch holds in reserve). The trial's numbers were thrown away |
+| Run time | 61 minutes, not the 2 hours expected: the views took less time on the T4 than my laptop measurement suggested. About 1 Kaggle hour used |
+| Memory reading in the rule | Step 1(d) reads the peak GPU memory **in use**. PyTorch also holds some memory in reserve; both are reported in section 11.8 |
+| Ordinary (CPU) memory | measured on Kaggle (about 1.5 GB for every version). Not measured on the laptop, where Windows does not offer that reading |
+| Python environment | this folder's own `.venv` (146 MB), for the figures and the PDF only |
+
+Nothing in sections 1 to 9 was changed.
+
+## 11. The readings
+
+### 11.1 Step 0: are the earlier numbers rebuilt? Yes
+
+| A0 (EXP-10's eyes), compact tables | This run | Earlier | Allowed difference |
+|---|---|---|---|
+| Old classes, smoothing 0.1, no correction, 3 pictures | 52.2 ± 0.2 | 52.2 (EXP-10) | 0.5 |
+| New classes, same setting | 7.0 ± 0.3 | 7.0 (EXP-10) | 0.5 |
+| New among themselves, same setting | 33.5 ± 0.5 | 33.5 (EXP-9) | 0.5 |
+| T1, 80 classes, smoothing 0.01 | 54.3 ± 0.5 | 55.2 (EXP-8, half of the test pictures) | 1.0 |
+
+The compact tables changed nothing measurable. T1 sits 0.95 under EXP-8's number, just inside
+the allowed point; EXP-8 used only half of the test pictures, so the two are not the same exam.
+
+### 11.2 The three tests, every version
+
+![The three tests](figures/fig1_three_tests.svg)
+
+*Figure 1. Each version of the eyes on the three tests. T1: 80 classes from all their pictures.
+T2: 20 new classes from 3 pictures, named among themselves. T3: the same 20 new classes among
+all 100, harmonic mean, at the setting chosen in the rehearsal under the old-class limit.*
+
+| Version | Length | T1: 80 classes | T2: 20 new, 3 pictures | T3 old | T3 new | **T3 harmonic mean** |
+|---|---|---|---|---|---|---|
+| A0 EXP-10's eyes | 6,400 | 54.1 | 33.3 | 45.6 | 17.1 | 24.8 |
+| A1 + mirror | 6,400 | 57.1 | 35.1 | 49.5 | 17.3 | 25.7 |
+| **A2 + mirror + two-sided** (selected) | 12,800 | **59.3** | **36.2** | **52.5** | **17.3** | **26.0** |
+| A3 + mirror + 9 regions | 14,400 | 58.6 | 35.9 | 50.6 | 17.7 | 26.2 |
+| A4 + mirror + 3,200 stencils | 12,800 | 59.4 | 36.2 | 52.3 | 17.3 | 26.0 |
+| A5 + mirror + all three, 800 stencils | 14,400 | 58.7 | 36.0 | 50.6 | 17.6 | 26.1 |
+
+The rehearsal chose correction C1 (the handicap) at a handicap of 0.08 for every version. The
+smoothing chosen differs by version (A2: 0.01 for T1, 0.1 for T2 and T3).
+
+In plain words: the sharper eyes name the 80 known classes much better (**54.1% to 59.3%**) and
+the new classes among themselves better (**33.3% to 36.2%**). When the new classes have to
+compete with the old ones, the new classes stay at about **17%** in every version. What rises
+is the old classes' score at the same handicap (45.6% to 52.5%). The harmonic mean moves only
+from 24.8 to 26.0.
+
+For comparison: EXP-8's retrained network with the same memory scored 58.8% and its ceiling
+61.1%, both on half of the test pictures. So A2's 59.3% is about level with the retrained
+network, with no backpropagation, but this is not a comparison on the same pictures. EXP-9's
+retrained network scored 38.5% on T2, still 2.3 points above A2.
+
+### 11.3 Which upgrade does the work? (step 2)
+
+| Upgrade | T1 | T2 | T3 harmonic mean | Counts (1.0 or more) on |
+|---|---|---|---|---|
+| Mirror (A1 − A0) | **+3.0** | **+1.7** | +0.8 | T1, T2 |
+| Two-sided (A2 − A1) | +2.2 | +1.2 | +0.3 | T1, T2 |
+| 9 regions (A3 − A1) | +1.5 | +0.9 | +0.6 | T1 |
+| 3,200 stencils (A4 − A1) | +2.3 | +1.1 | +0.4 | T1, T2 |
+| All three in 14,400 numbers (A5 − A1) | +1.6 | +0.9 | +0.5 | T1 |
+
+Mirroring is the biggest single gain and costs nothing in description length. Two-sided answers
+and doubling the stencils give the same gain at the same length (12,800); combining all three
+in a fixed length (A5) is worse than either. **No upgrade counts on T3.**
+
+### 11.4 Old against new
+
+![Old against new](figures/fig2_tradeoff.svg)
+
+*Figure 2. 3 pictures per new class, every picture named among all 100. Each line is one version
+of the eyes as the handicap moves from small to large; the circle is the setting chosen in the
+rehearsal; the star is the same version with the new classes learned from all their pictures.
+A2 and A4 (dashed) lie almost on top of each other, and so do A5 and A3 (dashed).*
+
+The sharper eyes move the whole curve outwards: at every handicap, both old and new are a
+little higher. But the stars move outwards just as much. The certainty correction C2 (no
+setting) shows the same: with A2 it reaches a harmonic mean of 31.2 (old 43.3, new 24.4),
+against 27.7 with A0 (old 35.2, new 22.9). That is a bigger gain (+3.5), but at old-class
+scores far under the limit, so it is not the setting the rule allows.
+
+### 11.5 1, 3 and 10 pictures
+
+![Pictures per new class](figures/fig3_pictures.svg)
+
+*Figure 3. T2 (new among themselves) and T3 (harmonic mean among 100) against the number of
+pictures per new class.*
+
+| Pictures per new class | T2, A0 | T2, A2 | T3 harmonic mean, A0 | T3 harmonic mean, A2 |
+|---|---|---|---|---|
+| 1 | 23.3 | 24.9 | 17.0 | 18.3 |
+| 3 | 33.3 | 36.2 | 24.8 | 26.0 |
+| 10 | 44.2 | 47.2 | 32.6 | 35.8 |
+
+The gain from the sharper eyes grows with the number of pictures: +1.6 points on T2 at 1
+picture, +3.0 at 10. Better eyes help most when there is more to describe.
+
+### 11.6 Does the gap to "all pictures" shrink? (step 3) No, it grows
+
+| Version | T3 harmonic mean, 3 pictures | Reference: all pictures | Ratio |
+|---|---|---|---|
+| A0 | 24.8 | 46.2 | 0.537 |
+| A2 (selected) | 26.0 | 52.9 | 0.492 |
+
+The sharper eyes lift the reference by 6.6 points and the few-picture result by 1.2. The ratio
+falls by 0.045. A rise of 0.05 was needed to count as "the gap shrinks".
+
+### 11.7 Smoothing
+
+![Smoothing](figures/fig4_smoothing.svg)
+
+*Figure 4. T1 (80 classes) against the smoothing of the shared table, every version.*
+
+The longer descriptions did **not** need more smoothing for T1: 0.01, the smallest value tried,
+is best or within 0.3 of best for every version. Part A's worry (section 7) that longer
+descriptions would make the table too uncertain did not show up here. Because 0.01 is at the
+edge of the values tried, an even smaller value might be better still.
+
+### 11.8 Cost
+
+![Cost](figures/fig5_cost.svg)
+
+*Figure 5. Peak GPU memory and time per seed for each version, on the Kaggle T4.*
+
+| Version | Length | Peak GPU memory in use | Including reserve | Time per seed | GPU energy per seed |
+|---|---|---|---|---|---|
+| A0 | 6,400 | 1.0 GB | 1.4 GB | 41 s | 0.24 Wh |
+| A1 | 6,400 | 1.0 GB | 1.4 GB | 66 s | 0.42 Wh |
+| **A2** | 12,800 | **2.2 GB** | **3.1 GB** | **155 s** | **1.39 Wh** |
+| A3 | 14,400 | 2.7 GB | 3.4 GB | 152 s | 1.25 Wh |
+| A4 | 12,800 | 2.2 GB | 3.1 GB | 163 s | 1.52 Wh |
+| A5 | 14,400 | 2.7 GB | 3.6 GB | 149 s | 1.22 Wh |
+
+Time per seed covers everything: describing all pictures, filling the tables, computing views
+at 5 smoothings for the rehearsal and the test, and scoring every setting. Every version is
+under the 3.5 GB limit for memory in use. The two 14,400-number versions hold 3.4 to 3.6 GB
+including reserve, which is close to the laptop's 4 GB; the selected A2 holds 3.1 GB.
+
+### 11.9 Rehearsal against test
+
+| Version | T3 harmonic mean, rehearsal | T3 harmonic mean, test |
+|---|---|---|
+| A0 | 29.9 | 24.8 |
+| A1 | 30.7 | 25.7 |
+| **A2** (selected) | **31.4** | 26.0 |
+| A3 | 30.7 | **26.2** (best on test) |
+| A4 | 31.1 | 26.0 |
+| A5 | 30.8 | 26.1 |
+
+A2 was chosen; A3 is best on the test by 0.25. Versions A2 to A5 are all within 0.3 of each
+other on the test.
+
+## 12. The verdict, by the rule written in section 5
+
+| Step | Reading | Result |
+|---|---|---|
+| 0. Rebuild | old 52.2, new 7.0, new among themselves 33.5, T1 54.3 | passed |
+| 1(a) T1 gain | A2 59.3 − A0 54.1 = **+5.2** (2.0 needed) | holds |
+| 1(b) T2 gain | 36.2 − 33.3 = **+2.9** (2.0 needed) | holds |
+| 1(c) T3 harmonic-mean gain | 26.0 − 24.8 = **+1.2** (3.0 needed); old 52.5 against 55.9 without correction, within 6 | **fails** |
+| 1(d) peak GPU memory | 2.2 GB (3.5 GB allowed) | holds |
+| **1. Main verdict** | (d) plus two of (a)–(c) | **helps, but not enough** |
+| 2. Which upgrade does the work? | mirror, two-sided and more stencils count on T1 and T2; 9 regions and the combination on T1 only | none counts on T3 |
+| 3. Does the gap to "all pictures" shrink? | ratio 0.537 to 0.492 | **no**, it grows |
+| 4. Can the rehearsal be trusted? | A2 26.0 against best A3 26.2 | **yes** |
+
+## 13. Was the expectation in section 5 right?
+
+| What I wrote before the run | What happened | |
+|---|---|---|
+| Step 0 passes | passed (T1 by 0.05 of the allowed point) | right |
+| Mirror: about +1 on T1, +1.5 on T2 | +3.0 and +1.7 | T1 **too low**; T2 right |
+| Other upgrades: +1 to +1.5 on T1, under 1 on T2 | two-sided +2.2 and +1.2, stencils +2.3 and +1.1, regions +1.5 and +0.9 | too low for two of the three |
+| A5 (all three) is best and selected | A2 selected; A5 fourth in the rehearsal | wrong |
+| T1 +3, to about 58% | +5.2, to 59.3% | too low |
+| T2 +2, to about 35.5% | +2.9, to 36.2% | too low |
+| T3 harmonic mean +2 | +1.2 | too high |
+| Verdict "helps, but not enough" | "helps, but not enough" | right |
+| The gap to "all pictures" does not shrink | it grows | right |
+| About 3 GB of GPU memory for the longest | 2.7 GB in use, 3.4–3.6 GB including reserve | right |
+| The rehearsal picks well | it did | right |
+| About 2 hours on Kaggle | 61 minutes | too high |
+
+My verdict was right this time, but the eyes did better than I expected on everything except
+the one test that matters most here.
+
+## 14. What it means for the project
+
+**1. Eyes with no backpropagation are now about level with a retrained network on the known
+classes.** 59.3% on 80 classes, against 58.8% for EXP-8's retrained network with the same memory
+(not the same test pictures, so "about level"), and 2 points under the 61.1% ceiling. This takes
+one pass, about 2.5 minutes per seed, 2.2 GB of GPU memory and no forgetting. Mirroring alone
+gave 3 points of that.
+
+**2. Better eyes do not fix new classes among old ones.** Among themselves the new classes
+improved (33.3% to 36.2%), and with all their pictures they reach 51.7% among all 100. From 3
+pictures, among all 100, they stay at 17% whatever the eyes, at the handicap the old-class limit
+allows. The extra quality went to the old classes, which have 500 pictures each to use it.
+**Sharper eyes widen the advantage of classes that have many pictures.**
+
+**3. The problem is now the decision "old or new?", not the card.** Two readings, put together
+by hand (arithmetic, not measured): the old classes named among themselves by angle score 60.7%
+(A2), and the new classes among themselves 36.2%. If every picture were first sent to the right
+group (old or new) by a perfect switch, the harmonic mean would be about **45**. The method
+gets 26. Most of the loss happens when an old card and a new card compete for the same picture,
+not inside either group. A handicap is one number for all classes and cannot make that decision
+well.
+
+**4. Against the three goals.** No forgetting: still achieved. Cheap: achieved (2.5 minutes per
+seed, 2.2 GB, 1.4 Wh of GPU energy per seed). A new class from a handful of pictures: achieved
+among new classes (36.2%), **not achieved among old classes** (17% at the old-class limit).
+
+## 15. What is still unverified
+
+- **The comparison with the retrained network on T1** used different test pictures (EXP-8: half
+  of them). Running EXP-8's retrained network on the full test would settle "about level".
+- **Smoothing below 0.01** was not tried; T1 may rise a little more.
+- **The "perfect switch" figure (about 45)** is arithmetic on two readings, not a measurement.
+  The old-group reading is by angle at a different smoothing from the new-group reading.
+- **The laptop run of the selected version end to end** was not done. A3 at full size was
+  measured on the laptop only up to the stage-6 rehearsal (2.74 GB in use). The versions of
+  14,400 numbers hold up to 3.6 GB including reserve on the T4, which is close to 4 GB.
+- **Mirror copies when building the new card** were used as an average (the picture and its
+  mirror). Using the two copies as two separate pictures was not tried.
+- 5 seeds, one dataset (CIFAR-100), images only. GPU energy only.
+
+## 16. What carries over beyond pictures
+
+| Part | Depends on pictures? |
+|---|---|
+| Mirror, two-sided stencils, finer regions, more stencils | **yes**. All four are image-specific |
+| The compact tables (single precision around a fixed reference, view computed in place) | **no**. They held 14,400 numbers per example in 2.7 GB with no measurable loss (step 0) |
+| The finding that better descriptions help classes with many examples more than new ones | **no**. It is about how much data each class has, not about pictures |
+| The finding that the "old or new?" decision is where most of the loss is | **no** |
+| The choosing rule with an old-class limit | **no** |
+
+## 17. What the next experiment should be, and why
+
+**Proposed EXP-12: is it something I know? A switch between old and new classes.**
+
+Why: EXP-11 shows that better eyes improve old classes, and new classes among themselves, but
+leave new classes stuck at 17% when they compete with old ones. A perfect "old or new?" switch
+in front of the two groups would lift the harmonic mean from 26 to about 45 (section 14,
+arithmetic). The handicap is a crude switch: one number, the same for every class. The brain
+has a separate signal for this ("I have seen this before" against "this is new"), and the same
+question exists in language (is this word or topic one I know?).
+
+What it should contain, all closed-form, on A2's eyes (mirror and two-sided, 12,800 numbers):
+
+1. **Measure the switch first.** Run the perfect switch (using the true answer, as a ceiling) to
+   confirm the "about 45" in this journal with real readings.
+2. **Closed-form familiarity scores**, computed from what the memory already stores: for
+   example, how far a picture is from the nearest old card compared with how far that class's
+   own pictures usually are (the shared table gives this), or how much of the picture lies
+   outside the directions the old classes use. Measure how well each separates old test
+   pictures from new ones.
+3. **Switch, then name**: send each picture to the old or new group by the familiarity score,
+   then name it within the group. Judge it against the handicap with the same old-class limit.
+4. **A short paper check first** (a Sonnet subagent), on known ways to tell known classes from
+   unknown ones with class averages and a shared table, before Part A is written.
+
+This is a proposal. It needs its own Part A before any code is run.

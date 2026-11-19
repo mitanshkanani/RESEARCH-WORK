@@ -1,0 +1,348 @@
+[{"stream_name":"stdout","time":10.121217331,"data":"device cuda Tesla T4 torch 2.11.0+cu130 smoke False arms ['A0', 'A1', 'A2', 'A3', 'A4', 'A5']\n"}
+,{"stream_name":"stdout","time":17.139143879,"data":"copied /kaggle/input/datasets/mitanshkanani/cifar100-python/train\n"}
+,{"stream_name":"stdout","time":17.436297112,"data":"copied /kaggle/input/datasets/mitanshkanani/cifar100-python/test\n"}
+,{"stream_name":"stdout","time":17.504335205,"data":"copied /kaggle/input/datasets/mitanshkanani/cifar100-python/meta\n"}
+,{"stream_name":"stdout","time":19.618734213,"data":"data ready, 0.2 min\n"}
+,{"stream_name":"stdout","time":35.954141188,"data":"seed 0 A0 rehearsal gamma 0.01 | T1 0.603 | k=10 C0 old 0.589 new 0.145 new-only 0.444\n"}
+,{"stream_name":"stdout","time":36.426387261,"data":"seed 0 A0 rehearsal gamma 0.03 | T1 0.605 | k=10 C0 old 0.588 new 0.157 new-only 0.463\n"}
+,{"stream_name":"stdout","time":36.898224018,"data":"seed 0 A0 rehearsal gamma 0.1 | T1 0.588 | k=10 C0 old 0.571 new 0.165 new-only 0.470\n"}
+,{"stream_name":"stdout","time":37.371240743,"data":"seed 0 A0 rehearsal gamma 0.3 | T1 0.566 | k=10 C0 old 0.548 new 0.172 new-only 0.470\n"}
+,{"stream_name":"stdout","time":37.846850177,"data":"seed 0 A0 rehearsal gamma 1.0 | T1 0.535 | k=10 C0 old 0.512 new 0.180 new-only 0.464\n"}
+,{"stream_name":"stdout","time":48.285946846,"data":"seed 0 A0 part1 gamma 0.01 | T1 0.545 | k=10 C0 old 0.541 new 0.110 new-only 0.409\n"}
+,{"stream_name":"stdout","time":49.029585068,"data":"seed 0 A0 part1 gamma 0.03 | T1 0.544 | k=10 C0 old 0.537 new 0.123 new-only 0.433\n"}
+,{"stream_name":"stdout","time":49.774834746,"data":"seed 0 A0 part1 gamma 0.1 | T1 0.527 | k=10 C0 old 0.519 new 0.133 new-only 0.445\n"}
+,{"stream_name":"stdout","time":50.517204242,"data":"seed 0 A0 part1 gamma 0.3 | T1 0.503 | k=10 C0 old 0.494 new 0.140 new-only 0.444\n"}
+,{"stream_name":"stdout","time":51.265070671,"data":"seed 0 A0 part1 gamma 1.0 | T1 0.469 | k=10 C0 old 0.453 new 0.147 new-only 0.434\n"}
+,{"stream_name":"stdout","time":59.040523273,"data":"seed 0 A0 done: dim 6400, peak GPU 1016.0 MB (reserved 1428.0), times {'describe': 21.456090927124023, 'tables': 0.8777303695678711, 'view': 9.54417872428894, 'scoring': 6.245748281478882}\n"}
+,{"stream_name":"stdout","time":85.752617895,"data":"seed 0 A1 rehearsal gamma 0.01 | T1 0.633 | k=10 C0 old 0.615 new 0.166 new-only 0.485\n"}
+,{"stream_name":"stdout","time":86.251637293,"data":"seed 0 A1 rehearsal gamma 0.03 | T1 0.620 | k=10 C0 old 0.606 new 0.170 new-only 0.492\n"}
+,{"stream_name":"stdout","time":86.755175678,"data":"seed 0 A1 rehearsal gamma 0.1 | T1 0.600 | k=10 C0 old 0.585 new 0.176 new-only 0.491\n"}
+,{"stream_name":"stdout","time":87.254385606,"data":"seed 0 A1 rehearsal gamma 0.3 | T1 0.575 | k=10 C0 old 0.559 new 0.181 new-only 0.485\n"}
+,{"stream_name":"stdout","time":87.753752722,"data":"seed 0 A1 rehearsal gamma 1.0 | T1 0.539 | k=10 C0 old 0.519 new 0.190 new-only 0.472\n"}
+,{"stream_name":"stdout","time":105.648081633,"data":"seed 0 A1 part1 gamma 0.01 | T1 0.573 | k=10 C0 old 0.568 new 0.127 new-only 0.460\n"}
+,{"stream_name":"stdout","time":106.458145272,"data":"seed 0 A1 part1 gamma 0.03 | T1 0.559 | k=10 C0 old 0.557 new 0.132 new-only 0.466\n"}
+,{"stream_name":"stdout","time":107.268302027,"data":"seed 0 A1 part1 gamma 0.1 | T1 0.538 | k=10 C0 old 0.531 new 0.141 new-only 0.466\n"}
+,{"stream_name":"stdout","time":108.077167124,"data":"seed 0 A1 part1 gamma 0.3 | T1 0.509 | k=10 C0 old 0.502 new 0.147 new-only 0.459\n"}
+,{"stream_name":"stdout","time":108.888427814,"data":"seed 0 A1 part1 gamma 1.0 | T1 0.472 | k=10 C0 old 0.457 new 0.152 new-only 0.444\n"}
+,{"stream_name":"stdout","time":122.02437801,"data":"seed 0 A1 done: dim 6400, peak GPU 1043.0 MB (reserved 1428.0), times {'describe': 44.35378456115723, 'tables': 2.113619565963745, 'view': 9.760927677154541, 'scoring': 6.539918661117554}\n"}
+,{"stream_name":"stdout","time":187.609212411,"data":"seed 0 A2 rehearsal gamma 0.01 | T1 0.648 | k=10 C0 old 0.638 new 0.174 new-only 0.493\n"}
+,{"stream_name":"stdout","time":188.140961616,"data":"seed 0 A2 rehearsal gamma 0.03 | T1 0.643 | k=10 C0 old 0.630 new 0.180 new-only 0.504\n"}
+,{"stream_name":"stdout","time":188.665599612,"data":"seed 0 A2 rehearsal gamma 0.1 | T1 0.622 | k=10 C0 old 0.606 new 0.180 new-only 0.504\n"}
+,{"stream_name":"stdout","time":189.184518916,"data":"seed 0 A2 rehearsal gamma 0.3 | T1 0.596 | k=10 C0 old 0.582 new 0.183 new-only 0.498\n"}
+,{"stream_name":"stdout","time":189.706305161,"data":"seed 0 A2 rehearsal gamma 1.0 | T1 0.567 | k=10 C0 old 0.546 new 0.186 new-only 0.484\n"}
+,{"stream_name":"stdout","time":236.076288193,"data":"seed 0 A2 part1 gamma 0.01 | T1 0.593 | k=10 C0 old 0.595 new 0.127 new-only 0.459\n"}
+,{"stream_name":"stdout","time":236.943635078,"data":"seed 0 A2 part1 gamma 0.03 | T1 0.585 | k=10 C0 old 0.579 new 0.132 new-only 0.473\n"}
+,{"stream_name":"stdout","time":237.813306196,"data":"seed 0 A2 part1 gamma 0.1 | T1 0.562 | k=10 C0 old 0.554 new 0.136 new-only 0.475\n"}
+,{"stream_name":"stdout","time":238.683745129,"data":"seed 0 A2 part1 gamma 0.3 | T1 0.538 | k=10 C0 old 0.527 new 0.143 new-only 0.468\n"}
+,{"stream_name":"stdout","time":239.553452059,"data":"seed 0 A2 part1 gamma 1.0 | T1 0.499 | k=10 C0 old 0.486 new 0.149 new-only 0.457\n"}
+,{"stream_name":"stdout","time":277.838273912,"data":"seed 0 A2 done: dim 12800, peak GPU 2282.0 MB (reserved 3124.0), times {'describe': 78.58066940307617, 'tables': 8.576979875564575, 'view': 61.32676577568054, 'scoring': 6.962624549865723}\n"}
+,{"stream_name":"stdout","time":337.558622627,"data":"seed 0 A3 rehearsal gamma 0.01 | T1 0.644 | k=10 C0 old 0.628 new 0.162 new-only 0.466\n"}
+,{"stream_name":"stdout","time":338.084237412,"data":"seed 0 A3 rehearsal gamma 0.03 | T1 0.644 | k=10 C0 old 0.625 new 0.170 new-only 0.482\n"}
+,{"stream_name":"stdout","time":338.612445634,"data":"seed 0 A3 rehearsal gamma 0.1 | T1 0.632 | k=10 C0 old 0.614 new 0.173 new-only 0.492\n"}
+,{"stream_name":"stdout","time":339.138172939,"data":"seed 0 A3 rehearsal gamma 0.3 | T1 0.613 | k=10 C0 old 0.594 new 0.175 new-only 0.493\n"}
+,{"stream_name":"stdout","time":339.664480027,"data":"seed 0 A3 rehearsal gamma 1.0 | T1 0.583 | k=10 C0 old 0.565 new 0.181 new-only 0.488\n"}
+,{"stream_name":"stdout","time":385.590620324,"data":"seed 0 A3 part1 gamma 0.01 | T1 0.591 | k=10 C0 old 0.582 new 0.116 new-only 0.440\n"}
+,{"stream_name":"stdout","time":386.439177191,"data":"seed 0 A3 part1 gamma 0.03 | T1 0.587 | k=10 C0 old 0.578 new 0.126 new-only 0.458\n"}
+,{"stream_name":"stdout","time":387.287553949,"data":"seed 0 A3 part1 gamma 0.1 | T1 0.573 | k=10 C0 old 0.565 new 0.136 new-only 0.471\n"}
+,{"stream_name":"stdout","time":388.134977836,"data":"seed 0 A3 part1 gamma 0.3 | T1 0.552 | k=10 C0 old 0.542 new 0.143 new-only 0.474\n"}
+,{"stream_name":"stdout","time":388.981818137,"data":"seed 0 A3 part1 gamma 1.0 | T1 0.519 | k=10 C0 old 0.509 new 0.150 new-only 0.469\n"}
+,{"stream_name":"stdout","time":429.866265009,"data":"seed 0 A3 done: dim 14400, peak GPU 2798.0 MB (reserved 3502.0), times {'describe': 47.16357398033142, 'tables': 12.771665811538696, 'view': 84.77834439277649, 'scoring': 6.873758554458618}\n"}
+,{"stream_name":"stdout","time":499.075266475,"data":"seed 0 A4 rehearsal gamma 0.01 | T1 0.652 | k=10 C0 old 0.642 new 0.171 new-only 0.486\n"}
+,{"stream_name":"stdout","time":499.608998185,"data":"seed 0 A4 rehearsal gamma 0.03 | T1 0.646 | k=10 C0 old 0.630 new 0.174 new-only 0.496\n"}
+,{"stream_name":"stdout","time":500.135060331,"data":"seed 0 A4 rehearsal gamma 0.1 | T1 0.624 | k=10 C0 old 0.607 new 0.178 new-only 0.499\n"}
+,{"stream_name":"stdout","time":500.663857231,"data":"seed 0 A4 rehearsal gamma 0.3 | T1 0.599 | k=10 C0 old 0.582 new 0.180 new-only 0.495\n"}
+,{"stream_name":"stdout","time":501.189159774,"data":"seed 0 A4 rehearsal gamma 1.0 | T1 0.567 | k=10 C0 old 0.545 new 0.183 new-only 0.483\n"}
+,{"stream_name":"stdout","time":550.308218039,"data":"seed 0 A4 part1 gamma 0.01 | T1 0.597 | k=10 C0 old 0.594 new 0.131 new-only 0.463\n"}
+,{"stream_name":"stdout","time":551.15531925,"data":"seed 0 A4 part1 gamma 0.03 | T1 0.583 | k=10 C0 old 0.581 new 0.136 new-only 0.472\n"}
+,{"stream_name":"stdout","time":552.006629398,"data":"seed 0 A4 part1 gamma 0.1 | T1 0.562 | k=10 C0 old 0.556 new 0.140 new-only 0.473\n"}
+,{"stream_name":"stdout","time":552.857534974,"data":"seed 0 A4 part1 gamma 0.3 | T1 0.536 | k=10 C0 old 0.525 new 0.146 new-only 0.469\n"}
+,{"stream_name":"stdout","time":553.706964235,"data":"seed 0 A4 part1 gamma 1.0 | T1 0.493 | k=10 C0 old 0.483 new 0.150 new-only 0.457\n"}
+,{"stream_name":"stdout","time":593.643274072,"data":"seed 0 A4 done: dim 12800, peak GPU 2282.0 MB (reserved 3128.0), times {'describe': 87.03458571434021, 'tables': 8.392239332199097, 'view': 61.08453726768494, 'scoring': 6.889654636383057}\n"}
+,{"stream_name":"stdout","time":652.160437368,"data":"seed 0 A5 rehearsal gamma 0.01 | T1 0.642 | k=10 C0 old 0.629 new 0.164 new-only 0.468\n"}
+,{"stream_name":"stdout","time":652.688002222,"data":"seed 0 A5 rehearsal gamma 0.03 | T1 0.641 | k=10 C0 old 0.629 new 0.173 new-only 0.483\n"}
+,{"stream_name":"stdout","time":653.212993357,"data":"seed 0 A5 rehearsal gamma 0.1 | T1 0.632 | k=10 C0 old 0.616 new 0.178 new-only 0.497\n"}
+,{"stream_name":"stdout","time":653.73776268,"data":"seed 0 A5 rehearsal gamma 0.3 | T1 0.615 | k=10 C0 old 0.598 new 0.178 new-only 0.496\n"}
+,{"stream_name":"stdout","time":654.259108789,"data":"seed 0 A5 rehearsal gamma 1.0 | T1 0.584 | k=10 C0 old 0.563 new 0.183 new-only 0.489\n"}
+,{"stream_name":"stdout","time":699.542771828,"data":"seed 0 A5 part1 gamma 0.01 | T1 0.589 | k=10 C0 old 0.586 new 0.119 new-only 0.438\n"}
+,{"stream_name":"stdout","time":700.402404465,"data":"seed 0 A5 part1 gamma 0.03 | T1 0.589 | k=10 C0 old 0.583 new 0.130 new-only 0.457\n"}
+,{"stream_name":"stdout","time":701.261121924,"data":"seed 0 A5 part1 gamma 0.1 | T1 0.572 | k=10 C0 old 0.569 new 0.137 new-only 0.471\n"}
+,{"stream_name":"stdout","time":702.115899901,"data":"seed 0 A5 part1 gamma 0.3 | T1 0.553 | k=10 C0 old 0.544 new 0.140 new-only 0.473\n"}
+,{"stream_name":"stdout","time":702.972261255,"data":"seed 0 A5 part1 gamma 1.0 | T1 0.520 | k=10 C0 old 0.508 new 0.147 new-only 0.470\n"}
+,{"stream_name":"stdout","time":743.3507488,"data":"seed 0 A5 done: dim 14400, peak GPU 2799.0 MB (reserved 3636.0), times {'describe': 44.47016954421997, 'tables': 13.082245826721191, 'view': 84.83541750907898, 'scoring': 6.903759002685547}\n"}
+,{"stream_name":"stdout","time":743.350821331,"data":"== seed 0 done, 12.2 min elapsed\n"}
+,{"stream_name":"stdout","time":760.409992065,"data":"seed 1 A0 rehearsal gamma 0.01 | T1 0.582 | k=10 C0 old 0.567 new 0.175 new-only 0.469\n"}
+,{"stream_name":"stdout","time":760.935075962,"data":"seed 1 A0 rehearsal gamma 0.03 | T1 0.577 | k=10 C0 old 0.563 new 0.195 new-only 0.491\n"}
+,{"stream_name":"stdout","time":761.462415043,"data":"seed 1 A0 rehearsal gamma 0.1 | T1 0.564 | k=10 C0 old 0.548 new 0.209 new-only 0.502\n"}
+,{"stream_name":"stdout","time":761.986680902,"data":"seed 1 A0 rehearsal gamma 0.3 | T1 0.542 | k=10 C0 old 0.522 new 0.217 new-only 0.503\n"}
+,{"stream_name":"stdout","time":762.512584838,"data":"seed 1 A0 rehearsal gamma 1.0 | T1 0.512 | k=10 C0 old 0.490 new 0.224 new-only 0.496\n"}
+,{"stream_name":"stdout","time":774.056839799,"data":"seed 1 A0 part1 gamma 0.01 | T1 0.547 | k=10 C0 old 0.542 new 0.105 new-only 0.411\n"}
+,{"stream_name":"stdout","time":774.911816398,"data":"seed 1 A0 part1 gamma 0.03 | T1 0.545 | k=10 C0 old 0.538 new 0.117 new-only 0.433\n"}
+,{"stream_name":"stdout","time":775.765328692,"data":"seed 1 A0 part1 gamma 0.1 | T1 0.527 | k=10 C0 old 0.520 new 0.129 new-only 0.445\n"}
+,{"stream_name":"stdout","time":776.616240099,"data":"seed 1 A0 part1 gamma 0.3 | T1 0.503 | k=10 C0 old 0.493 new 0.138 new-only 0.444\n"}
+,{"stream_name":"stdout","time":777.466697726,"data":"seed 1 A0 part1 gamma 1.0 | T1 0.471 | k=10 C0 old 0.457 new 0.144 new-only 0.435\n"}
+,{"stream_name":"stdout","time":785.968395151,"data":"seed 1 A0 done: dim 6400, peak GPU 1016.0 MB (reserved 1428.0), times {'describe': 24.26751708984375, 'tables': 1.0665135383605957, 'view': 10.039328575134277, 'scoring': 6.889348268508911}\n"}
+,{"stream_name":"stdout","time":815.368878398,"data":"seed 1 A1 rehearsal gamma 0.01 | T1 0.608 | k=10 C0 old 0.600 new 0.203 new-only 0.513\n"}
+,{"stream_name":"stdout","time":815.898383684,"data":"seed 1 A1 rehearsal gamma 0.03 | T1 0.601 | k=10 C0 old 0.584 new 0.210 new-only 0.519\n"}
+,{"stream_name":"stdout","time":816.42623741,"data":"seed 1 A1 rehearsal gamma 0.1 | T1 0.578 | k=10 C0 old 0.559 new 0.218 new-only 0.520\n"}
+,{"stream_name":"stdout","time":816.95936045,"data":"seed 1 A1 rehearsal gamma 0.3 | T1 0.548 | k=10 C0 old 0.529 new 0.223 new-only 0.515\n"}
+,{"stream_name":"stdout","time":817.493132772,"data":"seed 1 A1 rehearsal gamma 1.0 | T1 0.510 | k=10 C0 old 0.493 new 0.230 new-only 0.504\n"}
+,{"stream_name":"stdout","time":836.496901585,"data":"seed 1 A1 part1 gamma 0.01 | T1 0.573 | k=10 C0 old 0.567 new 0.124 new-only 0.458\n"}
+,{"stream_name":"stdout","time":837.362175307,"data":"seed 1 A1 part1 gamma 0.03 | T1 0.559 | k=10 C0 old 0.552 new 0.129 new-only 0.465\n"}
+,{"stream_name":"stdout","time":838.22433152,"data":"seed 1 A1 part1 gamma 0.1 | T1 0.538 | k=10 C0 old 0.529 new 0.135 new-only 0.465\n"}
+,{"stream_name":"stdout","time":839.087220295,"data":"seed 1 A1 part1 gamma 0.3 | T1 0.511 | k=10 C0 old 0.502 new 0.142 new-only 0.459\n"}
+,{"stream_name":"stdout","time":839.950819791,"data":"seed 1 A1 part1 gamma 1.0 | T1 0.475 | k=10 C0 old 0.459 new 0.151 new-only 0.446\n"}
+,{"stream_name":"stdout","time":853.379154923,"data":"seed 1 A1 done: dim 6400, peak GPU 1043.0 MB (reserved 1428.0), times {'describe': 47.56273126602173, 'tables': 2.518075466156006, 'view': 10.10646677017212, 'scoring': 6.966933965682983}\n"}
+,{"stream_name":"stdout","time":918.231922033,"data":"seed 1 A2 rehearsal gamma 0.01 | T1 0.628 | k=10 C0 old 0.620 new 0.201 new-only 0.510\n"}
+,{"stream_name":"stdout","time":918.756748386,"data":"seed 1 A2 rehearsal gamma 0.03 | T1 0.622 | k=10 C0 old 0.613 new 0.213 new-only 0.523\n"}
+,{"stream_name":"stdout","time":919.285327982,"data":"seed 1 A2 rehearsal gamma 0.1 | T1 0.604 | k=10 C0 old 0.591 new 0.218 new-only 0.527\n"}
+,{"stream_name":"stdout","time":919.812704634,"data":"seed 1 A2 rehearsal gamma 0.3 | T1 0.578 | k=10 C0 old 0.558 new 0.221 new-only 0.524\n"}
+,{"stream_name":"stdout","time":920.337084296,"data":"seed 1 A2 rehearsal gamma 1.0 | T1 0.541 | k=10 C0 old 0.519 new 0.227 new-only 0.514\n"}
+,{"stream_name":"stdout","time":966.796300502,"data":"seed 1 A2 part1 gamma 0.01 | T1 0.591 | k=10 C0 old 0.595 new 0.129 new-only 0.464\n"}
+,{"stream_name":"stdout","time":967.643150905,"data":"seed 1 A2 part1 gamma 0.03 | T1 0.585 | k=10 C0 old 0.581 new 0.135 new-only 0.473\n"}
+,{"stream_name":"stdout","time":968.489077756,"data":"seed 1 A2 part1 gamma 0.1 | T1 0.566 | k=10 C0 old 0.558 new 0.139 new-only 0.477\n"}
+,{"stream_name":"stdout","time":969.336632993,"data":"seed 1 A2 part1 gamma 0.3 | T1 0.540 | k=10 C0 old 0.529 new 0.142 new-only 0.471\n"}
+,{"stream_name":"stdout","time":970.18240694,"data":"seed 1 A2 part1 gamma 1.0 | T1 0.503 | k=10 C0 old 0.489 new 0.148 new-only 0.457\n"}
+,{"stream_name":"stdout","time":1008.416556064,"data":"seed 1 A2 done: dim 12800, peak GPU 2282.0 MB (reserved 3124.0), times {'describe': 78.11851811408997, 'tables': 8.546512365341187, 'view': 61.123841762542725, 'scoring': 6.862640619277954}\n"}
+,{"stream_name":"stdout","time":1068.003333615,"data":"seed 1 A3 rehearsal gamma 0.01 | T1 0.617 | k=10 C0 old 0.605 new 0.183 new-only 0.494\n"}
+,{"stream_name":"stdout","time":1068.530799721,"data":"seed 1 A3 rehearsal gamma 0.03 | T1 0.618 | k=10 C0 old 0.602 new 0.198 new-only 0.512\n"}
+,{"stream_name":"stdout","time":1069.056171503,"data":"seed 1 A3 rehearsal gamma 0.1 | T1 0.608 | k=10 C0 old 0.593 new 0.210 new-only 0.524\n"}
+,{"stream_name":"stdout","time":1069.58508427,"data":"seed 1 A3 rehearsal gamma 0.3 | T1 0.587 | k=10 C0 old 0.568 new 0.212 new-only 0.525\n"}
+,{"stream_name":"stdout","time":1070.109835764,"data":"seed 1 A3 rehearsal gamma 1.0 | T1 0.555 | k=10 C0 old 0.540 new 0.221 new-only 0.522\n"}
+,{"stream_name":"stdout","time":1116.240327368,"data":"seed 1 A3 part1 gamma 0.01 | T1 0.585 | k=10 C0 old 0.581 new 0.120 new-only 0.439\n"}
+,{"stream_name":"stdout","time":1117.091338146,"data":"seed 1 A3 part1 gamma 0.03 | T1 0.583 | k=10 C0 old 0.578 new 0.127 new-only 0.456\n"}
+,{"stream_name":"stdout","time":1117.939956824,"data":"seed 1 A3 part1 gamma 0.1 | T1 0.570 | k=10 C0 old 0.563 new 0.135 new-only 0.470\n"}
+,{"stream_name":"stdout","time":1118.789753548,"data":"seed 1 A3 part1 gamma 0.3 | T1 0.549 | k=10 C0 old 0.539 new 0.139 new-only 0.472\n"}
+,{"stream_name":"stdout","time":1119.636404531,"data":"seed 1 A3 part1 gamma 1.0 | T1 0.519 | k=10 C0 old 0.511 new 0.145 new-only 0.465\n"}
+,{"stream_name":"stdout","time":1160.453915611,"data":"seed 1 A3 done: dim 14400, peak GPU 2798.0 MB (reserved 3502.0), times {'describe': 47.19717979431152, 'tables': 12.837833166122437, 'view': 84.68790316581726, 'scoring': 6.876168727874756}\n"}
+,{"stream_name":"stdout","time":1229.661507863,"data":"seed 1 A4 rehearsal gamma 0.01 | T1 0.629 | k=10 C0 old 0.624 new 0.203 new-only 0.516\n"}
+,{"stream_name":"stdout","time":1230.196766524,"data":"seed 1 A4 rehearsal gamma 0.03 | T1 0.618 | k=10 C0 old 0.612 new 0.211 new-only 0.527\n"}
+,{"stream_name":"stdout","time":1230.731641439,"data":"seed 1 A4 rehearsal gamma 0.1 | T1 0.603 | k=10 C0 old 0.586 new 0.221 new-only 0.530\n"}
+,{"stream_name":"stdout","time":1231.270351295,"data":"seed 1 A4 rehearsal gamma 0.3 | T1 0.574 | k=10 C0 old 0.555 new 0.223 new-only 0.526\n"}
+,{"stream_name":"stdout","time":1231.804259884,"data":"seed 1 A4 rehearsal gamma 1.0 | T1 0.536 | k=10 C0 old 0.518 new 0.227 new-only 0.514\n"}
+,{"stream_name":"stdout","time":1280.952012442,"data":"seed 1 A4 part1 gamma 0.01 | T1 0.592 | k=10 C0 old 0.597 new 0.126 new-only 0.465\n"}
+,{"stream_name":"stdout","time":1281.796232798,"data":"seed 1 A4 part1 gamma 0.03 | T1 0.580 | k=10 C0 old 0.582 new 0.134 new-only 0.475\n"}
+,{"stream_name":"stdout","time":1282.64217336,"data":"seed 1 A4 part1 gamma 0.1 | T1 0.563 | k=10 C0 old 0.553 new 0.136 new-only 0.476\n"}
+,{"stream_name":"stdout","time":1283.488417349,"data":"seed 1 A4 part1 gamma 0.3 | T1 0.537 | k=10 C0 old 0.528 new 0.140 new-only 0.471\n"}
+,{"stream_name":"stdout","time":1284.333894195,"data":"seed 1 A4 part1 gamma 1.0 | T1 0.498 | k=10 C0 old 0.488 new 0.148 new-only 0.458\n"}
+,{"stream_name":"stdout","time":1324.21626064,"data":"seed 1 A4 done: dim 12800, peak GPU 2282.0 MB (reserved 3128.0), times {'describe': 87.13759541511536, 'tables': 8.324777364730835, 'view': 61.003026723861694, 'scoring': 6.900199890136719}\n"}
+,{"stream_name":"stdout","time":1382.737064532,"data":"seed 1 A5 rehearsal gamma 0.01 | T1 0.623 | k=10 C0 old 0.611 new 0.188 new-only 0.493\n"}
+,{"stream_name":"stdout","time":1383.260015172,"data":"seed 1 A5 rehearsal gamma 0.03 | T1 0.623 | k=10 C0 old 0.607 new 0.203 new-only 0.512\n"}
+,{"stream_name":"stdout","time":1383.783609907,"data":"seed 1 A5 rehearsal gamma 0.1 | T1 0.612 | k=10 C0 old 0.594 new 0.209 new-only 0.522\n"}
+,{"stream_name":"stdout","time":1384.319483673,"data":"seed 1 A5 rehearsal gamma 0.3 | T1 0.586 | k=10 C0 old 0.570 new 0.211 new-only 0.522\n"}
+,{"stream_name":"stdout","time":1384.851502904,"data":"seed 1 A5 rehearsal gamma 1.0 | T1 0.556 | k=10 C0 old 0.540 new 0.218 new-only 0.519\n"}
+,{"stream_name":"stdout","time":1430.121843011,"data":"seed 1 A5 part1 gamma 0.01 | T1 0.583 | k=10 C0 old 0.582 new 0.124 new-only 0.440\n"}
+,{"stream_name":"stdout","time":1430.974397008,"data":"seed 1 A5 part1 gamma 0.03 | T1 0.586 | k=10 C0 old 0.579 new 0.131 new-only 0.458\n"}
+,{"stream_name":"stdout","time":1431.825751007,"data":"seed 1 A5 part1 gamma 0.1 | T1 0.574 | k=10 C0 old 0.562 new 0.136 new-only 0.472\n"}
+,{"stream_name":"stdout","time":1432.675501749,"data":"seed 1 A5 part1 gamma 0.3 | T1 0.553 | k=10 C0 old 0.542 new 0.140 new-only 0.472\n"}
+,{"stream_name":"stdout","time":1433.525996885,"data":"seed 1 A5 part1 gamma 1.0 | T1 0.520 | k=10 C0 old 0.509 new 0.145 new-only 0.467\n"}
+,{"stream_name":"stdout","time":1473.904704084,"data":"seed 1 A5 done: dim 14400, peak GPU 2799.0 MB (reserved 3636.0), times {'describe': 44.506572008132935, 'tables': 13.12003469467163, 'view': 84.7334520816803, 'scoring': 6.896819829940796}\n"}
+,{"stream_name":"stdout","time":1473.904840029,"data":"== seed 1 done, 24.4 min elapsed\n"}
+,{"stream_name":"stdout","time":1490.987322567,"data":"seed 2 A0 rehearsal gamma 0.01 | T1 0.578 | k=10 C0 old 0.571 new 0.140 new-only 0.404\n"}
+,{"stream_name":"stdout","time":1491.518320063,"data":"seed 2 A0 rehearsal gamma 0.03 | T1 0.581 | k=10 C0 old 0.568 new 0.157 new-only 0.433\n"}
+,{"stream_name":"stdout","time":1492.046070941,"data":"seed 2 A0 rehearsal gamma 0.1 | T1 0.565 | k=10 C0 old 0.550 new 0.170 new-only 0.454\n"}
+,{"stream_name":"stdout","time":1492.572109113,"data":"seed 2 A0 rehearsal gamma 0.3 | T1 0.541 | k=10 C0 old 0.522 new 0.182 new-only 0.459\n"}
+,{"stream_name":"stdout","time":1493.095606075,"data":"seed 2 A0 rehearsal gamma 1.0 | T1 0.506 | k=10 C0 old 0.487 new 0.192 new-only 0.456\n"}
+,{"stream_name":"stdout","time":1504.626435884,"data":"seed 2 A0 part1 gamma 0.01 | T1 0.540 | k=10 C0 old 0.540 new 0.104 new-only 0.407\n"}
+,{"stream_name":"stdout","time":1505.479651519,"data":"seed 2 A0 part1 gamma 0.03 | T1 0.537 | k=10 C0 old 0.533 new 0.116 new-only 0.427\n"}
+,{"stream_name":"stdout","time":1506.328465432,"data":"seed 2 A0 part1 gamma 0.1 | T1 0.524 | k=10 C0 old 0.518 new 0.127 new-only 0.437\n"}
+,{"stream_name":"stdout","time":1507.179392098,"data":"seed 2 A0 part1 gamma 0.3 | T1 0.504 | k=10 C0 old 0.493 new 0.134 new-only 0.439\n"}
+,{"stream_name":"stdout","time":1508.029526778,"data":"seed 2 A0 part1 gamma 1.0 | T1 0.470 | k=10 C0 old 0.456 new 0.141 new-only 0.434\n"}
+,{"stream_name":"stdout","time":1516.529629936,"data":"seed 2 A0 done: dim 6400, peak GPU 1016.0 MB (reserved 1428.0), times {'describe': 24.22506093978882, 'tables': 1.0917186737060547, 'view': 10.053178310394287, 'scoring': 6.8829686641693115}\n"}
+,{"stream_name":"stdout","time":1545.773252171,"data":"seed 2 A1 rehearsal gamma 0.01 | T1 0.608 | k=10 C0 old 0.598 new 0.168 new-only 0.456\n"}
+,{"stream_name":"stdout","time":1546.303585865,"data":"seed 2 A1 rehearsal gamma 0.03 | T1 0.598 | k=10 C0 old 0.587 new 0.175 new-only 0.468\n"}
+,{"stream_name":"stdout","time":1546.836836775,"data":"seed 2 A1 rehearsal gamma 0.1 | T1 0.576 | k=10 C0 old 0.560 new 0.183 new-only 0.474\n"}
+,{"stream_name":"stdout","time":1547.367394931,"data":"seed 2 A1 rehearsal gamma 0.3 | T1 0.546 | k=10 C0 old 0.528 new 0.190 new-only 0.473\n"}
+,{"stream_name":"stdout","time":1547.896387918,"data":"seed 2 A1 rehearsal gamma 1.0 | T1 0.509 | k=10 C0 old 0.488 new 0.200 new-only 0.466\n"}
+,{"stream_name":"stdout","time":1566.927482731,"data":"seed 2 A1 part1 gamma 0.01 | T1 0.570 | k=10 C0 old 0.566 new 0.122 new-only 0.455\n"}
+,{"stream_name":"stdout","time":1567.794512265,"data":"seed 2 A1 part1 gamma 0.03 | T1 0.559 | k=10 C0 old 0.554 new 0.126 new-only 0.459\n"}
+,{"stream_name":"stdout","time":1568.660728386,"data":"seed 2 A1 part1 gamma 0.1 | T1 0.538 | k=10 C0 old 0.528 new 0.136 new-only 0.458\n"}
+,{"stream_name":"stdout","time":1569.52753476,"data":"seed 2 A1 part1 gamma 0.3 | T1 0.508 | k=10 C0 old 0.498 new 0.143 new-only 0.451\n"}
+,{"stream_name":"stdout","time":1570.39353212,"data":"seed 2 A1 part1 gamma 1.0 | T1 0.472 | k=10 C0 old 0.457 new 0.150 new-only 0.440\n"}
+,{"stream_name":"stdout","time":1583.858518507,"data":"seed 2 A1 done: dim 6400, peak GPU 1043.0 MB (reserved 1428.0), times {'describe': 47.47601628303528, 'tables': 2.493664264678955, 'view': 10.105668306350708, 'scoring': 6.990144968032837}\n"}
+,{"stream_name":"stdout","time":1648.689059614,"data":"seed 2 A2 rehearsal gamma 0.01 | T1 0.636 | k=10 C0 old 0.626 new 0.166 new-only 0.457\n"}
+,{"stream_name":"stdout","time":1649.218331896,"data":"seed 2 A2 rehearsal gamma 0.03 | T1 0.625 | k=10 C0 old 0.614 new 0.175 new-only 0.471\n"}
+,{"stream_name":"stdout","time":1649.748629861,"data":"seed 2 A2 rehearsal gamma 0.1 | T1 0.599 | k=10 C0 old 0.590 new 0.180 new-only 0.479\n"}
+,{"stream_name":"stdout","time":1650.276217591,"data":"seed 2 A2 rehearsal gamma 0.3 | T1 0.573 | k=10 C0 old 0.557 new 0.187 new-only 0.483\n"}
+,{"stream_name":"stdout","time":1650.807512372,"data":"seed 2 A2 rehearsal gamma 1.0 | T1 0.536 | k=10 C0 old 0.519 new 0.195 new-only 0.475\n"}
+,{"stream_name":"stdout","time":1697.375321302,"data":"seed 2 A2 part1 gamma 0.01 | T1 0.594 | k=10 C0 old 0.595 new 0.121 new-only 0.454\n"}
+,{"stream_name":"stdout","time":1698.230858757,"data":"seed 2 A2 part1 gamma 0.03 | T1 0.583 | k=10 C0 old 0.583 new 0.126 new-only 0.463\n"}
+,{"stream_name":"stdout","time":1699.08230865,"data":"seed 2 A2 part1 gamma 0.1 | T1 0.561 | k=10 C0 old 0.558 new 0.131 new-only 0.466\n"}
+,{"stream_name":"stdout","time":1699.9335434,"data":"seed 2 A2 part1 gamma 0.3 | T1 0.535 | k=10 C0 old 0.526 new 0.137 new-only 0.460\n"}
+,{"stream_name":"stdout","time":1700.781804392,"data":"seed 2 A2 part1 gamma 1.0 | T1 0.498 | k=10 C0 old 0.486 new 0.145 new-only 0.451\n"}
+,{"stream_name":"stdout","time":1738.853810323,"data":"seed 2 A2 done: dim 12800, peak GPU 2282.0 MB (reserved 3124.0), times {'describe': 78.10624504089355, 'tables': 8.562266111373901, 'view': 61.01158118247986, 'scoring': 6.903782844543457}\n"}
+,{"stream_name":"stdout","time":1798.636400847,"data":"seed 2 A3 rehearsal gamma 0.01 | T1 0.620 | k=10 C0 old 0.614 new 0.147 new-only 0.424\n"}
+,{"stream_name":"stdout","time":1799.160761462,"data":"seed 2 A3 rehearsal gamma 0.03 | T1 0.620 | k=10 C0 old 0.614 new 0.162 new-only 0.448\n"}
+,{"stream_name":"stdout","time":1799.684710657,"data":"seed 2 A3 rehearsal gamma 0.1 | T1 0.605 | k=10 C0 old 0.596 new 0.172 new-only 0.466\n"}
+,{"stream_name":"stdout","time":1800.215512104,"data":"seed 2 A3 rehearsal gamma 0.3 | T1 0.581 | k=10 C0 old 0.571 new 0.178 new-only 0.470\n"}
+,{"stream_name":"stdout","time":1800.742582589,"data":"seed 2 A3 rehearsal gamma 1.0 | T1 0.547 | k=10 C0 old 0.536 new 0.188 new-only 0.470\n"}
+,{"stream_name":"stdout","time":1846.807805255,"data":"seed 2 A3 part1 gamma 0.01 | T1 0.589 | k=10 C0 old 0.588 new 0.115 new-only 0.435\n"}
+,{"stream_name":"stdout","time":1847.661429791,"data":"seed 2 A3 part1 gamma 0.03 | T1 0.586 | k=10 C0 old 0.584 new 0.124 new-only 0.453\n"}
+,{"stream_name":"stdout","time":1848.514419389,"data":"seed 2 A3 part1 gamma 0.1 | T1 0.572 | k=10 C0 old 0.563 new 0.132 new-only 0.465\n"}
+,{"stream_name":"stdout","time":1849.366457407,"data":"seed 2 A3 part1 gamma 0.3 | T1 0.545 | k=10 C0 old 0.537 new 0.136 new-only 0.469\n"}
+,{"stream_name":"stdout","time":1850.221830881,"data":"seed 2 A3 part1 gamma 1.0 | T1 0.515 | k=10 C0 old 0.505 new 0.143 new-only 0.465\n"}
+,{"stream_name":"stdout","time":1891.04176086,"data":"seed 2 A3 done: dim 14400, peak GPU 2798.0 MB (reserved 3502.0), times {'describe': 47.23181700706482, 'tables': 12.812246322631836, 'view': 84.79100108146667, 'scoring': 6.894935846328735}\n"}
+,{"stream_name":"stdout","time":1960.314457723,"data":"seed 2 A4 rehearsal gamma 0.01 | T1 0.631 | k=10 C0 old 0.623 new 0.159 new-only 0.453\n"}
+,{"stream_name":"stdout","time":1960.84794297,"data":"seed 2 A4 rehearsal gamma 0.03 | T1 0.621 | k=10 C0 old 0.613 new 0.171 new-only 0.469\n"}
+,{"stream_name":"stdout","time":1961.382102045,"data":"seed 2 A4 rehearsal gamma 0.1 | T1 0.598 | k=10 C0 old 0.588 new 0.180 new-only 0.479\n"}
+,{"stream_name":"stdout","time":1961.906095002,"data":"seed 2 A4 rehearsal gamma 0.3 | T1 0.576 | k=10 C0 old 0.556 new 0.187 new-only 0.478\n"}
+,{"stream_name":"stdout","time":1962.436473326,"data":"seed 2 A4 rehearsal gamma 1.0 | T1 0.535 | k=10 C0 old 0.517 new 0.195 new-only 0.473\n"}
+,{"stream_name":"stdout","time":2011.414397287,"data":"seed 2 A4 part1 gamma 0.01 | T1 0.593 | k=10 C0 old 0.591 new 0.123 new-only 0.459\n"}
+,{"stream_name":"stdout","time":2012.267362542,"data":"seed 2 A4 part1 gamma 0.03 | T1 0.581 | k=10 C0 old 0.580 new 0.129 new-only 0.469\n"}
+,{"stream_name":"stdout","time":2013.120265188,"data":"seed 2 A4 part1 gamma 0.1 | T1 0.563 | k=10 C0 old 0.557 new 0.134 new-only 0.469\n"}
+,{"stream_name":"stdout","time":2013.974808139,"data":"seed 2 A4 part1 gamma 0.3 | T1 0.537 | k=10 C0 old 0.525 new 0.139 new-only 0.461\n"}
+,{"stream_name":"stdout","time":2014.830115842,"data":"seed 2 A4 part1 gamma 1.0 | T1 0.497 | k=10 C0 old 0.485 new 0.146 new-only 0.449\n"}
+,{"stream_name":"stdout","time":2054.756093662,"data":"seed 2 A4 done: dim 12800, peak GPU 2282.0 MB (reserved 3128.0), times {'describe': 87.01548647880554, 'tables': 8.33691668510437, 'view': 61.02578806877136, 'scoring': 6.915282249450684}\n"}
+,{"stream_name":"stdout","time":2113.199677001,"data":"seed 2 A5 rehearsal gamma 0.01 | T1 0.626 | k=10 C0 old 0.614 new 0.149 new-only 0.424\n"}
+,{"stream_name":"stdout","time":2113.726251201,"data":"seed 2 A5 rehearsal gamma 0.03 | T1 0.623 | k=10 C0 old 0.612 new 0.162 new-only 0.446\n"}
+,{"stream_name":"stdout","time":2114.252881907,"data":"seed 2 A5 rehearsal gamma 0.1 | T1 0.608 | k=10 C0 old 0.598 new 0.171 new-only 0.464\n"}
+,{"stream_name":"stdout","time":2114.786311297,"data":"seed 2 A5 rehearsal gamma 0.3 | T1 0.583 | k=10 C0 old 0.575 new 0.177 new-only 0.471\n"}
+,{"stream_name":"stdout","time":2115.313452016,"data":"seed 2 A5 rehearsal gamma 1.0 | T1 0.552 | k=10 C0 old 0.538 new 0.188 new-only 0.470\n"}
+,{"stream_name":"stdout","time":2160.573147723,"data":"seed 2 A5 part1 gamma 0.01 | T1 0.590 | k=10 C0 old 0.584 new 0.118 new-only 0.430\n"}
+,{"stream_name":"stdout","time":2161.425622272,"data":"seed 2 A5 part1 gamma 0.03 | T1 0.586 | k=10 C0 old 0.580 new 0.126 new-only 0.448\n"}
+,{"stream_name":"stdout","time":2162.273126172,"data":"seed 2 A5 part1 gamma 0.1 | T1 0.570 | k=10 C0 old 0.563 new 0.133 new-only 0.459\n"}
+,{"stream_name":"stdout","time":2163.122142381,"data":"seed 2 A5 part1 gamma 0.3 | T1 0.547 | k=10 C0 old 0.539 new 0.137 new-only 0.466\n"}
+,{"stream_name":"stdout","time":2163.969983732,"data":"seed 2 A5 part1 gamma 1.0 | T1 0.516 | k=10 C0 old 0.507 new 0.142 new-only 0.463\n"}
+,{"stream_name":"stdout","time":2204.284086295,"data":"seed 2 A5 done: dim 14400, peak GPU 2799.0 MB (reserved 3636.0), times {'describe': 44.39375352859497, 'tables': 12.908981561660767, 'view': 84.86133146286011, 'scoring': 6.889308452606201}\n"}
+,{"stream_name":"stdout","time":2204.284335962,"data":"== seed 2 done, 36.6 min elapsed\n"}
+,{"stream_name":"stdout","time":2221.367952925,"data":"seed 3 A0 rehearsal gamma 0.01 | T1 0.566 | k=10 C0 old 0.556 new 0.151 new-only 0.450\n"}
+,{"stream_name":"stdout","time":2221.893225984,"data":"seed 3 A0 rehearsal gamma 0.03 | T1 0.564 | k=10 C0 old 0.554 new 0.174 new-only 0.478\n"}
+,{"stream_name":"stdout","time":2222.421887447,"data":"seed 3 A0 rehearsal gamma 0.1 | T1 0.553 | k=10 C0 old 0.542 new 0.193 new-only 0.495\n"}
+,{"stream_name":"stdout","time":2222.946122792,"data":"seed 3 A0 rehearsal gamma 0.3 | T1 0.528 | k=10 C0 old 0.513 new 0.206 new-only 0.497\n"}
+,{"stream_name":"stdout","time":2223.469091447,"data":"seed 3 A0 rehearsal gamma 1.0 | T1 0.499 | k=10 C0 old 0.476 new 0.213 new-only 0.492\n"}
+,{"stream_name":"stdout","time":2235.01347526,"data":"seed 3 A0 part1 gamma 0.01 | T1 0.545 | k=10 C0 old 0.542 new 0.107 new-only 0.415\n"}
+,{"stream_name":"stdout","time":2235.869262182,"data":"seed 3 A0 part1 gamma 0.03 | T1 0.543 | k=10 C0 old 0.539 new 0.117 new-only 0.435\n"}
+,{"stream_name":"stdout","time":2236.725844068,"data":"seed 3 A0 part1 gamma 0.1 | T1 0.530 | k=10 C0 old 0.523 new 0.132 new-only 0.447\n"}
+,{"stream_name":"stdout","time":2237.58030222,"data":"seed 3 A0 part1 gamma 0.3 | T1 0.503 | k=10 C0 old 0.496 new 0.141 new-only 0.447\n"}
+,{"stream_name":"stdout","time":2238.431859223,"data":"seed 3 A0 part1 gamma 1.0 | T1 0.471 | k=10 C0 old 0.455 new 0.148 new-only 0.440\n"}
+,{"stream_name":"stdout","time":2246.921138484,"data":"seed 3 A0 done: dim 6400, peak GPU 1016.0 MB (reserved 1428.0), times {'describe': 24.204996347427368, 'tables': 1.0732929706573486, 'view': 10.041236162185669, 'scoring': 6.904942750930786}\n"}
+,{"stream_name":"stdout","time":2276.015016427,"data":"seed 3 A1 rehearsal gamma 0.01 | T1 0.586 | k=10 C0 old 0.577 new 0.185 new-only 0.507\n"}
+,{"stream_name":"stdout","time":2276.547547779,"data":"seed 3 A1 rehearsal gamma 0.03 | T1 0.577 | k=10 C0 old 0.565 new 0.195 new-only 0.514\n"}
+,{"stream_name":"stdout","time":2277.075626258,"data":"seed 3 A1 rehearsal gamma 0.1 | T1 0.560 | k=10 C0 old 0.544 new 0.205 new-only 0.516\n"}
+,{"stream_name":"stdout","time":2277.613898007,"data":"seed 3 A1 rehearsal gamma 0.3 | T1 0.537 | k=10 C0 old 0.518 new 0.214 new-only 0.511\n"}
+,{"stream_name":"stdout","time":2278.14350573,"data":"seed 3 A1 rehearsal gamma 1.0 | T1 0.500 | k=10 C0 old 0.478 new 0.223 new-only 0.502\n"}
+,{"stream_name":"stdout","time":2297.134946978,"data":"seed 3 A1 part1 gamma 0.01 | T1 0.570 | k=10 C0 old 0.566 new 0.125 new-only 0.458\n"}
+,{"stream_name":"stdout","time":2297.999834536,"data":"seed 3 A1 part1 gamma 0.03 | T1 0.560 | k=10 C0 old 0.554 new 0.131 new-only 0.468\n"}
+,{"stream_name":"stdout","time":2298.865063977,"data":"seed 3 A1 part1 gamma 0.1 | T1 0.540 | k=10 C0 old 0.530 new 0.138 new-only 0.467\n"}
+,{"stream_name":"stdout","time":2299.728108898,"data":"seed 3 A1 part1 gamma 0.3 | T1 0.507 | k=10 C0 old 0.498 new 0.147 new-only 0.461\n"}
+,{"stream_name":"stdout","time":2300.591464174,"data":"seed 3 A1 part1 gamma 1.0 | T1 0.472 | k=10 C0 old 0.457 new 0.154 new-only 0.448\n"}
+,{"stream_name":"stdout","time":2314.05991889,"data":"seed 3 A1 done: dim 6400, peak GPU 1043.0 MB (reserved 1428.0), times {'describe': 47.30938124656677, 'tables': 2.432206630706787, 'view': 10.099344968795776, 'scoring': 6.979151725769043}\n"}
+,{"stream_name":"stdout","time":2378.901147278,"data":"seed 3 A2 rehearsal gamma 0.01 | T1 0.613 | k=10 C0 old 0.606 new 0.185 new-only 0.503\n"}
+,{"stream_name":"stdout","time":2379.428254389,"data":"seed 3 A2 rehearsal gamma 0.03 | T1 0.604 | k=10 C0 old 0.594 new 0.196 new-only 0.517\n"}
+,{"stream_name":"stdout","time":2379.955122653,"data":"seed 3 A2 rehearsal gamma 0.1 | T1 0.586 | k=10 C0 old 0.574 new 0.203 new-only 0.521\n"}
+,{"stream_name":"stdout","time":2380.479381652,"data":"seed 3 A2 rehearsal gamma 0.3 | T1 0.561 | k=10 C0 old 0.545 new 0.209 new-only 0.519\n"}
+,{"stream_name":"stdout","time":2381.00776734,"data":"seed 3 A2 rehearsal gamma 1.0 | T1 0.523 | k=10 C0 old 0.506 new 0.220 new-only 0.513\n"}
+,{"stream_name":"stdout","time":2427.476123188,"data":"seed 3 A2 part1 gamma 0.01 | T1 0.594 | k=10 C0 old 0.590 new 0.122 new-only 0.460\n"}
+,{"stream_name":"stdout","time":2428.324952614,"data":"seed 3 A2 part1 gamma 0.03 | T1 0.582 | k=10 C0 old 0.578 new 0.129 new-only 0.470\n"}
+,{"stream_name":"stdout","time":2429.174378101,"data":"seed 3 A2 part1 gamma 0.1 | T1 0.562 | k=10 C0 old 0.556 new 0.135 new-only 0.475\n"}
+,{"stream_name":"stdout","time":2430.023531262,"data":"seed 3 A2 part1 gamma 0.3 | T1 0.535 | k=10 C0 old 0.526 new 0.141 new-only 0.470\n"}
+,{"stream_name":"stdout","time":2430.871333991,"data":"seed 3 A2 part1 gamma 1.0 | T1 0.496 | k=10 C0 old 0.486 new 0.148 new-only 0.460\n"}
+,{"stream_name":"stdout","time":2469.001406922,"data":"seed 3 A2 done: dim 12800, peak GPU 2282.0 MB (reserved 3124.0), times {'describe': 78.0486319065094, 'tables': 8.57697582244873, 'view': 61.001057624816895, 'scoring': 6.871667146682739}\n"}
+,{"stream_name":"stdout","time":2528.621941754,"data":"seed 3 A3 rehearsal gamma 0.01 | T1 0.604 | k=10 C0 old 0.597 new 0.160 new-only 0.470\n"}
+,{"stream_name":"stdout","time":2529.147766497,"data":"seed 3 A3 rehearsal gamma 0.03 | T1 0.605 | k=10 C0 old 0.593 new 0.174 new-only 0.493\n"}
+,{"stream_name":"stdout","time":2529.675762901,"data":"seed 3 A3 rehearsal gamma 0.1 | T1 0.593 | k=10 C0 old 0.580 new 0.189 new-only 0.507\n"}
+,{"stream_name":"stdout","time":2530.20324305,"data":"seed 3 A3 rehearsal gamma 0.3 | T1 0.571 | k=10 C0 old 0.562 new 0.199 new-only 0.513\n"}
+,{"stream_name":"stdout","time":2530.73469576,"data":"seed 3 A3 rehearsal gamma 1.0 | T1 0.544 | k=10 C0 old 0.528 new 0.211 new-only 0.510\n"}
+,{"stream_name":"stdout","time":2576.748399973,"data":"seed 3 A3 part1 gamma 0.01 | T1 0.587 | k=10 C0 old 0.588 new 0.118 new-only 0.439\n"}
+,{"stream_name":"stdout","time":2577.594767309,"data":"seed 3 A3 part1 gamma 0.03 | T1 0.586 | k=10 C0 old 0.582 new 0.127 new-only 0.456\n"}
+,{"stream_name":"stdout","time":2578.443167372,"data":"seed 3 A3 part1 gamma 0.1 | T1 0.573 | k=10 C0 old 0.562 new 0.135 new-only 0.469\n"}
+,{"stream_name":"stdout","time":2579.290003024,"data":"seed 3 A3 part1 gamma 0.3 | T1 0.550 | k=10 C0 old 0.541 new 0.140 new-only 0.473\n"}
+,{"stream_name":"stdout","time":2580.137373865,"data":"seed 3 A3 part1 gamma 1.0 | T1 0.519 | k=10 C0 old 0.509 new 0.148 new-only 0.471\n"}
+,{"stream_name":"stdout","time":2620.953770807,"data":"seed 3 A3 done: dim 14400, peak GPU 2798.0 MB (reserved 3502.0), times {'describe': 47.013790130615234, 'tables': 12.776459693908691, 'view': 84.79549932479858, 'scoring': 6.87137770652771}\n"}
+,{"stream_name":"stdout","time":2690.165945975,"data":"seed 3 A4 rehearsal gamma 0.01 | T1 0.614 | k=10 C0 old 0.604 new 0.188 new-only 0.508\n"}
+,{"stream_name":"stdout","time":2690.695736403,"data":"seed 3 A4 rehearsal gamma 0.03 | T1 0.603 | k=10 C0 old 0.591 new 0.198 new-only 0.521\n"}
+,{"stream_name":"stdout","time":2691.228304185,"data":"seed 3 A4 rehearsal gamma 0.1 | T1 0.581 | k=10 C0 old 0.567 new 0.205 new-only 0.524\n"}
+,{"stream_name":"stdout","time":2691.761368666,"data":"seed 3 A4 rehearsal gamma 0.3 | T1 0.558 | k=10 C0 old 0.543 new 0.213 new-only 0.521\n"}
+,{"stream_name":"stdout","time":2692.288207561,"data":"seed 3 A4 rehearsal gamma 1.0 | T1 0.523 | k=10 C0 old 0.504 new 0.221 new-only 0.512\n"}
+,{"stream_name":"stdout","time":2741.428368681,"data":"seed 3 A4 part1 gamma 0.01 | T1 0.596 | k=10 C0 old 0.593 new 0.126 new-only 0.463\n"}
+,{"stream_name":"stdout","time":2742.276796333,"data":"seed 3 A4 part1 gamma 0.03 | T1 0.582 | k=10 C0 old 0.579 new 0.130 new-only 0.475\n"}
+,{"stream_name":"stdout","time":2743.127866287,"data":"seed 3 A4 part1 gamma 0.1 | T1 0.560 | k=10 C0 old 0.555 new 0.137 new-only 0.477\n"}
+,{"stream_name":"stdout","time":2743.977470828,"data":"seed 3 A4 part1 gamma 0.3 | T1 0.535 | k=10 C0 old 0.524 new 0.143 new-only 0.472\n"}
+,{"stream_name":"stdout","time":2744.827877128,"data":"seed 3 A4 part1 gamma 1.0 | T1 0.495 | k=10 C0 old 0.485 new 0.151 new-only 0.460\n"}
+,{"stream_name":"stdout","time":2784.752438922,"data":"seed 3 A4 done: dim 12800, peak GPU 2282.0 MB (reserved 3128.0), times {'describe': 86.875314950943, 'tables': 8.409951448440552, 'view': 61.168965339660645, 'scoring': 6.891422986984253}\n"}
+,{"stream_name":"stdout","time":2843.251571498,"data":"seed 3 A5 rehearsal gamma 0.01 | T1 0.605 | k=10 C0 old 0.597 new 0.158 new-only 0.471\n"}
+,{"stream_name":"stdout","time":2843.776460133,"data":"seed 3 A5 rehearsal gamma 0.03 | T1 0.602 | k=10 C0 old 0.594 new 0.177 new-only 0.493\n"}
+,{"stream_name":"stdout","time":2844.304910112,"data":"seed 3 A5 rehearsal gamma 0.1 | T1 0.589 | k=10 C0 old 0.580 new 0.190 new-only 0.510\n"}
+,{"stream_name":"stdout","time":2844.829258161,"data":"seed 3 A5 rehearsal gamma 0.3 | T1 0.573 | k=10 C0 old 0.559 new 0.199 new-only 0.513\n"}
+,{"stream_name":"stdout","time":2845.355642082,"data":"seed 3 A5 rehearsal gamma 1.0 | T1 0.545 | k=10 C0 old 0.529 new 0.209 new-only 0.510\n"}
+,{"stream_name":"stdout","time":2890.607445752,"data":"seed 3 A5 part1 gamma 0.01 | T1 0.587 | k=10 C0 old 0.585 new 0.119 new-only 0.441\n"}
+,{"stream_name":"stdout","time":2891.460099116,"data":"seed 3 A5 part1 gamma 0.03 | T1 0.585 | k=10 C0 old 0.579 new 0.126 new-only 0.457\n"}
+,{"stream_name":"stdout","time":2892.310967245,"data":"seed 3 A5 part1 gamma 0.1 | T1 0.568 | k=10 C0 old 0.562 new 0.134 new-only 0.471\n"}
+,{"stream_name":"stdout","time":2893.157427046,"data":"seed 3 A5 part1 gamma 0.3 | T1 0.545 | k=10 C0 old 0.536 new 0.140 new-only 0.474\n"}
+,{"stream_name":"stdout","time":2894.004126342,"data":"seed 3 A5 part1 gamma 1.0 | T1 0.516 | k=10 C0 old 0.505 new 0.148 new-only 0.471\n"}
+,{"stream_name":"stdout","time":2934.362099616,"data":"seed 3 A5 done: dim 14400, peak GPU 2799.0 MB (reserved 3636.0), times {'describe': 44.37086820602417, 'tables': 13.008995532989502, 'view': 84.86649322509766, 'scoring': 6.875517129898071}\n"}
+,{"stream_name":"stdout","time":2934.362352345,"data":"== seed 3 done, 48.7 min elapsed\n"}
+,{"stream_name":"stdout","time":2951.408867283,"data":"seed 4 A0 rehearsal gamma 0.01 | T1 0.598 | k=10 C0 old 0.589 new 0.129 new-only 0.355\n"}
+,{"stream_name":"stdout","time":2951.933101122,"data":"seed 4 A0 rehearsal gamma 0.03 | T1 0.604 | k=10 C0 old 0.588 new 0.145 new-only 0.377\n"}
+,{"stream_name":"stdout","time":2952.463598666,"data":"seed 4 A0 rehearsal gamma 0.1 | T1 0.589 | k=10 C0 old 0.573 new 0.159 new-only 0.390\n"}
+,{"stream_name":"stdout","time":2952.994739348,"data":"seed 4 A0 rehearsal gamma 0.3 | T1 0.570 | k=10 C0 old 0.554 new 0.170 new-only 0.392\n"}
+,{"stream_name":"stdout","time":2953.524742898,"data":"seed 4 A0 rehearsal gamma 1.0 | T1 0.539 | k=10 C0 old 0.516 new 0.178 new-only 0.385\n"}
+,{"stream_name":"stdout","time":2965.093793936,"data":"seed 4 A0 part1 gamma 0.01 | T1 0.534 | k=10 C0 old 0.535 new 0.104 new-only 0.397\n"}
+,{"stream_name":"stdout","time":2965.95797297,"data":"seed 4 A0 part1 gamma 0.03 | T1 0.535 | k=10 C0 old 0.531 new 0.116 new-only 0.420\n"}
+,{"stream_name":"stdout","time":2966.820590612,"data":"seed 4 A0 part1 gamma 0.1 | T1 0.526 | k=10 C0 old 0.517 new 0.128 new-only 0.435\n"}
+,{"stream_name":"stdout","time":2967.682796348,"data":"seed 4 A0 part1 gamma 0.3 | T1 0.504 | k=10 C0 old 0.496 new 0.137 new-only 0.438\n"}
+,{"stream_name":"stdout","time":2968.543387629,"data":"seed 4 A0 part1 gamma 1.0 | T1 0.472 | k=10 C0 old 0.459 new 0.146 new-only 0.430\n"}
+,{"stream_name":"stdout","time":2977.080814407,"data":"seed 4 A0 done: dim 6400, peak GPU 1016.0 MB (reserved 1428.0), times {'describe': 24.246100425720215, 'tables': 1.0597031116485596, 'view': 10.04709768295288, 'scoring': 6.9524219036102295}\n"}
+,{"stream_name":"stdout","time":3006.295784337,"data":"seed 4 A1 rehearsal gamma 0.01 | T1 0.633 | k=10 C0 old 0.622 new 0.150 new-only 0.399\n"}
+,{"stream_name":"stdout","time":3006.825861791,"data":"seed 4 A1 rehearsal gamma 0.03 | T1 0.625 | k=10 C0 old 0.611 new 0.157 new-only 0.407\n"}
+,{"stream_name":"stdout","time":3007.359319937,"data":"seed 4 A1 rehearsal gamma 0.1 | T1 0.605 | k=10 C0 old 0.590 new 0.168 new-only 0.409\n"}
+,{"stream_name":"stdout","time":3007.886914645,"data":"seed 4 A1 rehearsal gamma 0.3 | T1 0.579 | k=10 C0 old 0.561 new 0.176 new-only 0.404\n"}
+,{"stream_name":"stdout","time":3008.411602679,"data":"seed 4 A1 rehearsal gamma 1.0 | T1 0.541 | k=10 C0 old 0.520 new 0.181 new-only 0.394\n"}
+,{"stream_name":"stdout","time":3027.251722792,"data":"seed 4 A1 part1 gamma 0.01 | T1 0.569 | k=10 C0 old 0.568 new 0.124 new-only 0.450\n"}
+,{"stream_name":"stdout","time":3028.108110555,"data":"seed 4 A1 part1 gamma 0.03 | T1 0.562 | k=10 C0 old 0.556 new 0.130 new-only 0.455\n"}
+,{"stream_name":"stdout","time":3028.96394351,"data":"seed 4 A1 part1 gamma 0.1 | T1 0.540 | k=10 C0 old 0.534 new 0.139 new-only 0.457\n"}
+,{"stream_name":"stdout","time":3029.820529312,"data":"seed 4 A1 part1 gamma 0.3 | T1 0.510 | k=10 C0 old 0.502 new 0.146 new-only 0.452\n"}
+,{"stream_name":"stdout","time":3030.675138758,"data":"seed 4 A1 part1 gamma 1.0 | T1 0.476 | k=10 C0 old 0.461 new 0.154 new-only 0.440\n"}
+,{"stream_name":"stdout","time":3044.10404677,"data":"seed 4 A1 done: dim 6400, peak GPU 1043.0 MB (reserved 1428.0), times {'describe': 47.20426273345947, 'tables': 2.499845266342163, 'view': 10.081087589263916, 'scoring': 6.918720483779907}\n"}
+,{"stream_name":"stdout","time":3109.074317134,"data":"seed 4 A2 rehearsal gamma 0.01 | T1 0.657 | k=10 C0 old 0.646 new 0.143 new-only 0.395\n"}
+,{"stream_name":"stdout","time":3109.604162927,"data":"seed 4 A2 rehearsal gamma 0.03 | T1 0.648 | k=10 C0 old 0.638 new 0.155 new-only 0.406\n"}
+,{"stream_name":"stdout","time":3110.132878579,"data":"seed 4 A2 rehearsal gamma 0.1 | T1 0.629 | k=10 C0 old 0.617 new 0.163 new-only 0.413\n"}
+,{"stream_name":"stdout","time":3110.659583917,"data":"seed 4 A2 rehearsal gamma 0.3 | T1 0.608 | k=10 C0 old 0.591 new 0.172 new-only 0.412\n"}
+,{"stream_name":"stdout","time":3111.184158312,"data":"seed 4 A2 rehearsal gamma 1.0 | T1 0.568 | k=10 C0 old 0.552 new 0.177 new-only 0.403\n"}
+,{"stream_name":"stdout","time":3157.672012756,"data":"seed 4 A2 part1 gamma 0.01 | T1 0.593 | k=10 C0 old 0.591 new 0.129 new-only 0.456\n"}
+,{"stream_name":"stdout","time":3158.525297337,"data":"seed 4 A2 part1 gamma 0.03 | T1 0.587 | k=10 C0 old 0.581 new 0.135 new-only 0.465\n"}
+,{"stream_name":"stdout","time":3159.37567524,"data":"seed 4 A2 part1 gamma 0.1 | T1 0.567 | k=10 C0 old 0.558 new 0.139 new-only 0.467\n"}
+,{"stream_name":"stdout","time":3160.226261117,"data":"seed 4 A2 part1 gamma 0.3 | T1 0.542 | k=10 C0 old 0.531 new 0.141 new-only 0.462\n"}
+,{"stream_name":"stdout","time":3161.076150592,"data":"seed 4 A2 part1 gamma 1.0 | T1 0.504 | k=10 C0 old 0.490 new 0.149 new-only 0.449\n"}
+,{"stream_name":"stdout","time":3199.244810568,"data":"seed 4 A2 done: dim 12800, peak GPU 2282.0 MB (reserved 3124.0), times {'describe': 78.11291289329529, 'tables': 8.563779830932617, 'view': 61.121042251586914, 'scoring': 6.88347053527832}\n"}
+,{"stream_name":"stdout","time":3258.9107582,"data":"seed 4 A3 rehearsal gamma 0.01 | T1 0.640 | k=10 C0 old 0.631 new 0.141 new-only 0.378\n"}
+,{"stream_name":"stdout","time":3259.439498,"data":"seed 4 A3 rehearsal gamma 0.03 | T1 0.643 | k=10 C0 old 0.631 new 0.151 new-only 0.395\n"}
+,{"stream_name":"stdout","time":3259.967024414,"data":"seed 4 A3 rehearsal gamma 0.1 | T1 0.630 | k=10 C0 old 0.619 new 0.159 new-only 0.406\n"}
+,{"stream_name":"stdout","time":3260.49411463,"data":"seed 4 A3 rehearsal gamma 0.3 | T1 0.611 | k=10 C0 old 0.595 new 0.166 new-only 0.408\n"}
+,{"stream_name":"stdout","time":3261.025102811,"data":"seed 4 A3 rehearsal gamma 1.0 | T1 0.584 | k=10 C0 old 0.563 new 0.172 new-only 0.403\n"}
+,{"stream_name":"stdout","time":3307.063156637,"data":"seed 4 A3 part1 gamma 0.01 | T1 0.588 | k=10 C0 old 0.582 new 0.123 new-only 0.431\n"}
+,{"stream_name":"stdout","time":3307.911096078,"data":"seed 4 A3 part1 gamma 0.03 | T1 0.587 | k=10 C0 old 0.581 new 0.130 new-only 0.450\n"}
+,{"stream_name":"stdout","time":3308.75858121,"data":"seed 4 A3 part1 gamma 0.1 | T1 0.574 | k=10 C0 old 0.565 new 0.135 new-only 0.461\n"}
+,{"stream_name":"stdout","time":3309.606560953,"data":"seed 4 A3 part1 gamma 0.3 | T1 0.551 | k=10 C0 old 0.542 new 0.140 new-only 0.466\n"}
+,{"stream_name":"stdout","time":3310.455604221,"data":"seed 4 A3 part1 gamma 1.0 | T1 0.520 | k=10 C0 old 0.508 new 0.146 new-only 0.462\n"}
+,{"stream_name":"stdout","time":3351.228957177,"data":"seed 4 A3 done: dim 14400, peak GPU 2798.0 MB (reserved 3502.0), times {'describe': 46.99443292617798, 'tables': 12.77190375328064, 'view': 84.82131934165955, 'scoring': 6.877255916595459}\n"}
+,{"stream_name":"stdout","time":3420.47895754,"data":"seed 4 A4 rehearsal gamma 0.01 | T1 0.657 | k=10 C0 old 0.645 new 0.147 new-only 0.396\n"}
+,{"stream_name":"stdout","time":3421.004614524,"data":"seed 4 A4 rehearsal gamma 0.03 | T1 0.646 | k=10 C0 old 0.635 new 0.156 new-only 0.408\n"}
+,{"stream_name":"stdout","time":3421.533557878,"data":"seed 4 A4 rehearsal gamma 0.1 | T1 0.629 | k=10 C0 old 0.615 new 0.166 new-only 0.414\n"}
+,{"stream_name":"stdout","time":3422.05855782,"data":"seed 4 A4 rehearsal gamma 0.3 | T1 0.605 | k=10 C0 old 0.588 new 0.173 new-only 0.413\n"}
+,{"stream_name":"stdout","time":3422.584027702,"data":"seed 4 A4 rehearsal gamma 1.0 | T1 0.565 | k=10 C0 old 0.553 new 0.179 new-only 0.403\n"}
+,{"stream_name":"stdout","time":3471.689754165,"data":"seed 4 A4 part1 gamma 0.01 | T1 0.591 | k=10 C0 old 0.590 new 0.128 new-only 0.456\n"}
+,{"stream_name":"stdout","time":3472.541844462,"data":"seed 4 A4 part1 gamma 0.03 | T1 0.581 | k=10 C0 old 0.580 new 0.135 new-only 0.465\n"}
+,{"stream_name":"stdout","time":3473.392074224,"data":"seed 4 A4 part1 gamma 0.1 | T1 0.566 | k=10 C0 old 0.559 new 0.137 new-only 0.466\n"}
+,{"stream_name":"stdout","time":3474.24168397,"data":"seed 4 A4 part1 gamma 0.3 | T1 0.540 | k=10 C0 old 0.531 new 0.143 new-only 0.460\n"}
+,{"stream_name":"stdout","time":3475.090738274,"data":"seed 4 A4 part1 gamma 1.0 | T1 0.499 | k=10 C0 old 0.489 new 0.150 new-only 0.450\n"}
+,{"stream_name":"stdout","time":3514.929139902,"data":"seed 4 A4 done: dim 12800, peak GPU 2282.0 MB (reserved 3128.0), times {'describe': 86.80461144447327, 'tables': 8.390996217727661, 'view': 61.15330934524536, 'scoring': 6.881988048553467}\n"}
+,{"stream_name":"stdout","time":3573.426762147,"data":"seed 4 A5 rehearsal gamma 0.01 | T1 0.643 | k=10 C0 old 0.631 new 0.140 new-only 0.375\n"}
+,{"stream_name":"stdout","time":3573.953326345,"data":"seed 4 A5 rehearsal gamma 0.03 | T1 0.644 | k=10 C0 old 0.628 new 0.151 new-only 0.394\n"}
+,{"stream_name":"stdout","time":3574.482960479,"data":"seed 4 A5 rehearsal gamma 0.1 | T1 0.631 | k=10 C0 old 0.615 new 0.160 new-only 0.407\n"}
+,{"stream_name":"stdout","time":3575.003230015,"data":"seed 4 A5 rehearsal gamma 0.3 | T1 0.613 | k=10 C0 old 0.594 new 0.165 new-only 0.408\n"}
+,{"stream_name":"stdout","time":3575.531689201,"data":"seed 4 A5 rehearsal gamma 1.0 | T1 0.580 | k=10 C0 old 0.562 new 0.172 new-only 0.406\n"}
+,{"stream_name":"stdout","time":3620.764234732,"data":"seed 4 A5 part1 gamma 0.01 | T1 0.586 | k=10 C0 old 0.579 new 0.122 new-only 0.430\n"}
+,{"stream_name":"stdout","time":3621.611289946,"data":"seed 4 A5 part1 gamma 0.03 | T1 0.584 | k=10 C0 old 0.577 new 0.129 new-only 0.447\n"}
+,{"stream_name":"stdout","time":3622.4590467,"data":"seed 4 A5 part1 gamma 0.1 | T1 0.573 | k=10 C0 old 0.564 new 0.136 new-only 0.460\n"}
+,{"stream_name":"stdout","time":3623.305540849,"data":"seed 4 A5 part1 gamma 0.3 | T1 0.551 | k=10 C0 old 0.543 new 0.140 new-only 0.463\n"}
+,{"stream_name":"stdout","time":3624.153470243,"data":"seed 4 A5 part1 gamma 1.0 | T1 0.522 | k=10 C0 old 0.509 new 0.146 new-only 0.459\n"}
+,{"stream_name":"stdout","time":3664.529665288,"data":"seed 4 A5 done: dim 14400, peak GPU 2799.0 MB (reserved 3636.0), times {'describe': 44.384989500045776, 'tables': 12.921438217163086, 'view': 84.93219780921936, 'scoring': 6.858053922653198}\n"}
+,{"stream_name":"stdout","time":3664.52989615,"data":"== seed 4 done, 60.9 min elapsed\n"}
+,{"stream_name":"stdout","time":3664.533804562,"data":"{\"gpu\": \"Tesla T4\", \"torch\": \"2.11.0+cu130\", \"on_kaggle\": true, \"smoke\": false, \"seeds\": 5, \"stop\": 8, \"stages\": 8, \"per_stage\": 10, \"arms\": {\"A0\": {\"k\": 1600, \"sides\": 1, \"grid\": 2, \"mirror\": false}, \"A1\": {\"k\": 1600, \"sides\": 1, \"grid\": 2, \"mirror\": true}, \"A2\": {\"k\": 1600, \"sides\": 2, \"grid\": 2, \"mirror\": true}, \"A3\": {\"k\": 1600, \"sides\": 1, \"grid\": 3, \"mirror\": true}, \"A4\": {\"k\": 3200, \"sides\": 1, \"grid\": 2, \"mirror\": true}, \"A5\": {\"k\": 800, \"sides\": 2, \"grid\": 3, \"mirror\": true}}, \"n_patches\": 200000, \"thr\": 0.1, \"shots\": [1, 3, 10], \"episodes\": 20, \"gammas\": [0.01, 0.03, 0.1, 0.3, 1.0], \"alpha\": 1.0, \"n_borrow\": 2, \"g1\": [-0.2, -0.19, -0.18, -0.17, -0.16, -0.15, -0.14, -0.13, -0.12, -0.11, -0.1, -0.09, -0.08, -0.07, -0.06, -0.05, -0.04, -0.03, -0.02, -0.01, 0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3, 0.31, 0.32, 0.33, 0.34, 0.35, 0.36, 0.37, 0.38, 0.39, 0.4, 0.41, 0.42, 0.43, 0.44, 0.45, 0.46, 0.47, 0.48, 0.49, 0.5], \"g3\": [-0.5, -0.48, -0.46, -0.44, -0.42, -0.4, -0.38, -0.36, -0.34, -0.32, -0.3, -0.28, -0.26, -0.24, -0.22, -0.2, -0.18, -0.16, -0.14, -0.12, -0.1, -0.08, -0.06, -0.04, -0.02, 0.0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.22, 0.24, 0.26, 0.28, 0.3, 0.32, 0.34, 0.36, 0.38, 0.4, 0.42, 0.44, 0.46, 0.48, 0.5, 0.52, 0.54, 0.56, 0.58, 0.6, 0.62, 0.64, 0.66, 0.68, 0.7, 0.72, 0.74, 0.76, 0.78, 0.8, 0.82, 0.84, 0.86, 0.88, 0.9, 0.92, 0.94, 0.96, 0.98, 1.0], \"surprise_seed\": 1234, \"power_reported\": true, \"total_minutes\": 60.9, \"finished\": \"2026-11-19 05:15:46\"}\n"}
+,{"stream_name":"stderr","time":3670.49060787,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":3670.490638955,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":3670.787820877,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":3670.787852022,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":3671.7065698,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":3672.868306663,"data":"[NbConvertApp] Writing 429564 bytes to __results__.html\n"}
+]

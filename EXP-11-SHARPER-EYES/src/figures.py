@@ -204,10 +204,12 @@ def main():
         x = np.arange(len(arms))
         ax.bar(x, [m for m, _ in vals], yerr=[sd for _, sd in vals], color=[ACOL[a] for a in arms], width=0.7,
                error_kw=dict(ecolor=INK2, lw=0.8, capsize=2))
-        for xi, (m, _) in zip(x, vals):
-            ax.text(xi, m * 0.5, f"{m:.1f}", ha="center", fontsize=7.5, color="white" if xi else INK, rotation=90)
         lo = min(m for m, _ in vals)
-        ax.set_ylim(max(0, lo - 8), max(m for m, _ in vals) + 2)
+        bottom = max(0, lo - 8)
+        ax.set_ylim(bottom, max(m for m, _ in vals) + 2)
+        for xi, (m, _) in zip(x, vals):
+            ax.text(xi, bottom + (m - bottom) * 0.5, f"{m:.1f}", ha="center", va="center", fontsize=7.5,
+                    color="white" if xi else INK, rotation=90)
         ax.set_xticks(x, arms)
         ax.grid(False, axis="x")
         ax.set_title(title, fontsize=8.5)
@@ -221,7 +223,8 @@ def main():
     for a in arms:
         t3 = out[a]["T3"]["3"]
         recs = C[(a, "part1", t3["gamma"], 3, t3["corr"])]
-        ax.plot(arr(recs, "old").mean(0), arr(recs, "new").mean(0), color=ACOL[a], lw=1.5, label=ANAME[a])
+        ax.plot(arr(recs, "old").mean(0), arr(recs, "new").mean(0), color=ACOL[a], lw=1.5, label=ANAME[a],
+                ls="--" if a in ("A3", "A4") else "-")
         ax.scatter([t3["old"][0]], [t3["new"][0]], s=50, facecolor="none", edgecolor=ACOL[a], lw=1.5, zorder=3)
         ax.scatter([out[a]["ref"]["old"][0]], [out[a]["ref"]["new"][0]], marker="*", s=90, color=ACOL[a], zorder=3)
     ax.set_xlabel("old classes % (among all 100)")

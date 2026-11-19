@@ -126,6 +126,16 @@ of any few-shot ability comes from the pretraining rather than from the learning
   classes would reach 47.6% (old 50.3%), so the limit is the card from few pictures. Forgetting
   stays tiny (stream: 57.7% to 54.6% for the first 60 classes). Section 17 proposes EXP-11
   (better cards through better eyes: mirrored pictures, cheap patch-eye upgrades).
+- `EXP-11-SHARPER-EYES/`: tests cheap upgrades to the patch eyes (mirrored pictures, two-sided
+  stencil answers, 3 x 3 regions, more stencils; descriptions up to 14,400 numbers in compact
+  tables) on all three earlier tests at once. Complete (2026-11-19); journal `EXP-11-JOURNAL.pdf`.
+  Verdict "helps, but not enough": the selected eyes (mirror + two-sided, 12,800 numbers, 2.2 GB
+  GPU) reach 59.3% on 80 classes (from 54.1%; about level with EXP-8's retrained network with the
+  same memory, 58.8%, not on the same test pictures) and 36.2% for 20 new classes from 3 pictures
+  (from 33.3%), but among all 100 the new classes stay at 17% at the old-class limit (harmonic
+  mean 24.8 to 26.0; 3 needed). Mirroring alone gives +3.0 on 80 classes. The gap to "all
+  pictures" grows. Section 17 proposes EXP-12 (a closed-form "old or new?" switch; a perfect
+  switch would give a harmonic mean of about 45, by arithmetic).
 - `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
   2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that
