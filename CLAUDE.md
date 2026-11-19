@@ -165,6 +165,16 @@ of any few-shot ability comes from the pretraining rather than from the learning
   4-session stream, joining at 30 pictures gives 38.8 against 36.5 for never (3.0 needed), and the
   gain needs a handicap re-chosen for joined classes. Section 17 proposes EXP-15 (gradual joining,
   a separate handicap for joined classes, a longer stream).
+- `EXP-15-GRADUAL-JOIN/`: tests gradual joining: a new class's question counts with a weight that
+  grows with the evidence (by its number of pictures, or measured as novelty against the chance the
+  shared table predicts), with a second handicap and an 8-session stream (classes up to 500 pictures).
+  Complete (2026-11-19); journal `EXP-15-JOURNAL.pdf`. Verdict "works": the best rule asks the new
+  question of every picture in full and turns down only the card's novelty (measured weight, beta 0.5).
+  It beats the better of apart and full joining by 2.7 to 3.9 points from 3 to 30 pictures (harmonic
+  mean at 3 pictures 28.7, from 26.0), though it is 0.56 under full joining at 1 picture. Stream score
+  47.6 against 45.4 for EXP-14's rule and 39.2 for never joining; the second handicap does not matter.
+  Section 9 holds a roadmap; section 18 proposes EXP-16 (the whole memory as one stream, from 10
+  classes, against rebuilding from scratch).
 - `RESEARCH_LITERATURE_LOG.md`: running notes from paper reading by subagents (started
   2026-11-15), with honest tags for how each paper was read.
 - `_archive-previous-agent/`: reports and an END_GOAL written by an earlier agent that

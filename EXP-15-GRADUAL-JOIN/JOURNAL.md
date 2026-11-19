@@ -1,6 +1,6 @@
 # EXP-15 · GRADUAL JOINING: LET A NEW CLASS'S QUESTION COUNT MORE AS IT EARNS IT
 
-**Experiment ID:** EXP-15 · **Part A written:** 2026-11-19, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** PLANNED (Part A only; nothing has been run)
+**Experiment ID:** EXP-15 · **Part A written:** 2026-11-19, before any code was run · **Hardware:** free Kaggle GPU (the method must still fit the RTX 3050 laptop, 4 GB) · **Status:** COMPLETE (run 2026-11-19 on Kaggle). Verdict: **works**. Part B added at the end
 
 This journal has two parts. **Part A** (this part) explains the experiment before it starts.
 **Part B** will be added to the end of this same PDF when the experiment finishes. Part A
@@ -334,3 +334,284 @@ Part A, and the next step depends on this one's verdict.
 | Trace | The sum of the diagonal of a table; here it measures how much chance spread to expect |
 | Backpropagation | The usual way to train a network: push corrections back through all layers, many times |
 | Seed | One repeat with a different random shuffle |
+
+# Part B: the readings (added after the run, 2026-11-19)
+
+Part A above was not changed after the run, except the one status line at the top of page 1.
+
+## 11. What was actually run
+
+The plan in section 3 was run once, on a free Kaggle GPU (Tesla T4), as a private job named
+`exp15-gradual-join`. It took **25 minutes** for 5 seeds. The result files were downloaded into
+`results/`: `runs.jsonl`, `meta.json`, `kaggle_run.log`, and for each seed and task the accuracy
+tables `cross_<task>_s<seed>.npz` (part 1) and `stream_<task>_s<seed>.npz` (the stream). There were no
+errors. `src/figures.py` turned them into `results/summary.json` and the figures, with the choosing
+rules of section 3. **Every number below comes from `results/summary.json`** unless another file is
+named: means of 5 seeds on the test.
+
+**Things that differ from Part A, or that need saying:**
+
+| Item | What was done |
+|---|---|
+| Code checks before the run | A small trial (1 seed, a tenth of the stencils and pictures) gave **exactly** the numbers of EXP-14's small trial for "apart", "full" and stream sessions 1 to 3. The trial numbers were thrown away |
+| Laptop check | The full-size code ran on the laptop's RTX 3050 through the stage-6 rehearsal (1 seed): peak **2.22 GB** of GPU memory in use (2.7 GB including reserve), 4.1 minutes, lowest free ordinary memory 2.75 GB (a watcher would have stopped it below 1.2 GB). "Apart" at smoothing 0.3 gave old 53.47%, new 22.34%, the same as EXP-13 and EXP-14 |
+| Run time | 25 minutes, not 30. About 0.4 Kaggle hours used |
+| Handicap grid edge | For 5 rules (counted 3, counted 10, measured 0.25, card only 1 and 2) the rehearsal chose h2 = 0.2, the edge of the grid written in section 3. Their scores may be a little low. The selected rule's h2 (0.04) and threshold 30's (0.04) are well inside the grid. Recorded in section 16 |
+
+Nothing in sections 1 to 10 was changed.
+
+## 12. The readings
+
+### 12.1 Step 0: are the earlier results rebuilt? Yes, exactly
+
+- (a) Apart, smoothing 0.1, h1 = 0.08, 3 pictures: old **52.47%**, new **17.28%** (EXP-13 and EXP-14:
+  the same).
+- (b) Full, smoothing 0.1, h1 = 0.08, 3 pictures: old **55.35%**, new **9.91%** (EXP-14: the same).
+- (c) Stream, threshold at 30, smoothing 0.03, h1 = 0.12, h2 = 0, sessions 1 / 2 / 3: **34.82 / 38.65 /
+  39.20** (EXP-14: the same).
+
+### 12.2 The crossover with gradual joining
+
+![The crossover](figures/fig1_crossover.svg)
+
+*Figure 1. Harmonic mean of old and new among all 100 classes, with the handicap, against pictures per
+new class. Grey: apart (EXP-13). Blue: full joining (EXP-14). Green: the gradual way chosen in the
+rehearsal (G1\*: measured weight, card only, β = 0.5). Orange and violet: the best counted and the best
+measured way.*
+
+| Pictures per new class | 1 | 3 | 10 | 30 | 100 | all (500) |
+|---|---|---|---|---|---|---|
+| Apart | 18.4 | 26.0 | 35.8 | 41.1 | 44.2 | 45.1 |
+| Full (EXP-14) | 18.8 | 24.9 | 35.0 | 44.6 | 53.6 | 58.0 |
+| **Card only, β = 0.5 (G1\*)** | 18.3 | **28.7** | **39.4** | **48.5** | **55.3** | **58.4** |
+| Old / new, G1\* | 50.1 / 11.2 | 50.7 / 20.0 | 53.6 / 31.2 | 53.8 / 44.1 | 53.0 / 57.8 | 54.0 / 63.6 |
+| G1\* minus the better of apart and full | **−0.56** | +2.70 | +3.66 | +3.89 | +1.65 | +0.33 |
+| Counted, k = 10 | 18.4 | 29.2 | 39.5 | 45.9 | 53.8 | 58.1 |
+| Measured, β = 0.25 | 18.8 | 29.2 | 38.6 | 47.0 | 54.3 | 58.1 |
+
+![Gain over the better all-or-nothing choice](figures/fig2_gain.svg)
+
+*Figure 2. Every gradual way minus the better of apart and full, at each number of pictures. Dotted
+line: the −0.5 of step 1.*
+
+In plain words:
+
+- **Gradual joining does better than either all-or-nothing choice from 3 pictures on.** The fox
+  question asked at low volume gains 2.7 points at 3 pictures, 3.7 at 10 and 3.9 at 30 over the better
+  of "never ask" and "ask at full volume". Several gradual ways do this (figure 2): counting pictures
+  works almost as well as measuring.
+- **At 1 picture it is 0.56 points under full joining**, so step 1's "−0.5 or more everywhere" fails by
+  0.06. With one picture, all three are within half a point of each other (18.3 to 18.8).
+- With no handicap at all, G1\* reaches 17.9 at 3 pictures and 39.4 at 30 (apart: 14.3 and 29.2;
+  full: 10.7 and 30.4).
+- At 3 pictures, G1\*'s new classes named **among themselves** score 36.0%, the same as apart (36.2%).
+  So at 3 pictures the gain comes from how the new cards **compete with the old ones**, not from telling
+  the new classes apart better. From 30 pictures on, both improve (among themselves: 59.0% against
+  53.8% apart and 55.5% full).
+
+### 12.3 The weights, and the noise model
+
+![The weights](figures/fig3_weights.svg)
+
+*Figure 3. Weight of a new class's question against pictures per new class, at smoothing 0.01 (the
+smoothing G1\* chose most often), averaged over classes and seeds. Orange: counted; violet: measured.*
+
+| Pictures per new class | 1 | 3 | 10 | 30 | 100 | all |
+|---|---|---|---|---|---|---|
+| Measured weight, β = 0.5 (smoothing 0.01) | 0.14 | 0.14 | 0.17 | 0.23 | 0.39 | 0.72 |
+| Measured weight, β = 0.25 | 0.52 | 0.55 | 0.57 | 0.61 | 0.70 | 0.86 |
+| Counted weight, k = 10 | 0.09 | 0.23 | 0.50 | 0.75 | 0.91 | 0.98 |
+
+The **noise model holds up**. The chance part measured on the new classes' own pictures is **0.54 to
+0.59** times the table's prediction s² in part 1 and 0.58 to 0.66 in the rehearsal, depending on the
+smoothing (`noise` rows of `results/runs.jsonl`; spread over seeds under 0.03). That fits the
+expectation in section 5 (about 0.6): a picture averaged with its mirror image has less chance in it
+than one table description. The rehearsal picked β = 0.5 for the card-only rule, close to that ratio,
+and β = 0.25 for the measured rule.
+
+The measured weights grow **slowly**: even with 100 pictures, the measured weight with β = 0.5 is only
+0.39. Most of a new class's novelty, as the memory sees it, is chance until it has hundreds of pictures.
+
+### 12.4 The long stream
+
+![The long stream](figures/fig4_stream.svg)
+
+*Figure 4. Left: harmonic mean after each of the 8 sessions. Grey: never joining. Blue: threshold at 30
+(solid: one handicap, EXP-14's rule; dashed: two handicaps). Green: the selected rule G\*. Right: stream
+score of all 17 rules with two handicaps (bars) and one handicap (dots).*
+
+| Rule (handicaps) | Stream score | Old / new (mean of sessions) | Sessions 1 to 8 | No correction |
+|---|---|---|---|---|
+| never (one) | 39.2 | 54.0 / 31.8 | 27.4 32.8 36.4 37.8 42.2 44.7 45.8 46.3 | 26.3 |
+| threshold 30 (one; EXP-14's rule) | 45.4 | 55.2 / 40.2 | 35.0 38.8 39.0 41.0 46.8 51.2 54.6 56.5 | 31.9 |
+| threshold 30 (two) | 45.6 | 53.9 / 40.6 | | |
+| counted, k = 10 (two) | 46.6 | 55.0 / 41.7 | | 27.5 |
+| counted, k = 30 (two) | 46.3 | 54.0 / 41.3 | | 28.1 |
+| measured, β = 0.25 (two) | 45.1 | 53.4 / 41.9 | | 26.5 |
+| **card only, β = 0.5 (two): G\*** | **47.6** | 53.7 / **44.7** | 36.7 39.8 42.9 44.5 50.2 53.7 55.8 57.1 | **38.1** |
+
+The rehearsal picked **card only, β = 0.5** (smoothing 0.01, h1 = 0.11, h2 = 0.04), which is also the
+best rule on the test. It beats EXP-14's rule by **+2.2** (paired over seeds: +2.21, spread 0.20) and
+never joining by **+8.4**. It is ahead of threshold 30 with one handicap in all 8 sessions, most clearly in
+sessions 3 to 5 (by 3.4 to 3.9 points), when many classes have 10 to 60 pictures. Its old classes average 53.7%, 5.1 points
+under its own no-correction reading (58.8%); the limit was 6.
+
+With **no handicap at all**, G\* scores 38.1 against 26.3 for never and 31.9 for threshold 30. It needs
+the handicap much less than the other rules do.
+
+### 12.5 The second handicap
+
+![The second handicap](figures/fig5_h2.svg)
+
+*Figure 5. Stream score on the test against h2, for G\* and threshold 30, each at its chosen smoothing and
+h1. Circles: the h2 chosen in the rehearsal.*
+
+For G\*, the second handicap adds +0.17 (47.56 against 47.39 with h2 = 0); for threshold 30, +0.22. The
+curves are flat near 0. **The second handicap does not matter** for the rules that win. For some
+counted, measured and card-only rules it seemed to matter more (+1.2 to +3.5), but those choices have h1
+and h2 both large (h2 from 0.14 to the grid's edge, 0.2): the two handicaps partly cancel each other there.
+
+### 12.6 Does joining help without re-tuning?
+
+At never's settings (smoothing 0.03, h1 = 0.08, h2 = 0), G\* scores **45.7** against 39.2 for never:
+**+6.5**. In EXP-14, threshold 30 at never's settings gave −0.3. So the card-only rule's gain does not
+depend on a re-chosen handicap.
+
+### 12.7 Cost
+
+| | Reading |
+|---|---|
+| Peak GPU memory in use | **2.29 GB** (3.0 GB including reserve) on the T4; 2.22 GB (2.7 GB) on the laptop through the rehearsal |
+| Ordinary memory | 5.4 GB at its peak on Kaggle (with page-locked copies); the laptop never went under 2.75 GB free |
+| Time per seed (T4) | 293 s: describing 59 s, tables 6 s, views 38 s, joining for every draw, session and smoothing 128 s, scoring all ways and rules 63 s |
+| GPU energy per seed | 2.8 Wh |
+
+Gradual joining costs nothing over EXP-14's joining: the directions are the same, and each way only
+multiplies some numbers by a weight.
+
+## 13. The verdict, by the rule written in section 5
+
+| Step | Reading | Result |
+|---|---|---|
+| 0. Rebuild | (a) 52.47 / 17.28; (b) 55.35 / 9.91; (c) 34.82 / 38.65 / 39.20 | passed, exactly |
+| 1. Gradual minus the better of apart and full | G1\* = card only, β = 0.5: −0.56, +2.70, +3.66, +3.89, +1.65, +0.33 at 1, 3, 10, 30, 100, all | **fails at 1 picture by 0.06**; ahead from 3 pictures on |
+| 2. Noise model; counted against measured | ratio 0.54 to 0.66; β chosen 0.5 (card only) and 0.25 (measured); best counted 46.34, best measured 45.13: difference **1.21** | ratio as expected; **not the same** (counted ahead) |
+| 3(a) G\* minus threshold 30 with one handicap | 47.56 − 45.35 = **+2.21** (1.0 needed) | holds |
+| 3(b) G\* minus never | 47.56 − 39.17 = **+8.39** (3.0 needed) | holds |
+| 3(c) G\*'s old classes | 53.67, its own no correction 58.75: 5.1 under (6 allowed) | holds |
+| 3(d) peak GPU memory | 2.29 GB (3.5 GB allowed) | holds |
+| **3. Main verdict** | (a) to (d) all hold | **works** |
+| 4. Does the second handicap matter? | G\*: +0.17; threshold 30: +0.22 (1.0 needed) | **no** |
+| 5. Does consolidation pay off over a longer stream? | threshold 30 with one handicap − never = **+6.18** (3.0 needed) | **yes** |
+| 6. Does joining help without re-tuning? | G\* at never's settings − never = **+6.54** (1.0 needed) | **yes** |
+| 7. Can the rehearsal be trusted? | G\* is also the best gradual rule on the test | **yes** |
+
+## 14. Was the expectation in section 5 right?
+
+| What I wrote before the run | What happened | |
+|---|---|---|
+| Step 0 passes exactly | exactly | right |
+| G1\* is counted (k = 30) or measured (β = 0.5) | card only, β = 0.5 | **wrong** |
+| G1\*: 18.6 / 26.0 / 36.0 / 45.0 / 53.5 / 58.0 | 18.3 / 28.7 / 39.4 / 48.5 / 55.3 / 58.4 | too low from 3 pictures on |
+| Gradual removes the harm but adds little | adds 2.7 to 3.9 points from 3 to 30 pictures; misses the "no harm" rule at 1 picture by 0.06 | **wrong both ways** |
+| Measured ratio about 0.6; β = 0.5 | 0.54 to 0.66; β = 0.5 (card only) | right |
+| Counted and measured the same | counted 1.2 ahead | wrong |
+| Never about 40, threshold 30 about 45, G\* about 45.7 | 39.2, 45.4, 47.6 | right for the first two; G\* better |
+| Verdict "helps, but not enough" | "works" | **wrong** |
+| The second handicap matters for threshold 30 (+1) but not for G\* | +0.22 and +0.17: matters for neither | half right |
+| Consolidation pays off over the long stream, about +5 | +6.2 | right |
+| Joining helps without re-tuning, about +2 | +6.5 | right, and larger |
+| The rehearsal picks well; about 2.4 GB | yes; 2.29 GB | right |
+
+What I did not expect: the variant I added as a side test (turning down only the card) is the one that
+works best.
+
+## 15. What it means for the project
+
+**1. A new class can join the memory gradually, and that beats all-or-nothing joining.** From 3
+pictures on, asking a new class's question of every picture, while letting its card claim only as much
+as the evidence supports, gives 2.7 to 3.9 points more than either never asking or asking at full
+volume. In the long stream it gives 47.6 against 45.4 for EXP-14's rule and 39.2 for never joining.
+
+**2. The problem was the card, not the question.** "Measured, card only" (the pictures answer the fox
+question in full; the fox card is turned down) beats the best "measured" rule (both turned down) by 2.4
+points in the stream (47.6 against 45.1). My reading, not tested directly: with few pictures, the fox card
+lies far out along its own question, because that question was built from those very pictures; real fox
+pictures lie much closer in. Turning the card down puts it where real foxes are. Turning the question
+down for everyone throws away what fox pictures really do have in common.
+
+**3. The weight can come from what the memory already stores.** The measured weight needs only the
+class's average, its number of pictures and the shared table. The noise the table predicts is right up
+to a near-constant factor (0.54 to 0.66, explained by mirror averaging), and β = 0.5 matches it. Counting
+pictures alone (k = 10) is nearly as good in the stream (46.6 against 47.6) and simpler.
+
+**4. Consolidation pays off over time.** In a stream that lasts long enough for classes to collect
+hundreds of pictures, joining beats never joining by 6 to 8 points. This is the brain-like idea of
+EXP-14 (hold apart, then fold in) working as a running system, and the gradual version works from the
+first sessions on.
+
+**5. The second handicap is not needed.** One handicap on the old classes is enough once joining is
+gradual. G\* even needs the one handicap less: without any, it scores 38.1, against 26.3 for never.
+
+**6. The cost of new classes is old-class accuracy.** G\*'s old classes average 53.7% in the stream,
+against 58.8% at its own no correction. That is within the rule, but the handicap still trades about 5
+points of old accuracy for new accuracy. Without the handicap, G\* keeps the old classes at 58.8% and
+still scores 38.1.
+
+**7. Against the three goals.** No forgetting: achieved (old cards and directions are never changed;
+the old-class loss comes only from the handicap, a choice made at answer time). Cheap: achieved (2.3 GB,
+under 5 minutes per seed for all the tests, nothing trained). A new class from a handful of pictures
+among old ones: **better, not solved**. At 3 pictures the harmonic mean is now 28.7 (EXP-13: 26.0); the
+new class itself is named right 20% of the time among 100 classes.
+
+## 16. What is still unverified
+
+- **Why card only works** (section 15, point 2) is a reading, not a measurement. Where real test
+  pictures of a new class lie along its question, compared with its card, was not measured.
+- **The h2 grid edge.** Five rules chose h2 = 0.2, the edge. With a wider grid they might score higher.
+  The selected rule (h2 = 0.04) is not affected, but whether one of those rules would beat it is not known.
+- **1 picture**: gradual joining is 0.56 under full joining there, by the measure of step 1.
+- **The stream** is one design (20 classes, 8 sessions, up to 500 pictures, 10 runs, arrivals only in
+  the first 4 sessions). Whether the rule holds when classes keep arriving, or when the memory starts
+  from 10 classes rather than 80, is not known.
+- **The 80 old classes** are always well known (500 pictures each). In a memory that grows from the start,
+  old classes would themselves have been joined gradually.
+- **Many settings were searched** (17 rules, 5 smoothings, 71 × 21 handicaps). The rehearsal's pick was
+  also the test's best, but the margin over counted k = 10 (0.9 points) is not large.
+- 5 seeds, one dataset (CIFAR-100), images only. The surprise classes are fixed.
+
+## 17. What carries over beyond pictures
+
+| Part | Depends on pictures? |
+|---|---|
+| Gradual joining: ask a new class's question in full, turn its card's novelty down by a weight from the evidence | **no** |
+| The measured weight from the class average, the count and the shared table | **no**. β's value (0.5) reflects mirror averaging and may differ elsewhere |
+| Consolidation over a long stream (+6 to +8 over never joining) | **no** |
+| One handicap is enough | **no** |
+| The eyes (stencils, mirror images) | **yes**, unchanged from EXP-11 |
+
+## 18. What the next experiment should be, and why
+
+**Proposed EXP-16: the whole memory as one stream.** This follows the roadmap in section 9 ("if EXP-15
+helps or works").
+
+Why: every experiment from EXP-9 to EXP-15 added new classes **on top of 80 well-known classes**, each
+learned from all 500 pictures. The project's claim is a learner that grows from little, without
+retraining. EXP-15 now has a joining rule that works when classes arrive with few pictures and collect
+more over time. The next question is whether the whole memory can be built that way from the start.
+
+What it should contain, all closed-form, on A2's eyes:
+
+1. **Start from 10 classes** (the first stage, with all their pictures, to make the eyes and the first
+   view), then let the other 90 classes arrive a few per session, each starting with 3 pictures and
+   collecting more over the sessions, joined by EXP-15's rule (card only, β chosen in a rehearsal).
+2. **Compare with rebuilding the memory from scratch at each session** from all pictures seen so far
+   (the "retraining" reference of this memory, no backpropagation), and with never joining. Accuracy on
+   all classes seen so far, old-class forgetting, time and energy per session.
+3. **Let the shared table grow too**: in a memory that starts small, the table from 10 classes may not
+   be enough. Test adding the pictures of classes that have joined to the table at a few points, as in
+   EXP-14's "table and view", and compare.
+4. Fix the h2 grid problem by keeping one handicap (section 12.5).
+
+Nothing in it is image-specific. This is a proposal. It needs its own Part A and the owner's go-ahead
+before any code is run.

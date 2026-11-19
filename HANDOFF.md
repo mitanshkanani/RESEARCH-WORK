@@ -1,13 +1,13 @@
-# Handoff: state of the project on 2026-11-19 (after EXP-14)
+# Handoff: state of the project on 2026-11-19 (after EXP-15)
 
 Read `CLAUDE.md` first (project goal and working rules). This file says where things stand.
 
 ## RESUME HERE (written 2026-11-19, for a fresh session after /clear)
 
-**Where we are (updated 2026-11-19 after EXP-14).** EXP-1 to EXP-14 are done, with journals.
-EXP-15 is only proposed (section 17 of `EXP-14-JOURNAL.pdf`). No other branches (owner's rule).
-The owner approved EXP-11, EXP-12 ("Go for exp 12"), EXP-13 ("Start exp 13") and EXP-14 ("Yes go
-ahead") end to end on 2026-11-19; each approval was for that experiment only. The owner will review the journals on 2026-11-21/22.
+**Where we are (updated 2026-11-19 after EXP-15).** EXP-1 to EXP-15 are done, with journals.
+EXP-16 is only proposed (section 18 of `EXP-15-JOURNAL.pdf`; roadmap in its section 9). No other
+branches (owner's rule). The owner approved EXP-11 to EXP-15 end to end on 2026-11-19 (EXP-15: "You can
+start working on experiment 15 ... push it to Kaggle"); each approval was for that experiment only. The owner will review the journals on 2026-11-21/22.
 
 **Standing rules from the owner (all in memory and `CLAUDE.md`):**
 - Work on `main` only, no branches.
@@ -20,7 +20,7 @@ ahead") end to end on 2026-11-19; each approval was for that experiment only. Th
   figures from real results, Part B appended, update `CLAUDE.md` and this file.
 - Explain in plain language; the owner is not an ML researcher. Paper reading goes to Sonnet
   subagents; never cite a paper that was not opened; tag read/abstract/unverified.
-- Kaggle free GPU cap is about 30 h/week; about 26.1 h used since 2026-11-15 (EXP-3 to EXP-14; EXP-11 took 61 min, EXP-12 18, EXP-13 16, EXP-14 46).
+- Kaggle free GPU cap is about 30 h/week; about 26.5 h used since 2026-11-15 (EXP-3 to EXP-15; EXP-11 took 61 min, EXP-12 18, EXP-13 16, EXP-14 46, EXP-15 25).
   CIFAR-100 downloads slowly on Kaggle (20 of EXP-9's 28.5 min; 53.5 of EXP-10's 70 min). **Fixed
   2026-11-17 (owner approved):** private Kaggle dataset `mitanshkanani/cifar100-python` holds the
   official `train`, `test`, `meta` files (md5-checked against torchvision before upload). To use it:
@@ -73,13 +73,20 @@ ahead") end to end on 2026-11-19; each approval was for that experiment only. Th
    H 58.0 (old 54.0, new 62.8). Rebuilding the table too adds only +0.5. Stream (4 sessions): join at
    30 gives 38.8 vs never 36.5 (+2.2, 3.0 needed), but at never's handicap the gain vanishes; joined
    classes need their own handicap. Laptop check stopped for low RAM (not GPU); T4 peak 2.4 GB.
+13. **EXP-15 ("works")**: gradual joining. Every new class gets its question (as EXP-14); weights:
+   counted n/(n+k), measured max(0, 1 - beta s2/(n f2)) with s2 from the table (chance part check: actual
+   / predicted 0.54-0.66), and "card only" (pictures full, card's novelty times the measured weight).
+   Best: card only, beta 0.5. Crossover H 18.3/28.7/39.4/48.5/55.3/58.4 (+2.7 to +3.9 over the better of
+   apart and full from 3 to 30 pictures; -0.56 at 1). 8-session stream: 47.6 vs 45.4 (EXP-14's rule) vs
+   39.2 never; +6.5 over never even at never's settings. Second handicap +0.2 (does not matter).
 
 **Next steps, in order (owner decides):**
 - **Commit/push anything pending** (check `git status`; `PAPER 4.PDF` is an old unrelated change,
   leave it unstaged).
-- **EXP-15 (proposed, section 17 of `EXP-14-JOURNAL.pdf`):** gradual joining (a new direction
-  weighted n / (n + k), k from the rehearsal), a separate handicap for joined classes, and a longer
-  stream (8 sessions, up to 500 pictures). Write Part A first; needs the owner's go-ahead.
+- **EXP-16 (proposed, section 18 of `EXP-15-JOURNAL.pdf`):** the whole memory as one stream: start
+  from 10 classes, the other 90 arrive with 3 pictures and grow, joined by EXP-15's card-only rule;
+  compare with rebuilding from scratch each session and with never joining; test growing the shared
+  table too. Write Part A first; needs the owner's go-ahead.
 - Later: cheap boosts to patch eyes (mirrored images, +/- parts, finer regions, more detectors,
   second layer by grouping co-active detectors); make patch eyes fit 4 GB; a laptop-sized language
   test only when the owner asks (see literature log section 5).
@@ -118,6 +125,7 @@ researched both ways.
 | EXP-12 (old or new) | `EXP-12-OLD-OR-NEW/` | complete (2026-11-19). Private Kaggle job (Tesla T4, 18 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `kaggle_run.log`. Journal `EXP-12-JOURNAL.pdf` has Part A and Part B (17 pages). Verdict by the pre-written rule: **does not work** |
 | EXP-13 (how many pictures) | `EXP-13-HOW-MANY-PICTURES/` | complete (2026-11-19). Private Kaggle job (Tesla T4, 16 min), results in `results/runs.jsonl`, `summary.json`, `meta.json`, `kaggle_run.log`. Journal `EXP-13-JOURNAL.pdf` has Part A and Part B (14 pages). Verdict by the pre-written rule: **does not work** (copies) |
 | EXP-14 (when to join) | `EXP-14-WHEN-TO-JOIN/` | complete (2026-11-19). Private Kaggle job (Tesla T4, 46 min), results in `results/runs.jsonl`, `summary.json`, `extra_matched.json`, `meta.json`, `kaggle_run.log`. Journal `EXP-14-JOURNAL.pdf` has Part A and Part B (16 pages). Verdict by the pre-written rule: **helps, but not enough** |
+| EXP-15 (gradual join) | `EXP-15-GRADUAL-JOIN/` | complete (2026-11-19). Private Kaggle job (Tesla T4, 25 min), results in `results/runs.jsonl`, `cross_*.npz`, `stream_*.npz`, `summary.json`, `meta.json`, `kaggle_run.log`. Journal `EXP-15-JOURNAL.pdf` has Part A (with a roadmap) and Part B (19 pages). Verdict by the pre-written rule: **works** |
 | Literature log | `RESEARCH_LITERATURE_LOG.md` | nine sections written 2026-11-15/17 from subagent reading (passages, not full papers) |
 | Journal rule | `CLAUDE.md`, section "Experiment journals" | 2026-11-13: every experiment gets one PDF, Part A before the run and Part B appended after. EXP-2's journal got a "why this experiment" section to match |
 
@@ -444,6 +452,23 @@ settings from the rehearsal (`EXP-14-WHEN-TO-JOIN/results/summary.json`). Test:
 - Predictions: crossover 10 (wrong, 30); verdict, view enough, N* at 10/30, holding apart: right;
   handicap not needed: wrong.
 
+## EXP-15 result (read the journal for detail)
+
+Settings from the rehearsal (`EXP-15-GRADUAL-JOIN/results/summary.json`). Test, with the handicap:
+
+| Pictures per new class | 1 | 3 | 10 | 30 | 100 | all (500) |
+|---|---|---|---|---|---|---|
+| Apart | 18.4 | 26.0 | 35.8 | 41.1 | 44.2 | 45.1 |
+| Full (EXP-14) | 18.8 | 24.9 | 35.0 | 44.6 | 53.6 | 58.0 |
+| Card only, beta 0.5 | 18.3 | 28.7 | 39.4 | 48.5 | 55.3 | 58.4 |
+
+- Stream (8 sessions; 5 classes arrive in each of sessions 1-4; 3/10/30/60/100/200/300/500 pictures):
+  never 39.2, threshold 30 one handicap 45.4, counted k=10 46.6, card only beta 0.5 47.6 (selected;
+  also best on test); no handicap: 26.3 / 31.9 / 38.1.
+- Step 1 "no harm everywhere" fails at 1 picture by 0.06. Five rules chose h2 at the grid edge (0.2).
+- T4 2.29 GB (3.0 reserved); laptop rehearsal 2.22 GB (2.7), min free RAM 2.75 GB; 293 s, 2.8 Wh per seed.
+- Predictions: verdict "helps, but not enough" (wrong: works); G1* counted/measured (wrong: card only).
+
 ## Other literature facts worth keeping (from `RESEARCH_GROWING_STRUCTURE.md`)
 
 - Zero-forgetting growth methods mostly need a task hint; no-hint growth methods mostly rely on replay.
@@ -466,6 +491,6 @@ settings from the rehearsal (`EXP-14-WHEN-TO-JOIN/results/summary.json`). Test:
 
 ## Open decisions for the owner
 
-1. Go ahead with EXP-15 as proposed in section 17 of `EXP-14-WHEN-TO-JOIN/EXP-14-JOURNAL.pdf`,
+1. Go ahead with EXP-16 as proposed in section 18 of `EXP-15-GRADUAL-JOIN/EXP-15-JOURNAL.pdf`,
    or pick a different next step?
 2. (Done 2026-11-17: CIFAR-100 uploaded as a private Kaggle dataset, see the rules above.)

@@ -1,0 +1,223 @@
+[{"stream_name":"stdout","time":10.528797801,"data":"device cuda Tesla T4 torch 2.11.0+cu130 smoke False\n"}
+,{"stream_name":"stdout","time":18.999538521,"data":"copied /kaggle/input/datasets/mitanshkanani/cifar100-python/train\n"}
+,{"stream_name":"stdout","time":19.479993857,"data":"copied /kaggle/input/datasets/mitanshkanani/cifar100-python/test\n"}
+,{"stream_name":"stdout","time":19.570615861,"data":"copied /kaggle/input/datasets/mitanshkanani/cifar100-python/meta\n"}
+,{"stream_name":"stdout","time":21.844551242,"data":"data ready, 0.2 min\n"}
+,{"stream_name":"stdout","time":100.786934888,"data":"seed 0 rehearsal gamma 0.01 k=3 apart | h=0.08 old 0.5964 new 0.2159 | new-only 0.421\n"}
+,{"stream_name":"stdout","time":100.794782304,"data":"seed 0 rehearsal gamma 0.01 k=3 full  | h=0.08 old 0.6411 new 0.1298 | new-only 0.354\n"}
+,{"stream_name":"stdout","time":106.858825137,"data":"seed 0 rehearsal gamma 0.01 stream never  h1=0.12 H by session 43.4 44.5 44.5 44.3 47.1 48.3 48.9 49.3\n"}
+,{"stream_name":"stdout","time":106.858868541,"data":"seed 0 rehearsal gamma 0.01 stream at30   h1=0.12 H by session 43.4 44.5 43.2 44.0 48.6 52.2 55.7 57.6\n"}
+,{"stream_name":"stdout","time":118.486809348,"data":"seed 0 rehearsal gamma 0.03 k=3 apart | h=0.08 old 0.5875 new 0.2211 | new-only 0.427\n"}
+,{"stream_name":"stdout","time":118.494757221,"data":"seed 0 rehearsal gamma 0.03 k=3 full  | h=0.08 old 0.6326 new 0.1305 | new-only 0.372\n"}
+,{"stream_name":"stdout","time":124.492008824,"data":"seed 0 rehearsal gamma 0.03 stream never  h1=0.12 H by session 42.6 44.8 44.5 44.5 47.1 48.5 49.0 49.5\n"}
+,{"stream_name":"stdout","time":124.492061777,"data":"seed 0 rehearsal gamma 0.03 stream at30   h1=0.12 H by session 42.6 44.8 43.0 44.0 48.6 52.0 55.2 56.9\n"}
+,{"stream_name":"stdout","time":136.17271726,"data":"seed 0 rehearsal gamma 0.1 k=3 apart | h=0.08 old 0.5623 new 0.2242 | new-only 0.428\n"}
+,{"stream_name":"stdout","time":136.180609527,"data":"seed 0 rehearsal gamma 0.1 k=3 full  | h=0.08 old 0.6057 new 0.1338 | new-only 0.383\n"}
+,{"stream_name":"stdout","time":142.250537559,"data":"seed 0 rehearsal gamma 0.1 stream never  h1=0.12 H by session 42.0 43.6 43.9 43.5 46.1 47.4 48.0 48.3\n"}
+,{"stream_name":"stdout","time":142.250593558,"data":"seed 0 rehearsal gamma 0.1 stream at30   h1=0.12 H by session 42.0 43.6 42.5 43.5 47.9 51.0 53.5 54.9\n"}
+,{"stream_name":"stdout","time":154.025365466,"data":"seed 0 rehearsal gamma 0.3 k=3 apart | h=0.08 old 0.5347 new 0.2234 | new-only 0.416\n"}
+,{"stream_name":"stdout","time":154.033423797,"data":"seed 0 rehearsal gamma 0.3 k=3 full  | h=0.08 old 0.5787 new 0.1412 | new-only 0.387\n"}
+,{"stream_name":"stdout","time":160.02463065,"data":"seed 0 rehearsal gamma 0.3 stream never  h1=0.12 H by session 41.1 42.4 42.6 42.4 44.9 46.0 46.6 46.9\n"}
+,{"stream_name":"stdout","time":160.024674187,"data":"seed 0 rehearsal gamma 0.3 stream at30   h1=0.12 H by session 41.1 42.4 41.8 42.8 46.9 49.6 51.3 52.3\n"}
+,{"stream_name":"stdout","time":171.790194511,"data":"seed 0 rehearsal gamma 1.0 k=3 apart | h=0.08 old 0.4940 new 0.2229 | new-only 0.402\n"}
+,{"stream_name":"stdout","time":171.798287299,"data":"seed 0 rehearsal gamma 1.0 k=3 full  | h=0.08 old 0.5368 new 0.1533 | new-only 0.384\n"}
+,{"stream_name":"stdout","time":177.774277877,"data":"seed 0 rehearsal gamma 1.0 stream never  h1=0.12 H by session 40.1 40.9 41.3 40.7 42.9 43.8 44.3 44.6\n"}
+,{"stream_name":"stdout","time":177.774321263,"data":"seed 0 rehearsal gamma 1.0 stream at30   h1=0.12 H by session 40.1 40.9 40.9 41.3 44.9 47.1 48.2 48.7\n"}
+,{"stream_name":"stdout","time":240.118827869,"data":"seed 0 part1 gamma 0.01 k=3 apart | h=0.08 old 0.5644 new 0.1635 | new-only 0.358\n"}
+,{"stream_name":"stdout","time":240.129949852,"data":"seed 0 part1 gamma 0.01 k=3 full  | h=0.08 old 0.5911 new 0.0946 | new-only 0.303\n"}
+,{"stream_name":"stdout","time":246.692775509,"data":"seed 0 part1 gamma 0.01 stream never  h1=0.12 H by session 39.2 38.0 40.6 41.4 45.0 46.9 47.6 48.0\n"}
+,{"stream_name":"stdout","time":246.69282076,"data":"seed 0 part1 gamma 0.01 stream at30   h1=0.12 H by session 39.2 38.0 37.5 41.6 46.9 51.3 54.7 56.5\n"}
+,{"stream_name":"stdout","time":258.743964309,"data":"seed 0 part1 gamma 0.03 k=3 apart | h=0.08 old 0.5502 new 0.1685 | new-only 0.367\n"}
+,{"stream_name":"stdout","time":258.754992743,"data":"seed 0 part1 gamma 0.03 k=3 full  | h=0.08 old 0.5766 new 0.0945 | new-only 0.316\n"}
+,{"stream_name":"stdout","time":265.099197903,"data":"seed 0 part1 gamma 0.03 stream never  h1=0.12 H by session 38.8 37.4 40.6 41.4 45.0 46.7 47.5 48.0\n"}
+,{"stream_name":"stdout","time":265.099234795,"data":"seed 0 part1 gamma 0.03 stream at30   h1=0.12 H by session 38.8 37.4 37.7 41.5 46.7 50.8 53.9 55.6\n"}
+,{"stream_name":"stdout","time":277.079822762,"data":"seed 0 part1 gamma 0.1 k=3 apart | h=0.08 old 0.5241 new 0.1722 | new-only 0.366\n"}
+,{"stream_name":"stdout","time":277.090813694,"data":"seed 0 part1 gamma 0.1 k=3 full  | h=0.08 old 0.5516 new 0.0983 | new-only 0.326\n"}
+,{"stream_name":"stdout","time":283.669396553,"data":"seed 0 part1 gamma 0.1 stream never  h1=0.12 H by session 38.2 36.7 40.0 40.8 44.3 45.9 46.7 47.1\n"}
+,{"stream_name":"stdout","time":283.669446165,"data":"seed 0 part1 gamma 0.1 stream at30   h1=0.12 H by session 38.2 36.7 37.7 41.1 46.1 49.7 52.1 53.3\n"}
+,{"stream_name":"stdout","time":295.608529077,"data":"seed 0 part1 gamma 0.3 k=3 apart | h=0.08 old 0.4936 new 0.1733 | new-only 0.354\n"}
+,{"stream_name":"stdout","time":295.620161533,"data":"seed 0 part1 gamma 0.3 k=3 full  | h=0.08 old 0.5214 new 0.1052 | new-only 0.328\n"}
+,{"stream_name":"stdout","time":302.134764792,"data":"seed 0 part1 gamma 0.3 stream never  h1=0.12 H by session 36.8 36.0 39.0 39.6 43.0 44.4 45.2 45.5\n"}
+,{"stream_name":"stdout","time":302.134808229,"data":"seed 0 part1 gamma 0.3 stream at30   h1=0.12 H by session 36.8 36.0 37.5 40.3 45.0 47.7 49.7 50.5\n"}
+,{"stream_name":"stdout","time":314.084934392,"data":"seed 0 part1 gamma 1.0 k=3 apart | h=0.08 old 0.4485 new 0.1742 | new-only 0.340\n"}
+,{"stream_name":"stdout","time":314.095844005,"data":"seed 0 part1 gamma 1.0 k=3 full  | h=0.08 old 0.4765 new 0.1174 | new-only 0.324\n"}
+,{"stream_name":"stdout","time":320.600443177,"data":"seed 0 part1 gamma 1.0 stream never  h1=0.12 H by session 36.2 35.2 37.5 37.8 40.7 42.0 42.5 42.8\n"}
+,{"stream_name":"stdout","time":320.600488517,"data":"seed 0 part1 gamma 1.0 stream at30   h1=0.12 H by session 36.2 35.2 36.5 38.6 42.5 44.7 45.9 46.3\n"}
+,{"stream_name":"stdout","time":320.997913986,"data":"seed 0 done: dim 12800, peak GPU 2286.0 MB (reserved 2994.0), times {'describe': 58.43221306800842, 'tables': 5.46550440788269, 'view': 37.271708250045776, 'join': 127.94551992416382, 'scoring': 64.25844144821167}\n"}
+,{"stream_name":"stdout","time":320.998012083,"data":"== seed 0 done, 5.2 min elapsed\n"}
+,{"stream_name":"stdout","time":399.297712096,"data":"seed 1 rehearsal gamma 0.01 k=3 apart | h=0.08 old 0.5792 new 0.2355 | new-only 0.424\n"}
+,{"stream_name":"stdout","time":399.305516107,"data":"seed 1 rehearsal gamma 0.01 k=3 full  | h=0.08 old 0.6210 new 0.1487 | new-only 0.367\n"}
+,{"stream_name":"stdout","time":405.176967597,"data":"seed 1 rehearsal gamma 0.01 stream never  h1=0.12 H by session 44.7 45.5 47.1 46.1 48.9 49.7 50.1 50.2\n"}
+,{"stream_name":"stdout","time":405.177002697,"data":"seed 1 rehearsal gamma 0.01 stream at30   h1=0.12 H by session 44.7 45.5 45.9 46.7 52.1 55.7 58.1 59.4\n"}
+,{"stream_name":"stdout","time":416.870829152,"data":"seed 1 rehearsal gamma 0.03 k=3 apart | h=0.08 old 0.5709 new 0.2466 | new-only 0.439\n"}
+,{"stream_name":"stdout","time":416.878709526,"data":"seed 1 rehearsal gamma 0.03 k=3 full  | h=0.08 old 0.6134 new 0.1517 | new-only 0.387\n"}
+,{"stream_name":"stdout","time":422.772024225,"data":"seed 1 rehearsal gamma 0.03 stream never  h1=0.12 H by session 44.7 46.2 47.6 46.3 49.2 50.2 50.5 50.7\n"}
+,{"stream_name":"stdout","time":422.772132114,"data":"seed 1 rehearsal gamma 0.03 stream at30   h1=0.12 H by session 44.7 46.2 46.5 46.8 52.0 55.4 57.6 58.7\n"}
+,{"stream_name":"stdout","time":434.472874349,"data":"seed 1 rehearsal gamma 0.1 k=3 apart | h=0.08 old 0.5479 new 0.2528 | new-only 0.442\n"}
+,{"stream_name":"stdout","time":434.480862854,"data":"seed 1 rehearsal gamma 0.1 k=3 full  | h=0.08 old 0.5890 new 0.1570 | new-only 0.401\n"}
+,{"stream_name":"stdout","time":440.358282918,"data":"seed 1 rehearsal gamma 0.1 stream never  h1=0.12 H by session 43.7 45.5 47.0 45.5 48.4 49.3 49.9 50.1\n"}
+,{"stream_name":"stdout","time":440.358324131,"data":"seed 1 rehearsal gamma 0.1 stream at30   h1=0.12 H by session 43.7 45.5 46.4 46.3 51.1 54.1 55.8 56.5\n"}
+,{"stream_name":"stdout","time":452.043344404,"data":"seed 1 rehearsal gamma 0.3 k=3 apart | h=0.08 old 0.5140 new 0.2542 | new-only 0.436\n"}
+,{"stream_name":"stdout","time":452.051251578,"data":"seed 1 rehearsal gamma 0.3 k=3 full  | h=0.08 old 0.5534 new 0.1664 | new-only 0.407\n"}
+,{"stream_name":"stdout","time":457.90600128,"data":"seed 1 rehearsal gamma 0.3 stream never  h1=0.12 H by session 42.9 44.4 45.6 44.3 46.8 47.7 48.1 48.3\n"}
+,{"stream_name":"stdout","time":457.906045494,"data":"seed 1 rehearsal gamma 0.3 stream at30   h1=0.12 H by session 42.9 44.4 45.3 45.3 49.6 52.0 53.3 53.6\n"}
+,{"stream_name":"stdout","time":469.552336138,"data":"seed 1 rehearsal gamma 1.0 k=3 apart | h=0.08 old 0.4702 new 0.2569 | new-only 0.424\n"}
+,{"stream_name":"stdout","time":469.56027875,"data":"seed 1 rehearsal gamma 1.0 k=3 full  | h=0.08 old 0.5092 new 0.1810 | new-only 0.407\n"}
+,{"stream_name":"stdout","time":475.458860785,"data":"seed 1 rehearsal gamma 1.0 stream never  h1=0.12 H by session 41.5 42.8 43.3 42.1 44.3 45.2 45.5 45.7\n"}
+,{"stream_name":"stdout","time":475.458904158,"data":"seed 1 rehearsal gamma 1.0 stream at30   h1=0.12 H by session 41.5 42.8 43.5 43.5 47.1 48.9 49.6 49.8\n"}
+,{"stream_name":"stdout","time":537.454992111,"data":"seed 1 part1 gamma 0.01 k=3 apart | h=0.08 old 0.5619 new 0.1691 | new-only 0.360\n"}
+,{"stream_name":"stdout","time":537.465826865,"data":"seed 1 part1 gamma 0.01 k=3 full  | h=0.08 old 0.5908 new 0.0973 | new-only 0.307\n"}
+,{"stream_name":"stdout","time":543.94721074,"data":"seed 1 part1 gamma 0.01 stream never  h1=0.12 H by session 34.6 37.9 40.8 41.4 45.0 46.6 47.3 47.6\n"}
+,{"stream_name":"stdout","time":543.947255768,"data":"seed 1 part1 gamma 0.01 stream at30   h1=0.12 H by session 34.6 37.9 38.8 40.8 46.5 51.5 54.7 56.5\n"}
+,{"stream_name":"stdout","time":555.973654219,"data":"seed 1 part1 gamma 0.03 k=3 apart | h=0.08 old 0.5502 new 0.1741 | new-only 0.367\n"}
+,{"stream_name":"stdout","time":555.984738444,"data":"seed 1 part1 gamma 0.03 k=3 full  | h=0.08 old 0.5791 new 0.0969 | new-only 0.323\n"}
+,{"stream_name":"stdout","time":562.444112889,"data":"seed 1 part1 gamma 0.03 stream never  h1=0.12 H by session 34.6 38.1 41.0 41.6 44.9 46.6 47.3 47.6\n"}
+,{"stream_name":"stdout","time":562.444156493,"data":"seed 1 part1 gamma 0.03 stream at30   h1=0.12 H by session 34.6 38.1 39.1 41.0 46.5 51.1 54.0 55.5\n"}
+,{"stream_name":"stdout","time":574.438581983,"data":"seed 1 part1 gamma 0.1 k=3 apart | h=0.08 old 0.5256 new 0.1772 | new-only 0.366\n"}
+,{"stream_name":"stdout","time":574.44963594,"data":"seed 1 part1 gamma 0.1 k=3 full  | h=0.08 old 0.5545 new 0.1002 | new-only 0.329\n"}
+,{"stream_name":"stdout","time":580.951400522,"data":"seed 1 part1 gamma 0.1 stream never  h1=0.12 H by session 34.6 38.1 40.5 41.0 44.2 46.1 46.7 47.0\n"}
+,{"stream_name":"stdout","time":580.951457485,"data":"seed 1 part1 gamma 0.1 stream at30   h1=0.12 H by session 34.6 38.1 39.1 40.9 46.0 50.0 52.3 53.5\n"}
+,{"stream_name":"stdout","time":592.947882715,"data":"seed 1 part1 gamma 0.3 k=3 apart | h=0.08 old 0.4935 new 0.1780 | new-only 0.352\n"}
+,{"stream_name":"stdout","time":592.958930687,"data":"seed 1 part1 gamma 0.3 k=3 full  | h=0.08 old 0.5231 new 0.1079 | new-only 0.330\n"}
+,{"stream_name":"stdout","time":599.380484163,"data":"seed 1 part1 gamma 0.3 stream never  h1=0.12 H by session 34.2 37.4 39.5 39.8 43.0 44.7 45.2 45.3\n"}
+,{"stream_name":"stdout","time":599.380525819,"data":"seed 1 part1 gamma 0.3 stream at30   h1=0.12 H by session 34.2 37.4 38.7 40.1 44.8 48.1 49.7 50.6\n"}
+,{"stream_name":"stdout","time":611.315915053,"data":"seed 1 part1 gamma 1.0 k=3 apart | h=0.08 old 0.4498 new 0.1786 | new-only 0.338\n"}
+,{"stream_name":"stdout","time":611.3271454,"data":"seed 1 part1 gamma 1.0 k=3 full  | h=0.08 old 0.4798 new 0.1184 | new-only 0.325\n"}
+,{"stream_name":"stdout","time":617.755243601,"data":"seed 1 part1 gamma 1.0 stream never  h1=0.12 H by session 33.3 36.3 37.8 38.0 40.9 42.3 42.7 42.9\n"}
+,{"stream_name":"stdout","time":617.755281042,"data":"seed 1 part1 gamma 1.0 stream at30   h1=0.12 H by session 33.3 36.3 37.5 38.8 42.5 45.1 46.2 46.6\n"}
+,{"stream_name":"stdout","time":618.122701824,"data":"seed 1 done: dim 12800, peak GPU 2286.0 MB (reserved 2994.0), times {'describe': 59.189793825149536, 'tables': 5.848503828048706, 'view': 37.864591121673584, 'join': 127.4657564163208, 'scoring': 63.27606010437012}\n"}
+,{"stream_name":"stdout","time":618.122846677,"data":"== seed 1 done, 10.1 min elapsed\n"}
+,{"stream_name":"stdout","time":696.587082142,"data":"seed 2 rehearsal gamma 0.01 k=3 apart | h=0.08 old 0.5866 new 0.1995 | new-only 0.366\n"}
+,{"stream_name":"stdout","time":696.594891405,"data":"seed 2 rehearsal gamma 0.01 k=3 full  | h=0.08 old 0.6232 new 0.1438 | new-only 0.328\n"}
+,{"stream_name":"stdout","time":702.503746548,"data":"seed 2 rehearsal gamma 0.01 stream never  h1=0.12 H by session 39.0 42.3 42.6 43.5 46.8 48.2 48.9 49.2\n"}
+,{"stream_name":"stdout","time":702.503797561,"data":"seed 2 rehearsal gamma 0.01 stream at30   h1=0.12 H by session 39.0 42.3 41.8 44.5 50.7 55.0 57.9 59.5\n"}
+,{"stream_name":"stdout","time":714.22275371,"data":"seed 2 rehearsal gamma 0.03 k=3 apart | h=0.08 old 0.5743 new 0.2075 | new-only 0.378\n"}
+,{"stream_name":"stdout","time":714.230860628,"data":"seed 2 rehearsal gamma 0.03 k=3 full  | h=0.08 old 0.6116 new 0.1452 | new-only 0.343\n"}
+,{"stream_name":"stdout","time":720.172908383,"data":"seed 2 rehearsal gamma 0.03 stream never  h1=0.12 H by session 38.8 42.9 43.2 43.8 46.9 48.4 49.0 49.2\n"}
+,{"stream_name":"stdout","time":720.172965801,"data":"seed 2 rehearsal gamma 0.03 stream at30   h1=0.12 H by session 38.8 42.9 42.2 44.8 50.7 54.8 57.2 58.6\n"}
+,{"stream_name":"stdout","time":731.885045389,"data":"seed 2 rehearsal gamma 0.1 k=3 apart | h=0.08 old 0.5491 new 0.2130 | new-only 0.383\n"}
+,{"stream_name":"stdout","time":731.892949644,"data":"seed 2 rehearsal gamma 0.1 k=3 full  | h=0.08 old 0.5870 new 0.1498 | new-only 0.355\n"}
+,{"stream_name":"stdout","time":737.748005634,"data":"seed 2 rehearsal gamma 0.1 stream never  h1=0.12 H by session 38.5 42.8 42.8 43.6 46.3 47.6 48.0 48.2\n"}
+,{"stream_name":"stdout","time":737.748049978,"data":"seed 2 rehearsal gamma 0.1 stream at30   h1=0.12 H by session 38.5 42.8 42.2 44.7 50.0 53.5 55.3 56.5\n"}
+,{"stream_name":"stdout","time":749.374457591,"data":"seed 2 rehearsal gamma 0.3 k=3 apart | h=0.08 old 0.5161 new 0.2182 | new-only 0.379\n"}
+,{"stream_name":"stdout","time":749.38233838,"data":"seed 2 rehearsal gamma 0.3 k=3 full  | h=0.08 old 0.5522 new 0.1582 | new-only 0.360\n"}
+,{"stream_name":"stdout","time":755.250222772,"data":"seed 2 rehearsal gamma 0.3 stream never  h1=0.12 H by session 38.9 41.9 41.9 42.5 45.3 46.2 46.5 46.8\n"}
+,{"stream_name":"stdout","time":755.250267716,"data":"seed 2 rehearsal gamma 0.3 stream at30   h1=0.12 H by session 38.9 41.9 41.4 44.0 48.4 51.4 52.9 53.5\n"}
+,{"stream_name":"stdout","time":766.885912744,"data":"seed 2 rehearsal gamma 1.0 k=3 apart | h=0.08 old 0.4743 new 0.2247 | new-only 0.373\n"}
+,{"stream_name":"stdout","time":766.893885612,"data":"seed 2 rehearsal gamma 1.0 k=3 full  | h=0.08 old 0.5083 new 0.1714 | new-only 0.358\n"}
+,{"stream_name":"stdout","time":772.786035075,"data":"seed 2 rehearsal gamma 1.0 stream never  h1=0.12 H by session 37.8 40.6 40.5 40.9 43.5 44.4 44.7 44.9\n"}
+,{"stream_name":"stdout","time":772.786098226,"data":"seed 2 rehearsal gamma 1.0 stream at30   h1=0.12 H by session 37.8 40.6 40.3 42.4 46.3 48.5 49.5 49.9\n"}
+,{"stream_name":"stdout","time":834.777703194,"data":"seed 2 part1 gamma 0.01 k=3 apart | h=0.08 old 0.5616 new 0.1639 | new-only 0.357\n"}
+,{"stream_name":"stdout","time":834.788501097,"data":"seed 2 part1 gamma 0.01 k=3 full  | h=0.08 old 0.5897 new 0.0932 | new-only 0.304\n"}
+,{"stream_name":"stdout","time":841.250805552,"data":"seed 2 part1 gamma 0.01 stream never  h1=0.12 H by session 30.0 39.7 40.7 40.7 44.3 46.5 47.2 47.8\n"}
+,{"stream_name":"stdout","time":841.251053786,"data":"seed 2 part1 gamma 0.01 stream at30   h1=0.12 H by session 30.0 39.7 39.9 40.7 46.8 50.8 54.4 56.2\n"}
+,{"stream_name":"stdout","time":853.282064388,"data":"seed 2 part1 gamma 0.03 k=3 apart | h=0.08 old 0.5500 new 0.1674 | new-only 0.361\n"}
+,{"stream_name":"stdout","time":853.293371079,"data":"seed 2 part1 gamma 0.03 k=3 full  | h=0.08 old 0.5794 new 0.0923 | new-only 0.317\n"}
+,{"stream_name":"stdout","time":859.659748487,"data":"seed 2 part1 gamma 0.03 stream never  h1=0.12 H by session 29.4 39.9 40.7 40.6 44.6 46.6 47.5 47.9\n"}
+,{"stream_name":"stdout","time":859.659786173,"data":"seed 2 part1 gamma 0.03 stream at30   h1=0.12 H by session 29.4 39.9 40.1 40.9 46.9 50.6 53.8 55.1\n"}
+,{"stream_name":"stdout","time":871.634602265,"data":"seed 2 part1 gamma 0.1 k=3 apart | h=0.08 old 0.5238 new 0.1708 | new-only 0.359\n"}
+,{"stream_name":"stdout","time":871.645638479,"data":"seed 2 part1 gamma 0.1 k=3 full  | h=0.08 old 0.5544 new 0.0952 | new-only 0.327\n"}
+,{"stream_name":"stdout","time":878.118991578,"data":"seed 2 part1 gamma 0.1 stream never  h1=0.12 H by session 30.8 39.3 40.2 40.0 43.9 45.8 46.6 46.9\n"}
+,{"stream_name":"stdout","time":878.119036778,"data":"seed 2 part1 gamma 0.1 stream at30   h1=0.12 H by session 30.8 39.3 39.9 40.6 46.2 49.5 51.9 53.0\n"}
+,{"stream_name":"stdout","time":890.071106336,"data":"seed 2 part1 gamma 0.3 k=3 apart | h=0.08 old 0.4889 new 0.1747 | new-only 0.353\n"}
+,{"stream_name":"stdout","time":890.082172904,"data":"seed 2 part1 gamma 0.3 k=3 full  | h=0.08 old 0.5187 new 0.1028 | new-only 0.327\n"}
+,{"stream_name":"stdout","time":896.592871033,"data":"seed 2 part1 gamma 0.3 stream never  h1=0.12 H by session 31.0 38.5 39.4 39.1 42.4 44.0 44.7 45.0\n"}
+,{"stream_name":"stdout","time":896.592928847,"data":"seed 2 part1 gamma 0.3 stream at30   h1=0.12 H by session 31.0 38.5 39.2 39.8 44.7 47.6 49.3 50.0\n"}
+,{"stream_name":"stdout","time":908.533300252,"data":"seed 2 part1 gamma 1.0 k=3 apart | h=0.08 old 0.4445 new 0.1763 | new-only 0.339\n"}
+,{"stream_name":"stdout","time":908.544383599,"data":"seed 2 part1 gamma 1.0 k=3 full  | h=0.08 old 0.4750 new 0.1156 | new-only 0.324\n"}
+,{"stream_name":"stdout","time":914.980438273,"data":"seed 2 part1 gamma 1.0 stream never  h1=0.12 H by session 31.1 37.7 38.0 37.2 40.3 41.7 42.3 42.7\n"}
+,{"stream_name":"stdout","time":914.980495093,"data":"seed 2 part1 gamma 1.0 stream at30   h1=0.12 H by session 31.1 37.7 37.8 38.2 42.3 44.6 45.6 46.1\n"}
+,{"stream_name":"stdout","time":915.34110437,"data":"seed 2 done: dim 12800, peak GPU 2286.0 MB (reserved 2994.0), times {'describe': 59.1584255695343, 'tables': 5.8565263748168945, 'view': 37.90088701248169, 'join': 127.55495882034302, 'scoring': 63.289613246917725}\n"}
+,{"stream_name":"stdout","time":915.342211138,"data":"== seed 2 done, 15.1 min elapsed\n"}
+,{"stream_name":"stdout","time":993.949896027,"data":"seed 3 rehearsal gamma 0.01 k=3 apart | h=0.08 old 0.5699 new 0.2052 | new-only 0.400\n"}
+,{"stream_name":"stdout","time":993.957887318,"data":"seed 3 rehearsal gamma 0.01 k=3 full  | h=0.08 old 0.6036 new 0.1439 | new-only 0.351\n"}
+,{"stream_name":"stdout","time":999.87215333,"data":"seed 3 rehearsal gamma 0.01 stream never  h1=0.12 H by session 39.4 43.4 44.1 44.3 47.5 48.8 49.3 49.5\n"}
+,{"stream_name":"stdout","time":999.872202803,"data":"seed 3 rehearsal gamma 0.01 stream at30   h1=0.12 H by session 39.4 43.4 44.9 46.2 51.6 56.0 58.8 60.0\n"}
+,{"stream_name":"stdout","time":1011.558804349,"data":"seed 3 rehearsal gamma 0.03 k=3 apart | h=0.08 old 0.5586 new 0.2145 | new-only 0.408\n"}
+,{"stream_name":"stdout","time":1011.566894811,"data":"seed 3 rehearsal gamma 0.03 k=3 full  | h=0.08 old 0.5919 new 0.1473 | new-only 0.368\n"}
+,{"stream_name":"stdout","time":1017.417861976,"data":"seed 3 rehearsal gamma 0.03 stream never  h1=0.12 H by session 39.8 43.8 44.7 44.6 47.8 49.0 49.5 49.8\n"}
+,{"stream_name":"stdout","time":1017.417911904,"data":"seed 3 rehearsal gamma 0.03 stream at30   h1=0.12 H by session 39.8 43.8 45.0 46.2 51.6 55.8 58.2 59.1\n"}
+,{"stream_name":"stdout","time":1029.11715396,"data":"seed 3 rehearsal gamma 0.1 k=3 apart | h=0.08 old 0.5370 new 0.2233 | new-only 0.412\n"}
+,{"stream_name":"stdout","time":1029.125092055,"data":"seed 3 rehearsal gamma 0.1 k=3 full  | h=0.08 old 0.5710 new 0.1524 | new-only 0.379\n"}
+,{"stream_name":"stdout","time":1034.967109425,"data":"seed 3 rehearsal gamma 0.1 stream never  h1=0.12 H by session 39.8 43.4 44.6 44.3 47.6 48.8 49.2 49.5\n"}
+,{"stream_name":"stdout","time":1034.967189939,"data":"seed 3 rehearsal gamma 0.1 stream at30   h1=0.12 H by session 39.8 43.4 44.8 46.1 50.9 54.5 56.4 57.0\n"}
+,{"stream_name":"stdout","time":1046.62546586,"data":"seed 3 rehearsal gamma 0.3 k=3 apart | h=0.08 old 0.5042 new 0.2264 | new-only 0.406\n"}
+,{"stream_name":"stdout","time":1046.633226729,"data":"seed 3 rehearsal gamma 0.3 k=3 full  | h=0.08 old 0.5379 new 0.1623 | new-only 0.382\n"}
+,{"stream_name":"stdout","time":1052.519148967,"data":"seed 3 rehearsal gamma 0.3 stream never  h1=0.12 H by session 39.3 42.6 43.7 43.2 46.4 47.5 47.9 48.1\n"}
+,{"stream_name":"stdout","time":1052.519190753,"data":"seed 3 rehearsal gamma 0.3 stream at30   h1=0.12 H by session 39.3 42.6 44.2 44.9 49.5 52.4 53.7 54.0\n"}
+,{"stream_name":"stdout","time":1064.163529911,"data":"seed 3 rehearsal gamma 1.0 k=3 apart | h=0.08 old 0.4613 new 0.2314 | new-only 0.393\n"}
+,{"stream_name":"stdout","time":1064.171234572,"data":"seed 3 rehearsal gamma 1.0 k=3 full  | h=0.08 old 0.4936 new 0.1760 | new-only 0.381\n"}
+,{"stream_name":"stdout","time":1070.000220635,"data":"seed 3 rehearsal gamma 1.0 stream never  h1=0.12 H by session 38.7 41.0 41.9 41.3 44.2 45.1 45.4 45.5\n"}
+,{"stream_name":"stdout","time":1070.00026714,"data":"seed 3 rehearsal gamma 1.0 stream at30   h1=0.12 H by session 38.7 41.0 42.6 43.0 47.0 48.9 49.8 49.8\n"}
+,{"stream_name":"stdout","time":1131.983046593,"data":"seed 3 part1 gamma 0.01 k=3 apart | h=0.08 old 0.5591 new 0.1647 | new-only 0.357\n"}
+,{"stream_name":"stdout","time":1131.994063266,"data":"seed 3 part1 gamma 0.01 k=3 full  | h=0.08 old 0.5868 new 0.1034 | new-only 0.315\n"}
+,{"stream_name":"stdout","time":1138.414262332,"data":"seed 3 part1 gamma 0.01 stream never  h1=0.12 H by session 34.6 38.7 41.7 40.9 45.0 47.0 47.8 48.0\n"}
+,{"stream_name":"stdout","time":1138.414331996,"data":"seed 3 part1 gamma 0.01 stream at30   h1=0.12 H by session 34.6 38.7 39.6 40.5 46.6 51.0 54.7 56.5\n"}
+,{"stream_name":"stdout","time":1150.424307432,"data":"seed 3 part1 gamma 0.03 k=3 apart | h=0.08 old 0.5474 new 0.1712 | new-only 0.365\n"}
+,{"stream_name":"stdout","time":1150.435675295,"data":"seed 3 part1 gamma 0.03 k=3 full  | h=0.08 old 0.5747 new 0.1037 | new-only 0.329\n"}
+,{"stream_name":"stdout","time":1156.861731018,"data":"seed 3 part1 gamma 0.03 stream never  h1=0.12 H by session 34.3 38.6 41.6 41.1 44.7 46.8 47.5 47.6\n"}
+,{"stream_name":"stdout","time":1156.861785056,"data":"seed 3 part1 gamma 0.03 stream at30   h1=0.12 H by session 34.3 38.6 39.8 40.7 46.7 50.7 54.0 55.4\n"}
+,{"stream_name":"stdout","time":1168.873431327,"data":"seed 3 part1 gamma 0.1 k=3 apart | h=0.08 old 0.5239 new 0.1731 | new-only 0.362\n"}
+,{"stream_name":"stdout","time":1168.885182328,"data":"seed 3 part1 gamma 0.1 k=3 full  | h=0.08 old 0.5517 new 0.1081 | new-only 0.339\n"}
+,{"stream_name":"stdout","time":1175.334494931,"data":"seed 3 part1 gamma 0.1 stream never  h1=0.12 H by session 33.8 38.5 40.8 40.4 43.8 45.8 46.4 46.6\n"}
+,{"stream_name":"stdout","time":1175.334527791,"data":"seed 3 part1 gamma 0.1 stream at30   h1=0.12 H by session 33.8 38.5 39.5 40.6 46.3 49.7 52.3 53.3\n"}
+,{"stream_name":"stdout","time":1187.287227278,"data":"seed 3 part1 gamma 0.3 k=3 apart | h=0.08 old 0.4904 new 0.1792 | new-only 0.358\n"}
+,{"stream_name":"stdout","time":1187.298364354,"data":"seed 3 part1 gamma 0.3 k=3 full  | h=0.08 old 0.5184 new 0.1165 | new-only 0.343\n"}
+,{"stream_name":"stdout","time":1193.74823684,"data":"seed 3 part1 gamma 0.3 stream never  h1=0.12 H by session 33.7 37.6 39.9 39.4 42.5 44.2 44.8 45.1\n"}
+,{"stream_name":"stdout","time":1193.748285991,"data":"seed 3 part1 gamma 0.3 stream at30   h1=0.12 H by session 33.7 37.6 39.1 40.0 45.1 47.8 49.7 50.4\n"}
+,{"stream_name":"stdout","time":1205.666975553,"data":"seed 3 part1 gamma 1.0 k=3 apart | h=0.08 old 0.4452 new 0.1844 | new-only 0.348\n"}
+,{"stream_name":"stdout","time":1205.677904588,"data":"seed 3 part1 gamma 1.0 k=3 full  | h=0.08 old 0.4743 new 0.1291 | new-only 0.341\n"}
+,{"stream_name":"stdout","time":1212.209673888,"data":"seed 3 part1 gamma 1.0 stream never  h1=0.12 H by session 33.1 36.9 38.2 37.6 40.5 41.8 42.4 42.7\n"}
+,{"stream_name":"stdout","time":1212.209729503,"data":"seed 3 part1 gamma 1.0 stream at30   h1=0.12 H by session 33.1 36.9 37.8 38.3 42.7 44.8 45.9 46.2\n"}
+,{"stream_name":"stdout","time":1212.580998582,"data":"seed 3 done: dim 12800, peak GPU 2286.0 MB (reserved 2994.0), times {'describe': 59.26974272727966, 'tables': 5.850988149642944, 'view': 37.898930072784424, 'join': 127.54539012908936, 'scoring': 63.17645812034607}\n"}
+,{"stream_name":"stdout","time":1212.581295126,"data":"== seed 3 done, 20.0 min elapsed\n"}
+,{"stream_name":"stdout","time":1291.163676381,"data":"seed 4 rehearsal gamma 0.01 k=3 apart | h=0.08 old 0.6099 new 0.1681 | new-only 0.315\n"}
+,{"stream_name":"stdout","time":1291.171551203,"data":"seed 4 rehearsal gamma 0.01 k=3 full  | h=0.08 old 0.6442 new 0.1176 | new-only 0.266\n"}
+,{"stream_name":"stdout","time":1297.051498282,"data":"seed 4 rehearsal gamma 0.01 stream never  h1=0.12 H by session 37.9 40.2 39.8 40.2 44.0 46.0 46.8 47.1\n"}
+,{"stream_name":"stdout","time":1297.051552382,"data":"seed 4 rehearsal gamma 0.01 stream at30   h1=0.12 H by session 37.9 40.2 38.5 40.8 46.1 50.9 54.5 56.5\n"}
+,{"stream_name":"stdout","time":1308.731998573,"data":"seed 4 rehearsal gamma 0.03 k=3 apart | h=0.08 old 0.6010 new 0.1777 | new-only 0.327\n"}
+,{"stream_name":"stdout","time":1308.740004174,"data":"seed 4 rehearsal gamma 0.03 k=3 full  | h=0.08 old 0.6364 new 0.1182 | new-only 0.281\n"}
+,{"stream_name":"stdout","time":1314.637520912,"data":"seed 4 rehearsal gamma 0.03 stream never  h1=0.12 H by session 38.4 40.7 40.2 41.0 44.4 46.3 47.0 47.4\n"}
+,{"stream_name":"stdout","time":1314.63755717,"data":"seed 4 rehearsal gamma 0.03 stream at30   h1=0.12 H by session 38.4 40.7 39.1 41.5 46.5 50.9 54.3 55.9\n"}
+,{"stream_name":"stdout","time":1326.344901025,"data":"seed 4 rehearsal gamma 0.1 k=3 apart | h=0.08 old 0.5782 new 0.1868 | new-only 0.333\n"}
+,{"stream_name":"stdout","time":1326.352964402,"data":"seed 4 rehearsal gamma 0.1 k=3 full  | h=0.08 old 0.6141 new 0.1223 | new-only 0.294\n"}
+,{"stream_name":"stdout","time":1332.160660203,"data":"seed 4 rehearsal gamma 0.1 stream never  h1=0.12 H by session 38.5 40.8 40.4 41.0 44.4 46.1 46.8 47.0\n"}
+,{"stream_name":"stdout","time":1332.160707071,"data":"seed 4 rehearsal gamma 0.1 stream at30   h1=0.12 H by session 38.5 40.8 39.4 41.8 46.3 50.4 53.2 54.2\n"}
+,{"stream_name":"stdout","time":1343.806270583,"data":"seed 4 rehearsal gamma 0.3 k=3 apart | h=0.08 old 0.5499 new 0.1928 | new-only 0.329\n"}
+,{"stream_name":"stdout","time":1343.814302833,"data":"seed 4 rehearsal gamma 0.3 k=3 full  | h=0.08 old 0.5851 new 0.1315 | new-only 0.303\n"}
+,{"stream_name":"stdout","time":1349.737781761,"data":"seed 4 rehearsal gamma 0.3 stream never  h1=0.12 H by session 38.7 40.3 40.0 40.4 43.9 45.5 46.2 46.5\n"}
+,{"stream_name":"stdout","time":1349.737833591,"data":"seed 4 rehearsal gamma 0.3 stream at30   h1=0.12 H by session 38.7 40.3 39.5 41.4 45.6 49.3 51.3 52.0\n"}
+,{"stream_name":"stdout","time":1361.370188149,"data":"seed 4 rehearsal gamma 1.0 k=3 apart | h=0.08 old 0.5084 new 0.1969 | new-only 0.321\n"}
+,{"stream_name":"stdout","time":1361.378026082,"data":"seed 4 rehearsal gamma 1.0 k=3 full  | h=0.08 old 0.5410 new 0.1443 | new-only 0.303\n"}
+,{"stream_name":"stdout","time":1367.219319077,"data":"seed 4 rehearsal gamma 1.0 stream never  h1=0.12 H by session 39.0 39.3 38.8 39.0 42.3 43.8 44.4 44.7\n"}
+,{"stream_name":"stdout","time":1367.219352583,"data":"seed 4 rehearsal gamma 1.0 stream at30   h1=0.12 H by session 39.0 39.3 38.9 40.0 44.0 47.0 48.2 48.8\n"}
+,{"stream_name":"stdout","time":1428.841665875,"data":"seed 4 part1 gamma 0.01 k=3 apart | h=0.08 old 0.5603 new 0.1636 | new-only 0.357\n"}
+,{"stream_name":"stdout","time":1428.852751843,"data":"seed 4 part1 gamma 0.01 k=3 full  | h=0.08 old 0.5893 new 0.0925 | new-only 0.302\n"}
+,{"stream_name":"stdout","time":1435.057741624,"data":"seed 4 part1 gamma 0.01 stream never  h1=0.12 H by session 36.9 39.6 40.8 40.9 44.6 46.4 47.3 47.8\n"}
+,{"stream_name":"stdout","time":1435.057782783,"data":"seed 4 part1 gamma 0.01 stream at30   h1=0.12 H by session 36.9 39.6 39.3 41.1 47.2 51.3 54.4 56.5\n"}
+,{"stream_name":"stdout","time":1447.063910224,"data":"seed 4 part1 gamma 0.03 k=3 apart | h=0.08 old 0.5508 new 0.1670 | new-only 0.361\n"}
+,{"stream_name":"stdout","time":1447.074893519,"data":"seed 4 part1 gamma 0.03 k=3 full  | h=0.08 old 0.5804 new 0.0919 | new-only 0.317\n"}
+,{"stream_name":"stdout","time":1453.34790449,"data":"seed 4 part1 gamma 0.03 stream never  h1=0.12 H by session 37.0 39.4 40.7 40.9 44.6 46.4 47.4 47.7\n"}
+,{"stream_name":"stdout","time":1453.347933759,"data":"seed 4 part1 gamma 0.03 stream at30   h1=0.12 H by session 37.0 39.4 39.3 41.3 47.1 50.9 53.8 55.6\n"}
+,{"stream_name":"stdout","time":1465.296646788,"data":"seed 4 part1 gamma 0.1 k=3 apart | h=0.08 old 0.5261 new 0.1709 | new-only 0.360\n"}
+,{"stream_name":"stdout","time":1465.307834513,"data":"seed 4 part1 gamma 0.1 k=3 full  | h=0.08 old 0.5555 new 0.0939 | new-only 0.326\n"}
+,{"stream_name":"stdout","time":1471.543526325,"data":"seed 4 part1 gamma 0.1 stream never  h1=0.12 H by session 36.2 38.6 39.8 40.5 43.9 45.6 46.5 46.9\n"}
+,{"stream_name":"stdout","time":1471.543560474,"data":"seed 4 part1 gamma 0.1 stream at30   h1=0.12 H by session 36.2 38.6 38.6 41.2 46.4 49.9 52.3 53.6\n"}
+,{"stream_name":"stdout","time":1483.45893683,"data":"seed 4 part1 gamma 0.3 k=3 apart | h=0.08 old 0.4968 new 0.1730 | new-only 0.351\n"}
+,{"stream_name":"stdout","time":1483.469849166,"data":"seed 4 part1 gamma 0.3 k=3 full  | h=0.08 old 0.5261 new 0.0991 | new-only 0.327\n"}
+,{"stream_name":"stdout","time":1489.584578721,"data":"seed 4 part1 gamma 0.3 stream never  h1=0.12 H by session 35.9 37.8 39.0 39.7 42.8 44.4 45.2 45.5\n"}
+,{"stream_name":"stdout","time":1489.58460813,"data":"seed 4 part1 gamma 0.3 stream at30   h1=0.12 H by session 35.9 37.8 38.1 40.5 45.1 48.1 50.1 51.0\n"}
+,{"stream_name":"stdout","time":1501.468517452,"data":"seed 4 part1 gamma 1.0 k=3 apart | h=0.08 old 0.4533 new 0.1790 | new-only 0.340\n"}
+,{"stream_name":"stdout","time":1501.479442424,"data":"seed 4 part1 gamma 1.0 k=3 full  | h=0.08 old 0.4820 new 0.1099 | new-only 0.324\n"}
+,{"stream_name":"stdout","time":1507.757095035,"data":"seed 4 part1 gamma 1.0 stream never  h1=0.12 H by session 35.6 36.8 37.5 37.8 40.6 42.2 42.7 43.1\n"}
+,{"stream_name":"stdout","time":1507.757154323,"data":"seed 4 part1 gamma 1.0 stream at30   h1=0.12 H by session 35.6 36.8 37.1 38.8 42.7 44.9 46.2 46.8\n"}
+,{"stream_name":"stdout","time":1508.121634591,"data":"seed 4 done: dim 12800, peak GPU 2286.0 MB (reserved 2994.0), times {'describe': 59.266867876052856, 'tables': 5.841249704360962, 'view': 37.87384486198425, 'join': 126.96746706962585, 'scoring': 62.03270721435547}\n"}
+,{"stream_name":"stdout","time":1508.121836343,"data":"== seed 4 done, 25.0 min elapsed\n"}
+,{"stream_name":"stdout","time":1508.125116475,"data":"{\"gpu\": \"Tesla T4\", \"torch\": \"2.11.0+cu130\", \"on_kaggle\": true, \"smoke\": false, \"seeds\": 5, \"stop\": 8, \"stages\": 8, \"per_stage\": 10, \"eyes\": {\"k\": 1600, \"sides\": 2, \"grid\": 2, \"mirror\": true}, \"n_patches\": 200000, \"thr\": 0.1, \"shots\": [1, 3, 10], \"big\": {\"30\": 20, \"100\": 10}, \"episodes\": 20, \"stream_runs\": 10, \"sessions\": 8, \"arrive_sessions\": 4, \"per_session\": 5, \"levels\": [3, 10, 30, 60, 100, 200, 300, 500], \"gammas\": [0.01, 0.03, 0.1, 0.3, 1.0], \"alpha\": 1.0, \"n_borrow\": 2, \"g1\": [-0.2, -0.19, -0.18, -0.17, -0.16, -0.15, -0.14, -0.13, -0.12, -0.11, -0.1, -0.09, -0.08, -0.07, -0.06, -0.05, -0.04, -0.03, -0.02, -0.01, 0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.19, 0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.29, 0.3, 0.31, 0.32, 0.33, 0.34, 0.35, 0.36, 0.37, 0.38, 0.39, 0.4, 0.41, 0.42, 0.43, 0.44, 0.45, 0.46, 0.47, 0.48, 0.49, 0.5], \"g2\": [-0.2, -0.18, -0.16, -0.14, -0.12, -0.1, -0.08, -0.06, -0.04, -0.02, -0.0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2], \"ks\": [3, 10, 30, 100], \"betas\": [0.25, 0.5, 1.0, 2.0], \"thresh\": {\"once\": 3, \"at10\": 10, \"at30\": 30, \"at100\": 100}, \"cross_ways\": [\"apart\", \"full\", \"counted3\", \"counted10\", \"counted30\", \"counted100\", \"measured0.25\", \"measured0.5\", \"measured1.0\", \"measured2.0\", \"card0.25\", \"card0.5\", \"card1.0\", \"card2.0\"], \"stream_rules\": [\"never\", \"once\", \"at10\", \"at30\", \"at100\", \"counted3\", \"counted10\", \"counted30\", \"counted100\", \"measured0.25\", \"measured0.5\", \"measured1.0\", \"measured2.0\", \"card0.25\", \"card0.5\", \"card1.0\", \"card2.0\"], \"probes\": 128, \"surprise_seed\": 1234, \"power_reported\": true, \"total_minutes\": 25.0, \"finished\": \"2026-11-19 16:21:45\"}\n"}
+,{"stream_name":"stderr","time":1514.77174682,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":1514.771796718,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":1515.082056835,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":1515.082096469,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":1516.068156761,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":1517.385093855,"data":"[NbConvertApp] Writing 492903 bytes to __results__.html\n"}
+]
