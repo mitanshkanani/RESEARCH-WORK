@@ -424,3 +424,28 @@ classes; Atzmon et al. arXiv:2004.02235.
   not from the paper).
 - Telling near unknowns from known classes is hard even with trained features (AUROC about 81 for
   CIFAR-100 vs CIFAR-10). Expect a real switch to land well under the perfect one.
+
+---
+
+## 11. Making a few pictures count for more (2026-11-19)
+
+Question: EXP-10 to EXP-12 show that the card of a new class from 3 pictures is the limit. Is there
+closed-form, no-backprop work on making each picture count for more, and on how scores grow with
+the number of pictures? One Sonnet subagent.
+
+| Paper | Tag | Recipe | Numbers seen |
+|---|---|---|---|
+| Yang, Liu, Xu, "Free Lunch for Few-shot Learning: Distribution Calibration", ICLR 2021, arXiv:2101.06395 | passages (full PDF text read by the subagent) | Fixed pretrained features; a square-root ("Tukey") transform of every feature; new class mean = (its picture + means of the 2 nearest base classes) / 3, covariance borrowed from them; 750 features sampled per picture and a logistic regression trained on them | miniImageNet 5-way, 1 / 5 pictures, logistic regression: 68.57 / 82.88; CUB 79.56 / 90.67. Ablation (1 / 5 pictures): neither 56.37 / 79.03; transform only 64.30 / 81.33; sampling only 63.70 / 82.26; both 68.57 / 82.88. Without a trained classifier ("maximum likelihood"): 66.91 / 80.74. Appendix A: borrowing real pictures of the nearest class helps a little, then hurts |
+| Bai, Shu, Tan, Chen, "Can One-Shot Test-Time Data Augmentation Help with Generalization?", arXiv:2602.00114 | model-written summary of the HTML page only; **unverified** | Copies of one picture: geometric changes, noise, then a trained image-cleaning model | Relayed: ProtoNet, miniImageNet 1 picture, +4.8 to +8.2 points; 5 pictures 78.89 (+4.7) |
+| Tian et al., "Rethinking Few-Shot Image Classification: a Good Embedding Is All You Need?", arXiv:2003.11539 | abstract (via summary) | A good embedding plus a linear classifier beats meta-learning | none on copies |
+| Paramonov et al., arXiv:2501.15998 | search snippet only | Few-shot class-incremental learning | snippet: plain inference is better "when 3 or more shots are available"; no curve seen |
+
+Not opened: Chen et al. 2019 "A Closer Look at Few-shot Classification"; an FSCIL survey (arXiv:2304.08130).
+
+### What this means for us (our reading)
+
+- Our borrowing from the 2 nearest known cards is essentially Distribution Calibration's mean step.
+- The square-root transform, worth as much as the calibration at 1 picture there, is already part of
+  our eyes (since EXP-7, every pooled match is square-rooted).
+- No paper found tests plain moved or enlarged copies averaged into a class average on fixed features,
+  or a 1-to-500 picture curve for new classes among old ones. EXP-13 measures both without a reference.
